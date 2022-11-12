@@ -1,0 +1,42 @@
+package ir.pattern.persianball.presenter.feature.home.recycler
+
+import android.annotation.SuppressLint
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import com.google.firebase.firestore.util.Assert
+import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.base.Equatable
+import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
+import ir.pattern.persianball.data.model.home.Course
+import ir.pattern.persianball.databinding.HolderHomeSliderBinding
+import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
+import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+
+class HomeCourseData(var course: Course): PersianBallRecyclerData, Equatable{
+    companion object{
+        const val VIEW_TYPE = R.layout.home_new_course_viewholder
+    }
+    override val viewType: Int = VIEW_TYPE
+
+    override fun equals(other: Any?): Boolean = true
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
+}
+
+class HomeCourseViewHolder(itemView: View) : BaseViewHolder<HomeCourseData>(itemView){
+    private lateinit var binding: HomeNewCourseViewholderBinding
+
+    @SuppressLint("RestrictedApi")
+    override fun setViewDataBinding(viewDataBinding: ViewDataBinding?) {
+        super.setViewDataBinding(viewDataBinding)
+        when (viewDataBinding) {
+            is HomeNewCourseViewholderBinding -> binding = viewDataBinding
+            else -> Assert.fail("binding is incompatible")
+        }
+    }
+    override fun onBindView(data: HomeCourseData?) {
+
+    }
+}

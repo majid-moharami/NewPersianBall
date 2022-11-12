@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_box_background"
+        tools:context=".presenter.feature.login.VerifyUserFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ir.pattern.persianball.views.PersianBallTextView
+                    android:id="@+id/persianBallTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/get_code"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ir.pattern.persianball.views.PersianBallTextView
+                    android:id="@+id/enter_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/enter_code"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/persianBallTextView2"
+                    app:layout_constraintStart_toStartOf="@+id/persianBallTextView2"
+                    app:layout_constraintTop_toBottomOf="@+id/persianBallTextView2" />
+
+                <com.kevinschildhorn.otpview.OTPView
+                    android:id="@+id/otp_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_code"
+                    app:otp_cursorColor="@color/red"
+                    app:otp_itemCount="5"
+                    app:otp_itemHeight="40dp"
+                    app:otp_itemWidth="40dp"
+                    app:otp_showCursor="true"
+                    app:otp_textColor="@color/black"
+                    app:otp_underscoreCursor="true" />
+
+                <ir.pattern.persianball.views.PersianBallTextView
+                    android:id="@+id/persianBallTextView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_get_code"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/otp_view"
+                    app:layout_constraintStart_toStartOf="@+id/otp_view"
+                    app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+
+                <ir.pattern.persianball.views.PersianBallTextView
+                    android:id="@+id/retry_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resend_code"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="@+id/persianBallTextView3"
+                    app:layout_constraintStart_toStartOf="@+id/persianBallTextView3"
+                    app:layout_constraintTop_toBottomOf="@+id/persianBallTextView3" />
+
+                <ir.pattern.persianball.views.PersianBallTextView
+                    android:id="@+id/submit_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/login_icon_bachground"
+                    android:gravity="center"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/persianBallTextView4" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/login"
+                    app:layout_constraintStart_toStartOf="@+id/login"
+                    app:layout_constraintTop_toBottomOf="@+id/login">
+
+                    <ir.pattern.persianball.views.PersianBallImageButton
+                        android:id="@+id/whatsapp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@drawable/product_page_text_background"
+                        android:src="@drawable/ic_whatsapp"
+                        app:layout_constraintBottom_toBottomOf="@+id/facebook"
+                        app:layout_constraintEnd_toStartOf="@+id/facebook"
+                        app:layout_constraintTop_toTopOf="@+id/facebook" />
+
+                    <ir.pattern.persianball.views.PersianBallImageButton
+                        android:id="@+id/facebook"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/product_page_text_background"
+                        android:src="@drawable/ic_facebook"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/submit_btn" />
+
+                    <ir.pattern.persianball.views.PersianBallImageButton
+                        android:id="@+id/youtube"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="24dp"
+                        android:background="@drawable/product_page_text_background"
+                        android:src="@drawable/ic_youtube"
+                        app:layout_constraintBottom_toBottomOf="@+id/facebook"
+                        app:layout_constraintStart_toEndOf="@+id/facebook"
+                        app:layout_constraintTop_toTopOf="@+id/facebook" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

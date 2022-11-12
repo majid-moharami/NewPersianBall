@@ -1,0 +1,8 @@
+package ir.pattern.persianball.presenter.feature.setting
+
+import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
+import ir.pattern.persianball.R
+@AndroidEntryPoint
+class SettingFragment : Fragment(R.layout.fragment_setting) {
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgerPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_verityUserFragment"
+            app:destination="@id/verityUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.ForgerPasswordFragment"
+        android:label="ForgerPasswordFragment" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_otpForgetPasswordFragment2"
+            app:destination="@id/otpForgetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verityUserFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.VerifyUserFragment"
+        android:label="VerityUserFragment" >
+        <argument
+            android:name="phone"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpForgetPasswordFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.OtpForgetPasswordFragment"
+        android:label="fragment_otp_forget_password"
+        tools:layout="@layout/fragment_otp_forget_password" >
+        <action
+            android:id="@+id/action_otpForgetPasswordFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="phone"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="ir.pattern.persianball.presenter.feature.login.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password">
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="phone"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

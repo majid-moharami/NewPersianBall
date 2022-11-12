@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_box_background">
+
+        <ir.pattern.persianball.views.PersianBallTextView
+            android:id="@+id/persianBallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/iran_sans_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_name_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="64dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:shapeAppearance="@style/Rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/persianBallTextView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iran_sans_bold"
+                android:hint="@string/user_name"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:shapeAppearance="@style/Rounded"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="@+id/user_name_layout"
+            app:layout_constraintStart_toStartOf="@+id/user_name_layout"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:fontFamily="@font/iran_sans_bold"
+                android:inputType="textPassword"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ir.pattern.persianball.views.PersianBallTextView
+            android:id="@+id/forget_password_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/forget_password"
+            android:textColor="@drawable/red_text_selector"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/password_layout"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:includeFontPadding="false"
+            android:text="@string/remember_me"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:theme="@style/Check"
+            android:fontFamily="@font/iran_sans"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toEndOf="@+id/password_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forget_password_txt" />
+
+        <FrameLayout
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox">
+
+            <ir.pattern.persianball.views.PersianBallTextView
+                android:id="@+id/login_btn"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/login_icon_bachground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/iran_sans_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        </FrameLayout>
+
+        <ir.pattern.persianball.views.PersianBallTextView
+            android:id="@+id/register_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/have_not_account"
+            android:textColor="@drawable/text_selector"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login" />
+
+        <ir.pattern.persianball.views.PersianBallImageButton
+            android:id="@+id/facebook"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/product_page_text_background"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_txt" />
+
+        <ir.pattern.persianball.views.PersianBallImageButton
+            android:id="@+id/whatsapp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/product_page_text_background"
+            android:src="@drawable/ic_whatsapp"
+            app:layout_constraintBottom_toBottomOf="@+id/facebook"
+            app:layout_constraintEnd_toStartOf="@+id/facebook"
+            app:layout_constraintTop_toTopOf="@+id/facebook" />
+
+        <ir.pattern.persianball.views.PersianBallImageButton
+            android:id="@+id/youtube"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/product_page_text_background"
+            android:src="@drawable/ic_youtube"
+            app:layout_constraintBottom_toBottomOf="@+id/facebook"
+            app:layout_constraintStart_toEndOf="@+id/facebook"
+            app:layout_constraintTop_toTopOf="@+id/facebook" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

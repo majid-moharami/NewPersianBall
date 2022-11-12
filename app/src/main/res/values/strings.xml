@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">NewPersianBall</string>
+    <string name="share_pref_mail">share_pref_mail</string>
+    <string name="share_pref_phone">share_pref_phone</string>
+    <string name="share_pref_username">share_pref_username</string>
+    <string name="share_pref_password">share_pref_password</string>
+    <string name="share_pref_token">share_pref_token</string>
+    <string name="share_pref_refresh_token">share_pref_refresh_token</string>
+    <string name="home">خانه</string>
+    <string name="store">فروشگاه</string>
+    <string name="profile">پروفایل</string>
+    <string name="academy">آکادمی</string>
+    <string name="setting">تنظیمات</string>
+    <string name="login">ورود</string>
+    <string name="signup">عضویت</string>
+    <string name="hi_user">سلام ایمان</string>
+    <string name="product_page">صفحه محصول</string>
+    <string name="user_name">نام کاربری</string>
+    <string name="password">رمز ورود</string>
+    <string name="repeat_password">تکرار رمز ورود</string>
+    <string name="forget_password">رمز خود را فراموش کرده‌اید؟</string>
+    <string name="remember_me">مرا به یاد داشته باش</string>
+    <string name="have_not_account">حساب کاربری ندارید؟ ثبت‌نام</string>
+    <string name="forget_password_page">فراموشی رمز عبور</string>
+    <string name="email">ایمیل</string>
+    <string name="enter_code">کد را وارد کنید</string>
+    <string name="not_get_code">کد را دریافت نکردید؟</string>
+    <string name="resend_code">دوباره ارسال کن</string>
+    <string name="new_password">رمز عبور جدید</string>
+    <string name="repeat_new_password">تکرار رمز عبور جدید</string>
+    <string name="sign_up">ثبت‌نام</string>
+    <string name="phone_number">شماره همراه</string>
+    <string name="recovery_by_email">بازیابی توسط ایمیل</string>
+    <string name="recovery_by_sms">بازیابی توسط اس‌ام‌اس</string>
+    <string name="signup_by_phone_number">ثبت‌نام با موبایل</string>
+    <string name="signup_by_email">ثبت‌نام با ایمیل</string>
+    <string name="get_code">دریافت کد</string>
+    <string name="submit">ثبت</string>
+    <string name="personal_info">اطلاعات شخصی</string>
+    <string name="address_phone">تماس و آدرس</string>
+    <string name="change_password">تغییر رمز عبور</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

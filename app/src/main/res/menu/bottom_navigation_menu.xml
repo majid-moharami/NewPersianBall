@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_nav_graph"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/store_nav_graph"
+        android:enabled="true"
+        android:title="@string/store"
+        android:icon="@drawable/ic_store"
+        />
+    <item
+        android:id="@+id/profile_nav_graph"
+        android:enabled="true"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_profile"
+        />
+    <item
+        android:id="@+id/academy_nav_graph"
+        android:enabled="true"
+        android:title="@string/academy"
+        android:icon="@drawable/ic_academy"
+        />
+    <item
+        android:id="@+id/setting_nav_graph"
+        android:enabled="true"
+        android:title="@string/setting"
+        android:icon="@drawable/ic_setting"
+        />
+</menu>
