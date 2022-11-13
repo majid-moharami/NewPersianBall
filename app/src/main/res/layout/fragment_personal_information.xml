@@ -13,8 +13,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +93,6 @@
                                 android:id="@+id/latin_name_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +148,6 @@
                                 android:id="@+id/name_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +209,6 @@
                                 android:id="@+id/latin_family_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -269,7 +264,6 @@
                                 android:id="@+id/family_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -331,7 +325,6 @@
                                 android:id="@+id/nation_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -352,7 +345,7 @@
                             android:layout_height="wrap_content">
 
                             <ir.pattern.persianball.views.PersianBallTextView
-                                android:id="@+id/bithdate_title"
+                                android:id="@+id/birthdate_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="24dp"
@@ -378,16 +371,15 @@
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/bithdate_title"
+                                app:layout_constraintEnd_toEndOf="@+id/birthdate_title"
                                 app:layout_constraintHorizontal_bias="1"
                                 app:layout_constraintStart_toEndOf="@+id/bithdate_persianBallImageButton"
-                                app:layout_constraintTop_toBottomOf="@+id/bithdate_title" />
+                                app:layout_constraintTop_toBottomOf="@+id/birthdate_title" />
 
                             <ir.pattern.persianball.views.PersianBallImageButton
                                 android:id="@+id/bithdate_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -449,7 +441,6 @@
                                 android:id="@+id/gender_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -505,7 +496,6 @@
                                 android:id="@+id/national_code_persianBallImageButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

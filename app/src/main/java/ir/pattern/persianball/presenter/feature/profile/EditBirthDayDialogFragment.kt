@@ -17,14 +17,17 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.data.repository.ProfileRepository
+import ir.pattern.persianball.databinding.EditBirthdayDialogBinding
 import ir.pattern.persianball.databinding.EditInfoDialogBinding
+import ir.pattern.persianball.utils.UiUtils
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditInfoDialogFragment(var input: String?, val infoType: InfoType) :
+class EditBirthDayDialogFragment(var birthday: Int, val infoType: InfoType) :
     DialogFragment() {
 
-    lateinit var binding: EditInfoDialogBinding
+    lateinit var binding: EditBirthdayDialogBinding
+    val years = ArrayList<Int>()
 
     private val dialogViewModel: EditInfoViewModel by viewModels({ requireParentFragment() })
 
@@ -35,21 +38,17 @@ class EditInfoDialogFragment(var input: String?, val infoType: InfoType) :
     ): View {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(requireActivity()),
-            R.layout.edit_info_dialog,
+            R.layout.edit_birthday_dialog,
             container,
             false
         )
-        binding.dialogTitle.text = infoType.type
-        binding.infoEditText.hint = infoType.type
-        if (!input.isNullOrEmpty() && !input.equals("null")) {
-            binding.infoEditText.setText(input)
-        }
+
         binding.submitBtn.setOnClickListener {
             dialogViewModel.setDialogResult(
                 bundleOf(
                     Pair(
                         infoType.type,
-                        binding.infoEditText.text.toString()
+                        years[binding.numberPicker.value].toString()
                     )
                 )
             )
@@ -76,14 +75,35 @@ class EditInfoDialogFragment(var input: String?, val infoType: InfoType) :
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initNumberPicker(birthday)
+    }
+
+    private fun initNumberPicker(birthday: Int) {
+        val numbers = ArrayList<String>()
+        for (i in 1335 until 1395) {
+            numbers.add(UiUtils.convertToPersianNumber("$i"))
+            years.add(i)
+        }
+        val arrayNumber = arrayOfNulls<String>(numbers.size)
+        numbers.toArray(arrayNumber)
+        binding.numberPicker.wrapSelectorWheel = false
+        binding.numberPicker.minValue = 0
+        binding.numberPicker.maxValue = numbers.size - 1
+        val birthdayIndex = numbers.indexOf(UiUtils.convertToPersianNumber("$birthday"))
+        binding.numberPicker.value = birthdayIndex
+        binding.numberPicker.displayedValues = arrayNumber
+    }
+
     companion object {
         private const val BUNDLE_KEY_MESSAGE = "BUNDLE_KEY_INFO_MESSAGE"
         private const val TAG = "EditInfoDialog"
         fun newInstance(
-            input: String?,
+            birthday: Int = 1336,
             infoType: InfoType
-        ): EditInfoDialogFragment {
-            return EditInfoDialogFragment(input, infoType)
+        ): EditBirthDayDialogFragment {
+            return EditBirthDayDialogFragment(birthday, infoType)
         }
     }
 }

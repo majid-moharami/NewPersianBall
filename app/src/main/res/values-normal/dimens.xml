@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_size_very_small">8dp</dimen>
+    <dimen name="font_size_small">9dp</dimen>
+    <dimen name="font_size_normal">11dp</dimen>
+    <dimen name="font_size_medium">13dp</dimen>
+    <dimen name="font_size_large">15dp</dimen>
+    <dimen name="font_size_huge">17dp</dimen>
+    <dimen name="font_size_super_huge">19dp</dimen>
+    <dimen name="font_size_extra_huge">30dp</dimen>
+    <dimen name="font_size_extra_super_huge">40dp</dimen>
+</resources>

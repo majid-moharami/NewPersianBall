@@ -1,25 +1,11 @@
 package ir.pattern.persianball.presenter.feature.profile.address
 
-import android.icu.text.IDNA
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
-import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.profile.Address
-import ir.pattern.persianball.data.model.profile.AddressDto
-import ir.pattern.persianball.data.model.profile.InfoType
-import ir.pattern.persianball.data.model.profile.ItemInfoDto
 import ir.pattern.persianball.data.repository.ProfileRepository
-import ir.pattern.persianball.presenter.adapter.BaseViewModel
-import ir.pattern.persianball.presenter.adapter.mapToRecyclerItem
-import ir.pattern.persianball.presenter.feature.profile.personalInformation.recycler.InfoItemData
-import ir.pattern.persianball.presenter.feature.profile.recycler.ProfileInformationData
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,7 +16,11 @@ class AddressViewModel
     val profileRepository: ProfileRepository
 ) : ViewModel() {
 
-    val addressInfo: SharedFlow<Address?> = profileRepository.address
+    private val _address = MutableStateFlow<Address?>(null)
+    val addressInfo: SharedFlow<Address?> = _address.asStateFlow()
+    var address: Address = Address()
+    private val _addressResponse = MutableSharedFlow<Resource<Any?>>()
+    val addressResponse = _addressResponse.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -38,24 +28,21 @@ class AddressViewModel
         }
     }
 
-    suspend fun getAddress() {
-        profileRepository.getAddress().collect {
-            when (it) {
-                is Resource.Success -> {
-                    profileRepository.setAddress(it.data.result[0])
+    private suspend fun getAddress() {
+        when (val result = profileRepository.getAddress()) {
+            is Resource.Success -> {
+                if (result.data.result.isNotEmpty()) {
+                    _address.value = result.data.result.first()
                 }
-                else -> {}
             }
+            else -> Unit
         }
     }
 
-    suspend fun updateAddress(address: Address) {
-        profileRepository.setAddress(address)
-    }
-
-    suspend fun createAddress(address: Address){
-        profileRepository.createAddress(address).collect{
-
+    fun createAddress(address: Address) {
+        viewModelScope.launch {
+            _addressResponse.emit(Resource.Loading())
+            _addressResponse.emit(profileRepository.createAddress(address))
         }
     }
 }

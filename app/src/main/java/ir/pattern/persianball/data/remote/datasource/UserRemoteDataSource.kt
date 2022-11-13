@@ -5,6 +5,8 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.TokenDto
 import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.model.profile.AddressDto
+import ir.pattern.persianball.data.model.profile.PersonalDto
+import ir.pattern.persianball.data.model.profile.PersonalInformationDto
 import ir.pattern.persianball.data.remote.api.Request
 import ir.pattern.persianball.data.remote.api.UserService
 import javax.inject.Inject
@@ -30,6 +32,20 @@ class UserRemoteDataSource
     suspend fun getUserAddress(): Resource<AddressDto>{
         return Request.getResponse(
             request = {userService.getUserAddress()},
+            defaultErrorMessage = "Error posting register info"
+        )
+    }
+
+    suspend fun getPersonalData(): Resource<PersonalDto>{
+        return Request.getResponse(
+            request = {userService.getUser()},
+            defaultErrorMessage = "Error posting register info"
+        )
+    }
+
+    suspend fun updatePersonalData(personalDto: PersonalDto): Resource<PersonalDto>{
+        return Request.getResponse(
+            request = {userService.updateUserPersonalData(personalDto.username, personalDto)},
             defaultErrorMessage = "Error posting register info"
         )
     }

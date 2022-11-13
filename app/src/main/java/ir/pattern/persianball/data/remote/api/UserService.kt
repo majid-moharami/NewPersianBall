@@ -2,15 +2,9 @@ package ir.pattern.persianball.data.remote.api
 
 import ir.pattern.persianball.data.model.Login
 import ir.pattern.persianball.data.model.TokenDto
-import ir.pattern.persianball.data.model.profile.Address
-import ir.pattern.persianball.data.model.profile.AddressDto
-import ir.pattern.persianball.data.model.profile.PersonalInfoCreate
-import ir.pattern.persianball.data.model.profile.PersonalInformationDto
+import ir.pattern.persianball.data.model.profile.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface UserService {
     @POST("order/address/")
@@ -26,5 +20,11 @@ interface UserService {
     suspend fun createUser(@Body personalInfoCreate: PersonalInfoCreate): Response<Any?>
 
     @GET("user/")
-    suspend fun getUser(): Response<PersonalInformationDto>
+    suspend fun getUser(): Response<PersonalDto>
+
+    @PUT("user/{username}/")
+    suspend fun updateUserPersonalData(
+        @Path("username") username: String,
+        @Body personalDto: PersonalDto
+    ): Response<PersonalDto>
 }

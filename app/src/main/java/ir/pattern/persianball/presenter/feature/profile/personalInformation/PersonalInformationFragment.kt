@@ -4,25 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
-import ir.pattern.persianball.data.model.profile.ItemInfoDto
+import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.databinding.FragmentPersonalInformationBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
-import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.profile.EditBirthDayDialogFragment
+import ir.pattern.persianball.presenter.feature.profile.EditGenderDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditInfoDialogFragment
+import ir.pattern.persianball.presenter.feature.profile.EditInfoViewModel
+import ir.pattern.persianball.utils.UiUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PersonalInformationFragment : Fragment() {
 
     lateinit var binding: FragmentPersonalInformationBinding
-    private val viewModel: PersonalInfoViewModel by viewModels()
-    var pagingAdapter: BasePagingAdapter? = null
+    val viewModel: PersonalInfoViewModel by viewModels()
+    private val dialogViewModel: EditInfoViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,29 +50,241 @@ class PersonalInformationFragment : Fragment() {
             container,
             false
         )
-//        pagingAdapter = PersonalInfoDataAdapter().also {
-//            binding.recyclerView.adapter = it
-//        }.apply {
-//            onEditClickListener = BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-////                val dialog = EditInfoDialogFragment.newInstance(recyclerData.addressDto,
-////                    object : OnSubmitClickListener {
-////                        override fun onSubmitClicked(info: ItemInfoDto) {
-////                            viewModel.updateList(info)
-////                        }
-////                    }, null)
-////                dialog.show(requireActivity().supportFragmentManager, "edit_info_dialog")
-//
-//            }
-//        }
 
+        binding.genderPersianBallImageButton.setOnClickListener {
+            val dialog = EditGenderDialogFragment.newInstance(
+                viewModel.personalData.gender,
+                InfoType.GENDER
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.namePersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.firstName,
+                InfoType.NAME
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.familyPersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.lastName,
+                InfoType.FAMILY_NAME
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.latinNamePersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.firstNameLatin,
+                InfoType.LATIN_NAME
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.latinFamilyPersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.lastNameLatin,
+                InfoType.LATIN_FAMILY_NAME
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.nationalCodePersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.nationId.toString(),
+                InfoType.NATIONAL_CODE
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        binding.bithdatePersianBallImageButton.setOnClickListener {
+            val dialog = EditBirthDayDialogFragment.newInstance(
+                viewModel.personalData.birthDate ?: 1336,
+                InfoType.BIRTHDAY
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recyclerItems.collectLatest {
-                it?.let { recyclerData ->
-                    pagingAdapter?.submitData(recyclerData)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userPersonalData.collectLatest { personalDto ->
+                    personalDto?.also { dto ->
+                        with(dto) {
+                            viewModel.personalData.username = username
+                            firstName?.also {
+                                viewModel.personalData.firstName = it
+                                binding.nameContent.text = it
+                            }
+                            lastName?.also {
+                                viewModel.personalData.lastName = it
+                                binding.familyContent.text = it
+                            }
+                            firstNameLatin?.also {
+                                viewModel.personalData.firstNameLatin = it
+                                binding.latinNameContent.text = it
+                            }
+                            lastNameLatin?.also {
+                                viewModel.personalData.lastNameLatin = it
+                                binding.latinFamilyContent.text = it
+                            }
+                            birthDate?.also {
+                                viewModel.personalData.birthDate = it
+                                binding.bithdateContent.text = it.toString()
+                            }
+                            gender?.also {
+                                viewModel.personalData.gender = it
+                                binding.genderContent.text = it
+                            }
+                            nationId?.also {
+                                viewModel.personalData.nationId = it
+                                binding.nationContent.text = it.toString()
+                            }
+                            nationality?.also {
+                                viewModel.personalData.nationality = it
+                                binding.nationalCodeContent.text = it.toString()
+                            }
+                        }
+                    }
                 }
             }
         }
-        return binding.root
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dialogViewModel.dialogResult.collectLatest { bundle ->
+                    bundle.getString(InfoType.NAME.type, null)
+                        ?.also {
+                            binding.nameContent.text = it
+                            binding.nameContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.firstName = it
+                        }
+                    bundle.getString(InfoType.FAMILY_NAME.type, null)
+                        ?.also {
+                            binding.familyContent.text = it
+                            binding.familyContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.lastName = it
+                        }
+                    bundle.getString(InfoType.LATIN_NAME.type, null)
+                        ?.also {
+                            binding.latinNameContent.text = it
+                            binding.latinNameContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.firstNameLatin = it
+                        }
+                    bundle.getString(InfoType.LATIN_FAMILY_NAME.type, null)
+                        ?.also {
+                            binding.latinFamilyContent.text = it
+                            binding.latinFamilyContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.lastNameLatin = it
+                        }
+                    bundle.getString(InfoType.NATION.type, null)
+                        ?.also {
+                            binding.nationContent.text = it
+                            binding.nationContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.nationality = it.toInt()
+                        }
+
+                    bundle.getString(InfoType.BIRTHDAY.type, null)
+                        ?.also {
+                            binding.bithdateContent.text = UiUtils.convertToPersianNumber(it)
+                            binding.bithdateContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.birthDate = it.toInt()
+                        }
+
+                    bundle.getString(InfoType.NATIONAL_CODE.type, null)
+                        ?.also {
+                            binding.nationalCodeContent.text = it
+                            binding.nationalCodeContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.nationId = it.toLong()
+                        }
+
+                    bundle.getString(InfoType.GENDER.type, null)
+                        ?.also {
+                            binding.genderContent.text = it
+                            binding.genderContent.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.black
+                                )
+                            )
+                            viewModel.personalData.gender = if (it == "مرد") "male" else "female"
+                        }
+                }
+            }
+        }
+        binding.submitBtn.setOnClickListener {
+            viewModel.updatePersonalData(viewModel.personalData)
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userUpdatePersonalData.collectLatest {
+                    when (it) {
+                        is Resource.Success -> {
+                            Toast.makeText(
+                                requireActivity(),
+                                "اطلاعات با موفقیت ذخیره شد",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is Resource.Loading -> {
+                            Toast.makeText(
+                                requireActivity(),
+                                "در حال ذخیره اطلاعات",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is Resource.Failure -> {
+                            Toast.makeText(
+                                requireActivity(),
+                                "ذخیره اطلاعات انجام نشد، دوباره تلاش کنید",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {
