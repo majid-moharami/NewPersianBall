@@ -14,51 +14,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import javax.inject.Provider
 
 class AccountManager
 @Inject
 constructor(
-    var sharedPreferenceUtils: SharedPreferenceUtils,
-    //private val loginService: LoginRemoteDataSource
+    var sharedPreferenceUtils: SharedPreferenceUtils
 ) {
 
-    val isLogin : Boolean
-    get() {
-        return sharedPreferenceUtils.getUserCredentials().username.isNotBlank()
-    }
+    val isLogin: Boolean
+        get() {
+            return sharedPreferenceUtils.getUserCredentials().username.isNotBlank()
+        }
 
-    fun updatePassword(password: String){
+    fun updatePassword(password: String) {
         sharedPreferenceUtils.updatePassword(password)
     }
-//
-//    suspend fun refresh(): String? {
-//        var token: String? = null
-//        flow {
-//            val result= loginService.refreshToken(RefreshTokenDto(sharedPreferenceUtils.getUserCredentials().token))
-//            emit(result)
-//        }.flowOn(Dispatchers.IO).collect{
-//            val username = sharedPreferenceUtils.getUserCredentials().username
-//            val password = sharedPreferenceUtils.getUserCredentials().password
-//            val accessToken = sharedPreferenceUtils.getUserCredentials().token
-//            val refreshToken =
-//                sharedPreferenceUtils.getUserCredentials().refreshToken
-//            sharedPreferenceUtils.putUserCredentials(
-//                User(username, password, accessToken, refreshToken)
-//            )
-//            token = (it as Resource.Success).data?.access
-//        }
-////        loginRepository.refreshToken(RefreshTokenDto(sharedPreferenceUtils.getUserCredentials().token))
-////            .collect {
-////                val username = sharedPreferenceUtils.getUserCredentials().username
-////                val password = sharedPreferenceUtils.getUserCredentials().password
-////                val accessToken = sharedPreferenceUtils.getUserCredentials().token
-////                val refreshToken =
-////                    sharedPreferenceUtils.getUserCredentials().refreshToken
-////                sharedPreferenceUtils.putUserCredentials(
-////                    User(username, password, accessToken, refreshToken)
-////                )
-////                token = (it as Resource.Success).data?.access
-////            }
-//        return token
-//    }
+
+    fun getRefreshToken(): String = sharedPreferenceUtils.getUserCredentials().token
 }

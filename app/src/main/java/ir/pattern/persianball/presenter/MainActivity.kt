@@ -12,8 +12,10 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupMenu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,6 +27,7 @@ import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
 import ir.pattern.persianball.views.PersianBallTextView
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainActivityViewModel by viewModels()
 
     @Inject
     lateinit var accountManager: AccountManager
@@ -72,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         //this.supportActionBar?.hide()
         setContentView(binding.root)
+        lifecycleScope.launch {
+            viewModel.refreshToken()
+        }
         navController = findNavController(R.id.my_nav_host_fragment)
         setupNavigation()
         setupSmoothBottomMenu()

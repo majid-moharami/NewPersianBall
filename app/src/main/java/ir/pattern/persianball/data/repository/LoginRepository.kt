@@ -3,6 +3,7 @@ package ir.pattern.persianball.data.repository
 import ir.pattern.persianball.data.RefreshTokenDto
 import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.remote.datasource.LoginRemoteDataSource
+import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 class LoginRepository
 @Inject
 constructor(
-    private val loginRemoteDataSource: LoginRemoteDataSource
+    private val loginRemoteDataSource: LoginRemoteDataSource,
+    private val sharedPreferenceUtils: SharedPreferenceUtils
 ){
 
     suspend fun login(login: Login): Flow<Resource<TokenDto?>>{
@@ -64,5 +66,9 @@ constructor(
             val result= loginRemoteDataSource.refreshToken(refreshTokenDto)
             emit(result)
         }.flowOn(Dispatchers.IO)
+    }
+
+    fun logout(){
+        sharedPreferenceUtils.clearCredentials()
     }
 }

@@ -59,6 +59,13 @@ constructor(
         editor.apply()
     }
 
+    fun clearCredentials() {
+        val editor =
+            context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
+        editor.clear()
+        editor.apply()
+    }
+
     companion object {
         const val TAG = "Utils.SharedPreference"
         // User Authentication
