@@ -11,6 +11,7 @@ data class AddressDto(
 )
 
 data class Address(
+    @SerializedName("id") var id: Long? = null,
     @SerializedName("postal_code") var postalCode: Long? = null,
     @SerializedName("address") var address: String? = null,
     @SerializedName("receiver_home_phone") var homePhone: String? = null,

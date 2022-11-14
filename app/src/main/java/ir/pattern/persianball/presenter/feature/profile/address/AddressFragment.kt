@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class AddressFragment : Fragment() {
 
     lateinit var binding: FragmentAddressBinding
-    private val viewModel: AddressViewModel by viewModels()
+    private val viewModel: AddressViewModel by viewModels({ requireParentFragment() })
     private val dialogViewModel: EditInfoViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
 

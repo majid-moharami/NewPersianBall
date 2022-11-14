@@ -9,6 +9,7 @@ import ir.pattern.persianball.data.model.profile.PersonalDto
 import ir.pattern.persianball.data.model.profile.PersonalInformationDto
 import ir.pattern.persianball.data.remote.api.Request
 import ir.pattern.persianball.data.remote.api.UserService
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class UserRemoteDataSource
@@ -25,6 +26,13 @@ class UserRemoteDataSource
     suspend fun createAddress(address: Address): Resource<Any?>{
         return Request.getResponse(
             request = {userService.createUserAddress(address)},
+            defaultErrorMessage = "Error Login"
+        )
+    }
+
+    suspend fun uploadAvatar(username: String, file: MultipartBody.Part): Resource<PersonalDto>{
+        return Request.getResponse(
+            request = {userService.uploadAvatar(username, file)},
             defaultErrorMessage = "Error Login"
         )
     }

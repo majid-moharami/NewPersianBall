@@ -35,7 +35,7 @@ data class PersonalDto(
     @SerializedName("avatar") var avatar: String? = null,
     @SerializedName("gender") var gender: String? = null,
     @SerializedName("nationality") var nationality: Int? = null,
-    @SerializedName("nation_id") var nationId: Long? = null,
+    @SerializedName("nation_code") var nationCode: Long? = null,
     @SerializedName("is_mobile_verified") var isMobileVerified: Boolean = false,
     @SerializedName("is_email_verified") var isEmailVerified: Boolean = false,
     @SerializedName("username") var username: String = ""

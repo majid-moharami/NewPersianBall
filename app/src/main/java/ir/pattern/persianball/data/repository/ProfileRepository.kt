@@ -13,6 +13,7 @@ import ir.pattern.persianball.data.model.profile.PersonalInformationDto
 import ir.pattern.persianball.data.remote.datasource.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,4 +34,7 @@ constructor(
 
     suspend fun createAddress(address: Address): Resource<Any?> =
         userRemoteDataSource.createAddress(address)
+
+    suspend fun uploadAvatar(username: String, file: MultipartBody.Part): Resource<PersonalDto> =
+        userRemoteDataSource.uploadAvatar(username, file)
 }

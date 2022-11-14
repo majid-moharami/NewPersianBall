@@ -17,7 +17,6 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.databinding.FragmentPersonalInformationBinding
-import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.feature.profile.EditBirthDayDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditGenderDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditInfoDialogFragment
@@ -30,7 +29,7 @@ import kotlinx.coroutines.launch
 class PersonalInformationFragment : Fragment() {
 
     lateinit var binding: FragmentPersonalInformationBinding
-    val viewModel: PersonalInfoViewModel by viewModels()
+    val viewModel: PersonalInfoViewModel by viewModels({ requireParentFragment() })
     private val dialogViewModel: EditInfoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +92,7 @@ class PersonalInformationFragment : Fragment() {
 
         binding.nationalCodePersianBallImageButton.setOnClickListener {
             val dialog = EditInfoDialogFragment.newInstance(
-                viewModel.personalData.nationId.toString(),
+                viewModel.personalData.nationCode.toString(),
                 InfoType.NATIONAL_CODE
             )
             dialog.show(childFragmentManager, "edit_info_dialog")
@@ -140,15 +139,15 @@ class PersonalInformationFragment : Fragment() {
                             }
                             gender?.also {
                                 viewModel.personalData.gender = it
-                                binding.genderContent.text = it
+                                binding.genderContent.text = UiUtils.convertGenderToPersianString(it)
                             }
-                            nationId?.also {
-                                viewModel.personalData.nationId = it
-                                binding.nationContent.text = it.toString()
+                            nationCode?.also {
+                                viewModel.personalData.nationCode = it
+                                binding.nationalCodeContent.text = it.toString()
                             }
                             nationality?.also {
                                 viewModel.personalData.nationality = it
-                                binding.nationalCodeContent.text = it.toString()
+                                binding.nationContent.text = it.toString()
                             }
                         }
                     }
@@ -236,7 +235,7 @@ class PersonalInformationFragment : Fragment() {
                                     R.color.black
                                 )
                             )
-                            viewModel.personalData.nationId = it.toLong()
+                            viewModel.personalData.nationCode = it.toLong()
                         }
 
                     bundle.getString(InfoType.GENDER.type, null)
@@ -261,6 +260,9 @@ class PersonalInformationFragment : Fragment() {
                 viewModel.userUpdatePersonalData.collectLatest {
                     when (it) {
                         is Resource.Success -> {
+                            it.data?.also { dto ->
+                                viewModel.personalData = dto
+                            }
                             Toast.makeText(
                                 requireActivity(),
                                 "اطلاعات با موفقیت ذخیره شد",

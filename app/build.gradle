@@ -104,4 +104,5 @@ dependencies {
 
     //slider
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+    implementation 'com.github.AhM0D:ImagePicker:v2.2'
 }

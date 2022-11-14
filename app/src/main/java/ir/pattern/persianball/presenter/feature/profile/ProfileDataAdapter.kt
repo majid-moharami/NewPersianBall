@@ -9,9 +9,12 @@ import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.profile.recycler.*
 
 class ProfileDataAdapter(private val fm: FragmentManager, val lifecycle: Lifecycle) : BasePagingAdapter() {
+
+    lateinit var uploadImager : () -> Unit
+
     override fun getViewHolder(parent: ViewGroup, viewType: Int, view: View): BaseViewHolder<*>? {
         return when (viewType) {
-            ProfileImageData.VIEW_TYPE -> ProfileImageViewHolder(view)
+            ProfileImageData.VIEW_TYPE -> ProfileImageViewHolder(view, uploadImager)
             ProfileNameData.VIEW_TYPE -> ProfileNameViewHolder(view)
             ProfileInformationData.VIEW_TYPE -> ProfileInformationViewHolder(view, fm, lifecycle)
             else -> null

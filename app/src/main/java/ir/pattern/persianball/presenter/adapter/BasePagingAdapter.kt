@@ -22,6 +22,9 @@ abstract class BasePagingAdapter : PagingDataAdapter<RecyclerItem, BaseViewHolde
 
     object DiffUtilCallBack : DiffUtil.ItemCallback<RecyclerItem>() {
         override fun areItemsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
+            if (oldItem.data is Equatable && newItem.data is Equatable) {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
             return oldItem.data.javaClass.name == newItem.data.javaClass.name
         }
 
@@ -29,7 +32,6 @@ abstract class BasePagingAdapter : PagingDataAdapter<RecyclerItem, BaseViewHolde
             if (oldItem.data is Equatable && newItem.data is Equatable) {
                 return oldItem.data == newItem.data
             }
-            //Assert.fail("Implement Equatable in your myketRecyclerData class!!")
             return false
         }
     }
