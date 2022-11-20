@@ -55,7 +55,22 @@ constructor(
             context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
         val passwordKey = context.getString(R.string.share_pref_password)
         editor.putString(passwordKey, password)
+        editor.apply()
+    }
 
+    fun updateAccessToken(token: String?){
+        val editor =
+            context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
+        val accessTokenKey = context.getString(R.string.share_pref_token)
+        editor.putString(accessTokenKey, token)
+        editor.apply()
+    }
+
+    fun updateUsername(username: String?){
+        val editor =
+            context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
+        val usernameKey = context.getString(R.string.share_pref_username)
+        editor.putString(usernameKey, username)
         editor.apply()
     }
 

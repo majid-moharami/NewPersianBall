@@ -51,23 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        if (accountManager.isLogin) {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.GONE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility =
-                View.VISIBLE
-        } else {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.VISIBLE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility = View.GONE
-            binding.toolbar.findViewById<PersianBallTextView>(R.id.signup).setOnClickListener {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
+        lifecycleScope.launch {
+            viewModel.refreshToken()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,37 +61,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         //this.supportActionBar?.hide()
-        setContentView(binding.root)
         lifecycleScope.launch {
             viewModel.refreshToken()
         }
+        setContentView(binding.root)
         navController = findNavController(R.id.my_nav_host_fragment)
         setupNavigation()
         setupSmoothBottomMenu()
         setBadge()
 
-        if (accountManager.isLogin) {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.GONE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility =
-                View.VISIBLE
-        } else {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.VISIBLE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility = View.GONE
-            binding.toolbar.findViewById<PersianBallTextView>(R.id.signup).setOnClickListener {
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra("IS_LOGIN", false)
-                startActivity(intent)
-            }
-            binding.toolbar.findViewById<PersianBallTextView>(R.id.login).setOnClickListener {
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra("IS_LOGIN", true)
-                startActivity(intent)
-            }
-        }
-
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        lifecycleScope.launch {
+            viewModel.isLogin.collect {
+                showToolbar(it)
+            }
+        }
         return super.onCreateView(name, context, attrs)
     }
 
@@ -123,12 +95,33 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.homeFragment, R.id.academyFragment,
-//                R.id.storeFragment, R.id.settingFragment -> binding.toolbar.visibility =
-//                    View.VISIBLE
-//                else -> binding.toolbar.visibility = View.GONE
-//            }
+            when (destination.id) {
+                R.id.homeFragment, R.id.academyFragment,
+                R.id.storeFragment, R.id.settingFragment -> binding.toolbar.visibility =
+                    View.VISIBLE
+                else -> binding.toolbar.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun showToolbar(isLogin: Boolean){
+        if (isLogin) {
+            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.GONE
+            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility =
+                View.VISIBLE
+        } else {
+            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.VISIBLE
+            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility = View.GONE
+            binding.toolbar.findViewById<PersianBallTextView>(R.id.signup).setOnClickListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("IS_LOGIN", false)
+                startActivity(intent)
+            }
+            binding.toolbar.findViewById<PersianBallTextView>(R.id.login).setOnClickListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("IS_LOGIN", true)
+                startActivity(intent)
+            }
         }
     }
 

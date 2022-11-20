@@ -1,6 +1,7 @@
 package ir.pattern.persianball.presenter.feature.profile
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -18,12 +19,17 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentProfileBinding
+import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.MainActivity
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
+import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.personalInformation.PersonalInfoViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -32,6 +38,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val viewModel: ProfileViewModel by viewModels()
     private val personalInfoViewModel: PersonalInfoViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
+
+    @Inject
+    lateinit var accountManager: AccountManager
+    private val isLogin = MutableSharedFlow<Boolean>()
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.lifecycleScope.launch {
+            isLogin.emit(accountManager.isLogin)
+        }
+        viewModel.setUpData()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,19 +61,34 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             container,
             false
         )
-        pagingAdapter = ProfileDataAdapter(childFragmentManager, lifecycle).apply {
-            uploadImager = {
-                openGalleryForImage()
+        viewLifecycleOwner.lifecycleScope.launch {
+            isLogin.collectLatest {
+                when (it) {
+                    true -> {
+                        binding.notLoginLayout.visibility = View.GONE
+                        viewModel.setUpData()
+                        binding.recyclerView.visibility = View.VISIBLE
+                    }
+                    false -> {
+                        binding.notLoginLayout.visibility = View.VISIBLE
+                        binding.recyclerView.visibility = View.GONE
+                    }
+                }
             }
-        }.also {
-            binding.recyclerView.adapter = it
         }
-        binding.recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.recyclerItems.collectLatest {
                 it?.let { recyclerData ->
+                    pagingAdapter = ProfileDataAdapter(childFragmentManager, lifecycle).apply {
+                        uploadImager = {
+                            openGalleryForImage()
+                        }
+                    }.also {
+                        binding.recyclerView.adapter = it
+                    }
+                    binding.recyclerView.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     pagingAdapter?.submitData(recyclerData)
                 }
             }
@@ -68,6 +101,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                 }
             }
+        }
+        binding.loginBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.putExtra("IS_LOGIN", true)
+            startActivity(intent)
         }
         return binding.root
     }

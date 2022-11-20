@@ -14,8 +14,8 @@ interface UserService {
     @GET("order/address/")
     suspend fun getUserAddress(): Response<AddressDto>
 
-    @PUT("order/address/1")
-    suspend fun updateUserAddress(@Body address: Address): Response<Any?>
+    @PUT("order/address/{id}/")
+    suspend fun updateUserAddress(@Path("id") id: Long, @Body address: Address): Response<Address?>
 
     @POST("user/")
     suspend fun createUser(@Body personalInfoCreate: PersonalInfoCreate): Response<Any?>
@@ -32,4 +32,7 @@ interface UserService {
     @Multipart
     @PUT("user/{username}/")
     suspend fun uploadAvatar(@Path("username") username: String, @Part part: MultipartBody.Part): Response<PersonalDto>
+
+    @POST("user/change-password/")
+    suspend fun changePassword(@Body changePasswordDto: ChangePasswordDto): Response<*>
 }

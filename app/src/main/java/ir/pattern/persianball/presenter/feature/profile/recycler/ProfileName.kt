@@ -9,8 +9,9 @@ import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderProfileNameBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import kotlinx.coroutines.flow.StateFlow
 
-class ProfileNameData(var firstName: String? = "", var lastName: String? = "") : PersianBallRecyclerData, Equatable{
+class ProfileNameData(var firstName: String? = "", var lastName: String? = "", var name: StateFlow<String?>) : PersianBallRecyclerData, Equatable{
 
     companion object{
         const val VIEW_TYPE = R.layout.holder_profile_name
@@ -48,7 +49,7 @@ class ProfileNameViewHolder(itemView: View) : BaseViewHolder<ProfileNameData>(it
         }
     }
     override fun onBindView(data: ProfileNameData) {
-        binding.nameTxt.text = data.firstName + data.lastName
+        binding.nameTxt.text = data.name.value
     }
 
 }

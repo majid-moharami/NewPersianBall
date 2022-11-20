@@ -24,9 +24,9 @@ constructor(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request {
-        runBlocking {
-            refreshToken()
-        }
+//        runBlocking {
+//            refreshToken()
+//        }
         return response
             .request
             .newBuilder()

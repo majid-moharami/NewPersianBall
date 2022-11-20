@@ -24,12 +24,22 @@ constructor(
 
     val isLogin: Boolean
         get() {
-            return sharedPreferenceUtils.getUserCredentials().username.isNotBlank()
+            return sharedPreferenceUtils.getUserCredentials().refreshToken.isNotBlank()
         }
 
     fun updatePassword(password: String) {
         sharedPreferenceUtils.updatePassword(password)
     }
 
-    fun getRefreshToken(): String = sharedPreferenceUtils.getUserCredentials().token
+    fun getRefreshToken(): String = sharedPreferenceUtils.getUserCredentials().refreshToken
+
+    fun getUsername() : String = sharedPreferenceUtils.getUserCredentials().username
+
+    fun updateAccessToken(token: String?){
+        sharedPreferenceUtils.updateAccessToken(token)
+    }
+
+    fun updateUsername(username: String?){
+        sharedPreferenceUtils.updateUsername(username)
+    }
 }

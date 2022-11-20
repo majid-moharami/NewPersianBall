@@ -20,9 +20,9 @@ class PersonalInfoViewModel
 
     var personalData = PersonalDto()
 
-    init {
-        getPersonalData()
-    }
+//    init {
+//        getPersonalData()
+//    }
 
     private val _userPersonalData = MutableStateFlow<PersonalDto?>(null)
     val userPersonalData: StateFlow<PersonalDto?> = _userPersonalData.asStateFlow()
@@ -31,7 +31,7 @@ class PersonalInfoViewModel
     val userUpdatePersonalData: SharedFlow<Resource<PersonalDto?>> =
         _userUpdatePersonalData.asSharedFlow()
 
-    private fun getPersonalData() {
+    fun getPersonalData() {
         viewModelScope.launch {
             when (val result = profileRepository.getUserPersonalData()) {
                 is Resource.Success -> {
@@ -43,6 +43,7 @@ class PersonalInfoViewModel
     }
 
     fun updatePersonalData(personalDto: PersonalDto) {
+        personalData.avatar = null
         viewModelScope.launch {
             _userUpdatePersonalData.emit(Resource.Loading())
             _userUpdatePersonalData.emit(profileRepository.updatePersonalData(personalDto))

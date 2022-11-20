@@ -42,7 +42,11 @@ class AddressViewModel
     fun createAddress(address: Address) {
         viewModelScope.launch {
             _addressResponse.emit(Resource.Loading())
-            _addressResponse.emit(profileRepository.createAddress(address))
+            address.id?.also {
+                _addressResponse.emit(profileRepository.updateAddress(address))
+            } ?: kotlin.run {
+                _addressResponse.emit(profileRepository.createAddress(address))
+            }
         }
     }
 }

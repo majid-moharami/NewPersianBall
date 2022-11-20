@@ -1,8 +1,10 @@
 package ir.pattern.persianball.presenter.feature.profile.recycler
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
@@ -41,7 +43,7 @@ class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBall
     }
 }
 
-class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit) :
+class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val activity: Context) :
     BaseViewHolder<ProfileImageData>(itemView) {
     private lateinit var binding: HolderProfileImageBinding
     private var job: Job? = null
@@ -56,6 +58,15 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit) :
     }
 
     override fun onBindView(data: ProfileImageData?) {
+        data?.avatar?.value?.also {
+            Glide.with(activity)
+                .load("https://api.persianball.ir/media/$it")
+                .centerCrop()
+                .into(binding.profileImage)
+            binding.uploadIcon.visibility = View.GONE
+        } ?: kotlin.run {
+            binding.uploadIcon.visibility = View.VISIBLE
+        }
         binding.backProfileImage.setImageDrawable(itemView.resources.getDrawable(R.drawable.desktop))
     }
 

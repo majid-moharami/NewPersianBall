@@ -51,6 +51,7 @@ object NetworkModule {
             .dispatcher(Dispatcher().apply { maxRequests = 1 })
             .addInterceptor(chuckerInterceptor)
             .addInterceptor(logging)
+            .authenticator(tokenAuthenticator)
             .addInterceptor(tokenInterceptor)
             .build()
     }
@@ -80,8 +81,30 @@ object NetworkModule {
     @Provides
     fun provideLoginApi(
         loginRetrofitBuilder: LoginRetrofitBuilder,
-        okHttpClient: OkHttpClient
+        @ApplicationContext context: Context
     ): LoginService {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(ChuckerCollector(context,showNotification = true))
+            .maxContentLength(250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(false)
+            .build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .callTimeout(10, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .dispatcher(Dispatcher().apply { maxRequests = 1 })
+            .addInterceptor(chuckerInterceptor)
+            .addInterceptor(logging)
+            .build()
         return loginRetrofitBuilder.retrofitBuilder
             .client(okHttpClient)
             .build()

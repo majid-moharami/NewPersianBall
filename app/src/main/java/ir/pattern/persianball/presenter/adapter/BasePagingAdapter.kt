@@ -1,5 +1,7 @@
 package ir.pattern.persianball.presenter.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +37,7 @@ abstract class BasePagingAdapter : PagingDataAdapter<RecyclerItem, BaseViewHolde
             return false
         }
     }
+    lateinit var activity: Context
 
     abstract fun getViewHolder(parent: ViewGroup, viewType: Int, view: View): BaseViewHolder<*>?
 
@@ -48,6 +51,7 @@ abstract class BasePagingAdapter : PagingDataAdapter<RecyclerItem, BaseViewHolde
         parent: ViewGroup,
         viewType: Int
     ): BaseViewHolder<PersianBallRecyclerData> {
+        activity = parent.context
         val inflater = LayoutInflater.from(parent.context)
         val viewHolder: BaseViewHolder<PersianBallRecyclerData>
         val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, viewType, parent, false)

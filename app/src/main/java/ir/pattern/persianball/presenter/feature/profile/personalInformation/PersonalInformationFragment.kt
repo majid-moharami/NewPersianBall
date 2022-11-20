@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.profile.personalInformation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +13,27 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import calendar.CivilDate
+import calendar.DateConverter
+import calendar.PersianDate
 import dagger.hilt.android.AndroidEntryPoint
+import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
+import ir.hamsaa.persiandatepicker.api.PersianPickerDate
+import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.databinding.FragmentPersonalInformationBinding
-import ir.pattern.persianball.presenter.feature.profile.EditBirthDayDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditGenderDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditInfoDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditInfoViewModel
 import ir.pattern.persianball.utils.UiUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 @AndroidEntryPoint
 class PersonalInformationFragment : Fragment() {
@@ -34,9 +44,6 @@ class PersonalInformationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
@@ -49,7 +56,9 @@ class PersonalInformationFragment : Fragment() {
             container,
             false
         )
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getPersonalData()
+        }
         binding.genderPersianBallImageButton.setOnClickListener {
             val dialog = EditGenderDialogFragment.newInstance(
                 viewModel.personalData.gender,
@@ -99,11 +108,65 @@ class PersonalInformationFragment : Fragment() {
         }
 
         binding.bithdatePersianBallImageButton.setOnClickListener {
-            val dialog = EditBirthDayDialogFragment.newInstance(
-                viewModel.personalData.birthDate ?: 1336,
-                InfoType.BIRTHDAY
-            )
-            dialog.show(childFragmentManager, "edit_info_dialog")
+            val picker = PersianDatePickerDialog(requireActivity())
+                .setPositiveButtonString("باشه")
+                .setNegativeButton("بیخیال")
+                .setTodayButton("امروز")
+                .setTodayButtonVisible(true)
+                .setMinYear(1300)
+                .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
+                .setMaxMonth(PersianDatePickerDialog.THIS_MONTH)
+                .setMaxDay(PersianDatePickerDialog.THIS_DAY)
+                .setInitDate(1370, 3, 13)
+                .setActionTextColor(Color.BLACK)
+                .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
+                .setShowInBottomSheet(true)
+                .setListener(object : PersianPickerListener {
+                    override fun onDateSelected(persianPickerDate: PersianPickerDate) {
+                        val month = persianPickerDate.persianMonth.let {
+                            if (it.toString().length == 1) {
+                                "0$it"
+                            } else {
+                                it
+                            }
+                        }
+                        val day = persianPickerDate.persianDay.let {
+                            if (it.toString().length == 1) {
+                                "0$it"
+                            } else {
+                                it
+                            }
+                        }
+                        val year = persianPickerDate.persianYear
+                        val date =
+                            "$year-$month-$day"
+                        binding.bithdateContent.text = UiUtils.convertToPersianNumber(date)
+                        binding.bithdateContent.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.black
+                            )
+                        )
+                        val civilDate = DateConverter.persianToCivil(
+                            PersianDate(
+                                persianPickerDate.persianYear,
+                                persianPickerDate.persianMonth,
+                                persianPickerDate.persianDay
+                            )
+                        )
+                        viewModel.personalData.birthDate =
+                            "${civilDate.year}-${civilDate.month}-${civilDate.dayOfMonth}"
+                        Toast.makeText(
+                            context,
+                            date,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onDismissed() {}
+                })
+
+            picker.show()
         }
 
         return binding.root
@@ -139,7 +202,8 @@ class PersonalInformationFragment : Fragment() {
                             }
                             gender?.also {
                                 viewModel.personalData.gender = it
-                                binding.genderContent.text = UiUtils.convertGenderToPersianString(it)
+                                binding.genderContent.text =
+                                    UiUtils.convertGenderToPersianString(it)
                             }
                             nationCode?.also {
                                 viewModel.personalData.nationCode = it
@@ -212,18 +276,6 @@ class PersonalInformationFragment : Fragment() {
                                 )
                             )
                             viewModel.personalData.nationality = it.toInt()
-                        }
-
-                    bundle.getString(InfoType.BIRTHDAY.type, null)
-                        ?.also {
-                            binding.bithdateContent.text = UiUtils.convertToPersianNumber(it)
-                            binding.bithdateContent.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.black
-                                )
-                            )
-                            viewModel.personalData.birthDate = it.toInt()
                         }
 
                     bundle.getString(InfoType.NATIONAL_CODE.type, null)

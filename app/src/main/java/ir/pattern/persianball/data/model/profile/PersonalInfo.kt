@@ -31,7 +31,7 @@ data class PersonalDto(
     @SerializedName("last_name_latin") var lastNameLatin: String? = null,
     @SerializedName("email") var email: String? = null,
     @SerializedName("mobile_number") var mobileNumber: String? = null,
-    @SerializedName("birth_date") var birthDate: Int? = null,
+    @SerializedName("birth_date") var birthDate: String? = null,
     @SerializedName("avatar") var avatar: String? = null,
     @SerializedName("gender") var gender: String? = null,
     @SerializedName("nationality") var nationality: Int? = null,

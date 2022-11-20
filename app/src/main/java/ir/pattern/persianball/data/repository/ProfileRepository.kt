@@ -6,10 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
-import ir.pattern.persianball.data.model.profile.Address
-import ir.pattern.persianball.data.model.profile.AddressDto
-import ir.pattern.persianball.data.model.profile.PersonalDto
-import ir.pattern.persianball.data.model.profile.PersonalInformationDto
+import ir.pattern.persianball.data.model.profile.*
 import ir.pattern.persianball.data.remote.datasource.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -37,4 +34,10 @@ constructor(
 
     suspend fun uploadAvatar(username: String, file: MultipartBody.Part): Resource<PersonalDto> =
         userRemoteDataSource.uploadAvatar(username, file)
+
+    suspend fun changePassword(changePasswordDto: ChangePasswordDto): Resource<*> =
+        userRemoteDataSource.changePassword(changePasswordDto)
+
+    suspend fun updateAddress(address: Address): Resource<Address?> =
+        userRemoteDataSource.updateAddress(address)
 }

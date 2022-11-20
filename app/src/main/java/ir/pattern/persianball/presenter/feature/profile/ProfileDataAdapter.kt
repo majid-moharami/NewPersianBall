@@ -14,7 +14,9 @@ class ProfileDataAdapter(private val fm: FragmentManager, val lifecycle: Lifecyc
 
     override fun getViewHolder(parent: ViewGroup, viewType: Int, view: View): BaseViewHolder<*>? {
         return when (viewType) {
-            ProfileImageData.VIEW_TYPE -> ProfileImageViewHolder(view, uploadImager)
+            ProfileImageData.VIEW_TYPE -> {
+                ProfileImageViewHolder(view, uploadImager, activity)
+            }
             ProfileNameData.VIEW_TYPE -> ProfileNameViewHolder(view)
             ProfileInformationData.VIEW_TYPE -> ProfileInformationViewHolder(view, fm, lifecycle)
             else -> null

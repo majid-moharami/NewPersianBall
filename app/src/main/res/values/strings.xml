@@ -17,6 +17,7 @@
     <string name="product_page">صفحه محصول</string>
     <string name="user_name">نام کاربری</string>
     <string name="password">رمز ورود</string>
+    <string name="last_password">رمز عبور پیشین</string>
     <string name="repeat_password">تکرار رمز ورود</string>
     <string name="forget_password">رمز خود را فراموش کرده‌اید؟</string>
     <string name="remember_me">مرا به یاد داشته باش</string>
@@ -36,6 +37,7 @@
     <string name="signup_by_email">ثبت‌نام با ایمیل</string>
     <string name="get_code">دریافت کد</string>
     <string name="submit">ثبت</string>
+    <string name="login_to_show_profile">برای مشاهده این صفحه لاگین کنید</string>
     <string name="personal_info">اطلاعات شخصی</string>
     <string name="address_phone">تماس و آدرس</string>
     <string name="change_password">تغییر رمز عبور</string>

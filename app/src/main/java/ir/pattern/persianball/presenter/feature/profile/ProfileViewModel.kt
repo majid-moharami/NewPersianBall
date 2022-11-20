@@ -31,11 +31,13 @@ class ProfileViewModel
     private val _avatar = MutableStateFlow<String?>(null)
     val avatar: StateFlow<String?> = _avatar.asStateFlow()
 
+    private val _name = MutableStateFlow<String?>(null)
+    val name: StateFlow<String?> = _name.asStateFlow()
 
-    init {
+    fun setUpData(){
         val list = mutableListOf<RecyclerItem>()
         list.add(RecyclerItem(ProfileImageData(avatar)))
-        list.add(RecyclerItem(ProfileNameData()))
+        list.add(RecyclerItem(ProfileNameData(name = name)))
         list.add(RecyclerItem(ProfileInformationData()))
         _recyclerItems.value = RecyclerData(flowOf(PagingData.from(list)))
     }
@@ -48,6 +50,7 @@ class ProfileViewModel
                         if (rvItem.data is ProfileNameData) {
                             (rvItem.data as ProfileNameData).firstName = personalDto.firstName
                             (rvItem.data as ProfileNameData).lastName = personalDto.lastName
+                            _name.emit(personalDto.firstName+ " " + personalDto.lastName)
                             rvItem
                         } else if (rvItem.data is ProfileImageData) {
                             _avatar.emit(personalDto.avatar)
