@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch {
-            viewModel.refreshToken()
-        }
+//        lifecycleScope.launch {
+//            viewModel.refreshToken()
+//        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,13 +69,15 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         setupSmoothBottomMenu()
         setBadge()
-
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         lifecycleScope.launch {
             viewModel.isLogin.collect {
                 showToolbar(it)
+//                binding.frameLayout.visibility = View.GONE
+//                binding.loading.isIndeterminate = false
+//                binding.loading.visibility = View.GONE
             }
         }
         return super.onCreateView(name, context, attrs)

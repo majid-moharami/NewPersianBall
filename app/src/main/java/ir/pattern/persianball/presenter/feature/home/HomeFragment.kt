@@ -16,11 +16,12 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentHomeBinding
 import ir.pattern.persianball.databinding.FragmentLoginBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
+import ir.pattern.persianball.presenter.feature.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : BaseFragment() {
     lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
@@ -29,6 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
             R.layout.fragment_home,
@@ -44,7 +46,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         pagingAdapter = HomeDataAdapter().also {
             binding.recyclerView.adapter = it
         }
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 //        viewLifecycleOwner.lifecycleScope.launch {
 //            //repeatOnLifecycle(Lifecycle.State.STARTED) {
 //                viewModel.recyclerItems.collectLatest {
