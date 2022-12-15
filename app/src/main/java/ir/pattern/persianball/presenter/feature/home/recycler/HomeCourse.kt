@@ -2,7 +2,10 @@ package ir.pattern.persianball.presenter.feature.home.recycler
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.ViewDataBinding
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
@@ -12,10 +15,11 @@ import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 
-class HomeCourseData(var course: Course): PersianBallRecyclerData, Equatable{
-    companion object{
+class HomeCourseData(var course: Course) : PersianBallRecyclerData, Equatable {
+    companion object {
         const val VIEW_TYPE = R.layout.home_new_course_viewholder
     }
+
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
@@ -25,7 +29,10 @@ class HomeCourseData(var course: Course): PersianBallRecyclerData, Equatable{
     }
 }
 
-class HomeCourseViewHolder(itemView: View) : BaseViewHolder<HomeCourseData>(itemView){
+class HomeCourseViewHolder(
+    itemView: View,
+    private val onCourseClickListener: OnClickListener<HomeCourseViewHolder, HomeCourseData>?
+) : BaseViewHolder<HomeCourseData>(itemView) {
     private lateinit var binding: HomeNewCourseViewholderBinding
 
     @SuppressLint("RestrictedApi")
@@ -36,7 +43,13 @@ class HomeCourseViewHolder(itemView: View) : BaseViewHolder<HomeCourseData>(item
             else -> Assert.fail("binding is incompatible")
         }
     }
-    override fun onBindView(data: HomeCourseData?) {
 
+    override fun onBindView(data: HomeCourseData) {
+        data.course.also {
+            Glide.with(itemView).load(it.image).into(binding.image)
+            binding.title.text = it.courseTitle
+            binding.description.text = it.courseDescription
+        }
+        setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)
     }
 }

@@ -7,11 +7,11 @@ import java.lang.Error
 
 class Request {
     companion object{
-        suspend fun <T> getResponse(request: suspend () -> Response<T>, defaultErrorMessage: String): Resource<T> {
+        suspend fun <T> getResponse(request: suspend () -> Response<T>): Resource<T> {
             return try {
                 val result = request.invoke()
                 if (result.isSuccessful) {
-                    return Resource.Success(result.body()) as Resource<T>
+                    Resource.Success(result.body()) as Resource<T>
                 } else {
                     result.message()
                     Resource.Failure(ErrorDTO(result.code(), result.message(), ""))

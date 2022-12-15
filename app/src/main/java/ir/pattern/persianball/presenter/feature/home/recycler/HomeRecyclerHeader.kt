@@ -11,10 +11,11 @@ import ir.pattern.persianball.databinding.HolderHomeRecyclerTitleBinding
 import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 
-class HomeRecyclerHeaderData() : PersianBallRecyclerData, Equatable{
-    companion object{
+class HomeRecyclerHeaderData(val title: String) : PersianBallRecyclerData, Equatable {
+    companion object {
         const val VIEW_TYPE = R.layout.holder_home_recycler_title
     }
+
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean {
@@ -26,7 +27,8 @@ class HomeRecyclerHeaderData() : PersianBallRecyclerData, Equatable{
     }
 }
 
-class HomeRecyclerHeaderViewHolder(itemView: View): BaseViewHolder<HomeRecyclerHeaderData>(itemView){
+class HomeRecyclerHeaderViewHolder(itemView: View) :
+    BaseViewHolder<HomeRecyclerHeaderData>(itemView) {
     private lateinit var binding: HolderHomeRecyclerTitleBinding
 
     @SuppressLint("RestrictedApi")
@@ -38,8 +40,8 @@ class HomeRecyclerHeaderViewHolder(itemView: View): BaseViewHolder<HomeRecyclerH
         }
     }
 
-    override fun onBindView(data: HomeRecyclerHeaderData?) {
-        binding.headerTitle.text = "محصولات جدید"
+    override fun onBindView(data: HomeRecyclerHeaderData) {
+        binding.headerTitle.text = data.title
     }
 
 }

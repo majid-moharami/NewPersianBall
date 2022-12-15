@@ -3,6 +3,7 @@ package ir.pattern.persianball.presenter.feature.home.recycler
 import android.annotation.SuppressLint
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
@@ -29,7 +30,10 @@ class HomeProductData(var product: Product) : PersianBallRecyclerData, Equatable
     }
 }
 
-class HomeProductViewHolder(itemView: View) : BaseViewHolder<HomeProductData>(itemView) {
+class HomeProductViewHolder(
+    itemView: View,
+    private val onProductClickListener: OnClickListener<HomeProductViewHolder, HomeProductData>?
+) : BaseViewHolder<HomeProductData>(itemView) {
     private lateinit var binding: HomeNewProductViewholderBinding
 
     @SuppressLint("RestrictedApi")
@@ -41,11 +45,17 @@ class HomeProductViewHolder(itemView: View) : BaseViewHolder<HomeProductData>(it
         }
     }
 
-    override fun onBindView(data: HomeProductData?) {
-        binding.title.text = "جا توپی"
-        binding.realPrice.text = "40000 تومان"
-        binding.discountedPrice.text = "30000 تومان"
-        binding.shapeableImageView.setImageDrawable(itemView.resources.getDrawable(R.drawable.real_ball))
+    override fun onBindView(data: HomeProductData) {
+        data.product.also {
+            binding.title.text = it.nameFarsi
+            binding.realPrice.text = itemView.resources.getString(R.string.product_price, it.price)
+            binding.discountedPrice.text = itemView.resources.getString(
+                R.string.product_price,
+                (it.price - (it.price * it.discountPercentage / 100))
+            )
+            Glide.with(itemView).load(it.image).into(binding.shapeableImageView)
+        }
+        setOnClickListener(binding.clickableLayout, onProductClickListener, this, data)
     }
 
 }

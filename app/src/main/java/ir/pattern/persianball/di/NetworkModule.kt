@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -56,6 +57,31 @@ object NetworkModule {
             .build()
     }
 
+    private fun provideOkHttp(@ApplicationContext context: Context) : OkHttpClient {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(ChuckerCollector(context,showNotification = true))
+            .maxContentLength(250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(false)
+            .build()
+
+        return OkHttpClient.Builder()
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .callTimeout(10, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .dispatcher(Dispatcher().apply { maxRequests = 1 })
+            .addInterceptor(chuckerInterceptor)
+            .addInterceptor(logging)
+            .build()
+    }
+
 
     @Singleton
     @Provides
@@ -83,31 +109,23 @@ object NetworkModule {
         loginRetrofitBuilder: LoginRetrofitBuilder,
         @ApplicationContext context: Context
     ): LoginService {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
-            .collector(ChuckerCollector(context,showNotification = true))
-            .maxContentLength(250000L)
-            .redactHeaders(emptySet())
-            .alwaysReadResponseBody(false)
-            .build()
-
-        val okHttpClient = OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .callTimeout(10, TimeUnit.SECONDS)
-            .retryOnConnectionFailure(true)
-            .dispatcher(Dispatcher().apply { maxRequests = 1 })
-            .addInterceptor(chuckerInterceptor)
-            .addInterceptor(logging)
-            .build()
+        val okHttpClient = provideOkHttp(context)
         return loginRetrofitBuilder.retrofitBuilder
             .client(okHttpClient)
             .build()
             .create(LoginService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHomeApi(
+        userRetrofitBuilder: UserRetrofitBuilder,
+        @ApplicationContext context: Context
+    ) : HomeService {
+        val okHttpClient = provideOkHttp(context)
+        return userRetrofitBuilder.retrofitBuilder
+            .client(okHttpClient)
+            .build()
+            .create(HomeService::class.java)
     }
 }

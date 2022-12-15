@@ -9,14 +9,16 @@ import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
+import ir.pattern.persianball.data.model.home.Gallery
 import ir.pattern.persianball.data.model.home.Slide
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 
-class HomeSliderData constructor(var slide: Slide) : PersianBallRecyclerData, Equatable{
+class HomeSliderData constructor(var gallery: Gallery) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.holder_home_slider
     }
+
     override val viewType: Int = VIEW_TYPE
     override fun equals(other: Any?): Boolean {
         TODO("Not yet implemented")
@@ -29,7 +31,7 @@ class HomeSliderData constructor(var slide: Slide) : PersianBallRecyclerData, Eq
 }
 
 
-class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(itemView){
+class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(itemView) {
 
     private lateinit var binding: HolderHomeSliderBinding
 
@@ -43,13 +45,11 @@ class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(item
     }
 
 
-    override fun onBindView(data: HomeSliderData?) {
+    override fun onBindView(data: HomeSliderData) {
         val imageList = mutableListOf<SlideModel>()
-        imageList.add(SlideModel(R.drawable.slider, ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.slider, ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.slider, ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.slider, ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.slider, ScaleTypes.FIT))
+        data.gallery.gallery.map {
+            imageList.add(SlideModel(it.image, ScaleTypes.FIT))
+        }
         binding.imageSlider.setImageList(imageList)
     }
 }

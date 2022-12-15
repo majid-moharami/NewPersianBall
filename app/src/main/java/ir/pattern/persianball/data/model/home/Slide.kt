@@ -1,3 +1,11 @@
 package ir.pattern.persianball.data.model.home
 
-data class Slide(val name: String)
+import com.google.gson.annotations.SerializedName
+
+data class Gallery(@SerializedName("results") val gallery: List<Slide>)
+
+data class Slide(
+    @SerializedName("uuid") val uuid: String,
+    @SerializedName("image") val image: String,
+    @SerializedName("position") val position: Int,
+)

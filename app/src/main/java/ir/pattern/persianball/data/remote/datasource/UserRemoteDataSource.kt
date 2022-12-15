@@ -15,50 +15,43 @@ class UserRemoteDataSource
 ) {
     suspend fun createUserAddress(address: Address): Resource<Any?> {
         return Request.getResponse(
-            request = {userService.createUserAddress(address)},
-            defaultErrorMessage = "Error posting register info"
+            request = {userService.createUserAddress(address)}
         )
     }
 
     suspend fun createAddress(address: Address): Resource<Any?>{
         return Request.getResponse(
-            request = {userService.createUserAddress(address)},
-            defaultErrorMessage = "Error Login"
+            request = {userService.createUserAddress(address)}
         )
     }
 
     suspend fun uploadAvatar(username: String, file: MultipartBody.Part): Resource<PersonalDto>{
         return Request.getResponse(
-            request = {userService.uploadAvatar(username, file)},
-            defaultErrorMessage = "Error Login"
+            request = {userService.uploadAvatar(username, file)}
         )
     }
 
     suspend fun getUserAddress(): Resource<AddressDto>{
         return Request.getResponse(
-            request = {userService.getUserAddress()},
-            defaultErrorMessage = "Error posting register info"
+            request = {userService.getUserAddress()}
         )
     }
 
     suspend fun getPersonalData(): Resource<PersonalDto>{
         return Request.getResponse(
-            request = {userService.getUser()},
-            defaultErrorMessage = "Error posting register info"
+            request = {userService.getUser()}
         )
     }
 
     suspend fun updatePersonalData(personalDto: PersonalDto): Resource<PersonalDto>{
         return Request.getResponse(
-            request = {userService.updateUserPersonalData(personalDto.username, personalDto)},
-            defaultErrorMessage = "Error posting register info"
+            request = {userService.updateUserPersonalData(personalDto.username, personalDto)}
         )
     }
 
     suspend fun changePassword(changePasswordDto: ChangePasswordDto): Resource<*>{
         return Request.getResponse(
-            request = {userService.changePassword(changePasswordDto)},
-            defaultErrorMessage = "Error posting register info"
+            request = {userService.changePassword(changePasswordDto)}
         )
     }
 
@@ -66,8 +59,7 @@ class UserRemoteDataSource
         val id = address.id ?: 0
         address.id = null
         return Request.getResponse(
-            request = {userService.updateUserAddress(id, address)},
-            defaultErrorMessage = ""
+            request = {userService.updateUserAddress(id, address)}
         )
     }
 }
