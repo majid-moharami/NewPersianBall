@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presenter.feature.movie.MovieDetailFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="308dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/fotbal" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/buy"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="64dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/yellow"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:drawablePadding="4dp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/buy"
+                    android:textColor="@color/white"
+                    app:drawableRightCompat="@drawable/ic_shopping" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/watch"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="64dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#6F71AB"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/pre_watch"
+                    android:textColor="@color/white"
+                    app:drawableRightCompat="@drawable/ic_video_square" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="دوره دریبل وی" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="#7C8EC2"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_arrow_left" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/video_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="32dp"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                app:drawableRightCompat="@drawable/ic_play_circle"
+                app:layout_constraintBottom_toTopOf="@+id/buy"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="8 ویدیو" />
+
+            <TextView
+                android:id="@+id/video_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginBottom="32dp"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                app:drawableRightCompat="@drawable/ic_clock"
+                app:layout_constraintBottom_toTopOf="@+id/watch"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/video_count"
+                tools:text="20 دقیقه" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@android:color/transparent"
+                app:tabBackground="@drawable/profile_toggle_selector"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="fixed"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="@android:color/white"
+                app:tabTextAppearance="@style/tab_text"
+                app:tabTextColor="@android:color/black">
+
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/progress_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_of_holding" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/info_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/specifications" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/courses_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Lessons" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

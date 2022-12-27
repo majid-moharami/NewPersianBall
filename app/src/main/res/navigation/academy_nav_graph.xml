@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/academyFragment"
         android:name="ir.pattern.persianball.presenter.feature.academy.AcademyFragment"
-        android:label="AcademyFragment" />
+        android:label="AcademyFragment" >
+        <action
+            android:id="@+id/action_academyFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.MovieDetailFragment"
+        android:label="MovieDetailFragment">
+        <argument
+            android:name="academy"
+            app:argType="ir.pattern.persianball.data.model.academy.AcademyDto" />
+    </fragment>
 </navigation>

@@ -12,5 +12,5 @@ data class Course(
     @SerializedName("image") val image: String,
     @SerializedName("course_description") val courseDescription: String,
     @SerializedName("course_difficulty") val courseDifficulty: String,
-    @SerializedName("course_duration") val courseDuration: String
+    @SerializedName("course_duration") val courseDuration: String?
 )

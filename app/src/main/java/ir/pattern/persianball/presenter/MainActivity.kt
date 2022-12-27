@@ -99,9 +99,17 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment, R.id.academyFragment,
-                R.id.storeFragment, R.id.settingFragment -> binding.toolbar.visibility =
-                    View.VISIBLE
-                else -> binding.toolbar.visibility = View.GONE
+                R.id.storeFragment, R.id.settingFragment -> {
+                    binding.toolbar.visibility = View.VISIBLE
+                    binding.bottomBar. visibility = View.VISIBLE
+                }
+                R.id.profileFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                }
+                else -> {
+                    binding.toolbar.visibility = View.GONE
+                    binding.bottomBar. visibility = View.GONE
+                }
             }
         }
     }

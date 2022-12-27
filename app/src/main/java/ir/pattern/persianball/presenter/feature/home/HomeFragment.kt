@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
@@ -47,7 +48,9 @@ class HomeFragment : BaseFragment() {
             binding.recyclerView.adapter = it
             it.onCourseClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-
+                    val directions =
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(recyclerData.academy)
+                    findNavController().navigate(directions)
                 }
 
             it.onProductClickListener =

@@ -28,9 +28,9 @@ class HomeViewModel
 
     protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
     val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
-    val recyclerList = mutableListOf<RecyclerItem>()
+    private val recyclerList = mutableListOf<RecyclerItem>()
 
-    suspend fun getGallery() {
+    private suspend fun getGallery() {
         homeRepository.getGallery().collect {
             when (it) {
                 is Resource.Success -> {
@@ -47,12 +47,12 @@ class HomeViewModel
         }
     }
 
-    suspend fun getCourses() {
+    private suspend fun getCourses() {
         homeRepository.getCourses().collect {
             when (it) {
                 is Resource.Success -> {
                     val listCourse = mutableListOf<RecyclerItem>()
-                    it.data.courses.map { course ->
+                    it.data.result.map { course ->
                         listCourse.add(RecyclerItem(HomeCourseData(course)))
                     }
                     val courses = RecyclerData(flowOf(PagingData.from(listCourse)))
@@ -69,7 +69,7 @@ class HomeViewModel
         }
     }
 
-    suspend fun getProducts() {
+    private suspend fun getProducts() {
         homeRepository.getProducts().collect {
             when (it) {
                 is Resource.Success -> {

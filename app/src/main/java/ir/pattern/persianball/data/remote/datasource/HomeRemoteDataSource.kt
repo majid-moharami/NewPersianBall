@@ -1,6 +1,7 @@
 package ir.pattern.persianball.data.remote.datasource
 
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.Courses
 import ir.pattern.persianball.data.model.home.Gallery
 import ir.pattern.persianball.data.model.home.Products
@@ -14,8 +15,12 @@ class HomeRemoteDataSource
     private val homeService: HomeService
 ) {
 
-    suspend fun getCourses() : Resource<Courses>{
+    suspend fun getCourses() : Resource<Academy>{
         return Request.getResponse(request = {homeService.getCourse()})
+    }
+
+    suspend fun getAcademy() : Resource<Academy>{
+        return Request.getResponse(request = {homeService.getAcademy()})
     }
 
     suspend fun getProducts() : Resource<Products> {

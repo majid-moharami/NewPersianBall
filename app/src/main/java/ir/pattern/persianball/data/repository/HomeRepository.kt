@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.Courses
 import ir.pattern.persianball.data.model.home.Gallery
 import ir.pattern.persianball.data.model.home.Products
@@ -31,7 +32,7 @@ class HomeRepository
 //        }
 //    ).flow
 
-    suspend fun getCourses(): Flow<Resource<Courses>> {
+    suspend fun getCourses(): Flow<Resource<Academy>> {
         return flow {
             val result = homeRemoteDataSource.getCourses()
             emit(result)
@@ -48,6 +49,13 @@ class HomeRepository
     suspend fun getGallery(): Flow<Resource<Gallery>> {
         return flow {
             val result = homeRemoteDataSource.getGalley()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getAcademy(): Flow<Resource<Academy>> {
+        return flow {
+            val result = homeRemoteDataSource.getAcademy()
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
