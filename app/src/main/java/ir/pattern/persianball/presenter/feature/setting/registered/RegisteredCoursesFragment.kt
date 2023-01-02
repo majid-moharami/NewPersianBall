@@ -1,65 +1,50 @@
-package ir.pattern.persianball.presenter.feature.academy
+package ir.pattern.persianball.presenter.feature.setting.registered
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
-import ir.pattern.persianball.databinding.FragmentAcademyBinding
+import ir.pattern.persianball.databinding.FragmentRegisteredCoursesBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
-import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.profile.password.ProfilePasswordFragment
+import ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AcademyFragment : Fragment() {
-
-    lateinit var binding: FragmentAcademyBinding
+class RegisteredCoursesFragment : Fragment() {
+    lateinit var binding: FragmentRegisteredCoursesBinding
     var pagingAdapter: BasePagingAdapter? = null
-    private val viewModel: AcademyViewModel by viewModels()
+    private val viewModel: RegisteredCoursesViewModel by viewModels()
+
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
-            R.layout.fragment_academy,
+            R.layout.fragment_registered_courses,
             container,
             false
         )
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getAcademy()
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recycler.layoutManager =
+        binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        pagingAdapter = AcademyAdapter().also {
-            binding.recycler.adapter = it
-
-            it.onCourseClickListener =
-                BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    val directions =
-                        AcademyFragmentDirections.actionAcademyFragmentToMovieDetailFragment(
-                            recyclerData.academy
-                        )
-                    findNavController().navigate(directions)
-                }
+        pagingAdapter = RegisteredCoursesAdapter().also {
+            binding.recyclerView.adapter = it
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -69,5 +54,14 @@ class AcademyFragment : Fragment() {
                 }
             }
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() =
+            RegisteredCoursesFragment().apply {
+                arguments = Bundle().apply {
+                }
+            }
     }
 }

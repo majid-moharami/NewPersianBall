@@ -104,7 +104,7 @@
             <com.skydoves.progressview.ProgressView
                 android:id="@+id/progressView"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="18dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -117,7 +117,7 @@
                 app:progressView_labelColorInner="@color/white"
                 app:progressView_labelSize="13sp"
                 app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_min="0"
                 app:progressView_progress="50"
                 app:progressView_progressFromPrevious="true"
                 app:progressView_radius="12dp" />

@@ -105,6 +105,18 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideDashboardApi(
+        userRetrofitBuilder: UserRetrofitBuilder,
+        okHttpClient: OkHttpClient
+    ): DashboardService {
+        return userRetrofitBuilder.retrofitBuilder
+            .client(okHttpClient)
+            .build()
+            .create(DashboardService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideLoginApi(
         loginRetrofitBuilder: LoginRetrofitBuilder,
         @ApplicationContext context: Context

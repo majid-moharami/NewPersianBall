@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment, R.id.academyFragment,
-                R.id.storeFragment, R.id.settingFragment -> {
+                R.id.storeFragment, R.id.dashboardFragment -> {
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomBar. visibility = View.VISIBLE
                 }
@@ -116,18 +116,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToolbar(isLogin: Boolean){
         if (isLogin) {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.GONE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility =
+            binding.loginLayout.visibility = View.GONE
+            binding.welcomeLayout.visibility =
                 View.VISIBLE
         } else {
-            binding.toolbar.findViewById<LinearLayout>(R.id.login_layout).visibility = View.VISIBLE
-            binding.toolbar.findViewById<LinearLayout>(R.id.welcome_layout).visibility = View.GONE
-            binding.toolbar.findViewById<PersianBallTextView>(R.id.signup).setOnClickListener {
+            binding.loginLayout.visibility = View.VISIBLE
+            binding.welcomeLayout.visibility = View.GONE
+            binding.signup.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("IS_LOGIN", false)
                 startActivity(intent)
             }
-            binding.toolbar.findViewById<PersianBallTextView>(R.id.login).setOnClickListener {
+            binding.login.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("IS_LOGIN", true)
                 startActivity(intent)
@@ -143,10 +143,10 @@ class MainActivity : AppCompatActivity() {
         badgeDrawable.badgeTextColor = resources.getColor(R.color.notification_icon_color)
         badgeDrawable.badgeGravity = BadgeDrawable.BOTTOM_END
         badgeDrawable.setBoundsFor(
-            binding.toolbar.findViewById(R.id.notification_badge),
-            binding.toolbar.findViewById(R.id.frame)
+            binding.notificationBadge,
+            binding.frame
         )
-        binding.toolbar.findViewById<FrameLayout>(R.id.notification_badge).foreground =
+        binding.notificationBadge.foreground =
             badgeDrawable
     }
 
