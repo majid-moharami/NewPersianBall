@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import ir.pattern.persianball.databinding.FragmentHomeBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.BaseFragment
+import ir.pattern.persianball.presenter.feature.login.LoginActivity
+import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -55,7 +58,8 @@ class HomeFragment : BaseFragment() {
 
             it.onProductClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-
+                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                    startActivity(intent)
                 }
         }
 
