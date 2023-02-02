@@ -19,15 +19,15 @@
     <dimen name="margin_default_v2_login">56dp</dimen>
 
     <!-- font sizes -->
-    <dimen name="font_size_very_small">8dp</dimen>
-    <dimen name="font_size_small">10dp</dimen>
-    <dimen name="font_size_normal">12dp</dimen>
-    <dimen name="font_size_medium">14dp</dimen>
-    <dimen name="font_size_large">16dp</dimen>
-    <dimen name="font_size_huge">18dp</dimen>
-    <dimen name="font_size_super_huge">20dp</dimen>
-    <dimen name="font_size_extra_huge">32dp</dimen>
-    <dimen name="font_size_extra_super_huge">42dp</dimen>
+    <dimen name="font_size_very_small">8sp</dimen>
+    <dimen name="font_size_small">10sp</dimen>
+    <dimen name="font_size_normal">12sp</dimen>
+    <dimen name="font_size_medium">14sp</dimen>
+    <dimen name="font_size_large">16sp</dimen>
+    <dimen name="font_size_huge">18sp</dimen>
+    <dimen name="font_size_super_huge">20sp</dimen>
+    <dimen name="font_size_extra_huge">32sp</dimen>
+    <dimen name="font_size_extra_super_huge">42sp</dimen>
 
     <dimen name="recycler_view_horizontal_padding">16dp</dimen>
     <dimen name="recycler_view_horizontal_app_padding">12dp</dimen>

@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.movie
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -45,10 +46,11 @@ class MovieDetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun initView(){
         binding.viewpager.setCurrentItem(2, false)
         binding.headerTitle.text = movie.courseTitle
-        Glide.with(this).load(movie.image).into(binding.poster)
+        Glide.with(this).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
         binding.videoTime.text = resources.getString(R.string.course_duration, movie.courseDuration)
         binding.videoCount.text = resources.getString(R.string.video_count, movie.section_count)
     }

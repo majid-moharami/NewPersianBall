@@ -17,7 +17,8 @@ class Request {
                     Resource.Failure(ErrorDTO(result.code(), result.message(), ""))
                 }
             } catch (e: Throwable) {
-                Resource.Failure(ErrorDTO(1, "", ""))
+                val s = e
+                Resource.Failure(ErrorDTO(1, e.message.toString(), ""))
             }
         }
     }

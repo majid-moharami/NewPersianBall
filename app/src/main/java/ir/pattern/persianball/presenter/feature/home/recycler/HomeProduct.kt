@@ -21,12 +21,10 @@ class HomeProductData(var product: Product) : PersianBallRecyclerData, Equatable
 
     override val viewType: Int = VIEW_TYPE
 
-    override fun equals(other: Any?): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun equals(other: Any?): Boolean = true
 
     override fun hashCode(): Int {
-        return product.hashCode()
+        return javaClass.hashCode()
     }
 }
 
@@ -49,11 +47,13 @@ class HomeProductViewHolder(
         data.product.also {
             binding.title.text = it.nameFarsi
             binding.realPrice.text = itemView.resources.getString(R.string.product_price, it.price)
-            binding.discountedPrice.text = itemView.resources.getString(
-                R.string.product_price,
-                (it.price - (it.price * it.discountPercentage / 100))
-            )
-            Glide.with(itemView).load(it.image).into(binding.shapeableImageView)
+            if (it.discountPercentage != null) {
+                binding.discountedPrice.text = itemView.resources.getString(
+                    R.string.product_price,
+                    (it.price?.minus((it.price * it.discountPercentage / 100)))
+                )
+            }
+            Glide.with(itemView).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onProductClickListener, this, data)
     }

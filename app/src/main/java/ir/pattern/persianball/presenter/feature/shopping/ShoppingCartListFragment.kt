@@ -1,68 +1,78 @@
-package ir.pattern.persianball.presenter.feature.home
+package ir.pattern.persianball.presenter.feature.shopping
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.shape.CornerFamily
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
-import ir.pattern.persianball.databinding.FragmentHomeBinding
+import ir.pattern.persianball.databinding.FragmentShoppingCartListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
-import ir.pattern.persianball.presenter.feature.BaseFragment
-import ir.pattern.persianball.presenter.feature.login.LoginActivity
-import ir.pattern.persianball.presenter.feature.player.PlayerActivity
+import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
-class HomeFragment : BaseFragment() {
-    lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+class ShoppingCartListFragment : Fragment() {
+
+    lateinit var binding: FragmentShoppingCartListBinding
+    private val viewModel: ShoppingCartViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
-            R.layout.fragment_home,
+            R.layout.fragment_shopping_cart_list,
             container,
             false
         )
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.shopCart.collectLatest {
+                it.price.also { price ->
+                    binding.totalPrice.text =  resources.getString(R.string.product_price, price.totalPrice.toInt())
+                    binding.discountPrice.text =  resources.getString(R.string.product_price, price.discount.toInt())
+                    binding.natPrice.text = resources.getString(R.string.product_price, price.nat.toInt())
+                }
+            }
+        }
         binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        pagingAdapter = HomeDataAdapter().also {
+        pagingAdapter = ShoppingCartAdapter().also {
             binding.recyclerView.adapter = it
-            it.onCourseClickListener =
+
+            it.onDeleteCartItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    val directions =
-                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(recyclerData.academy)
-                    findNavController().navigate(directions)
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.deleteCartItem(recyclerData.shoppingCartItemDto.id)
+                    }
                 }
 
-            it.onProductClickListener =
+            it.onAddCartItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-//                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
-//                    startActivity(intent)
-                    val directions =
-                        HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(recyclerData.product)
-                    findNavController().navigate(directions)
+
+                }
+
+            it.onMinusCartItemClickListener =
+                BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
+
                 }
         }
 

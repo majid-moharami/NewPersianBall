@@ -1,6 +1,5 @@
 package ir.pattern.persianball.data.model.academy
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -16,7 +15,7 @@ data class AcademyDto(
     @SerializedName("image") val image: String,
     @SerializedName("course_description") val courseDescription: String,
     @SerializedName("course_difficulty") val courseDifficulty: String,
-    @SerializedName("course_duration") val courseDuration: String?,
+    @SerializedName("course_duration") val courseDuration: Int,
     @SerializedName("detail") val detail: MovieDetailDto,
     @SerializedName("variants") val variants: List<VariantDto?>
 ): Serializable
@@ -41,25 +40,25 @@ data class SectionDto(
 ): Serializable
 
 data class TimeAndLocationsDto(
-    @SerializedName("id") val id: Int,
     @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("image") val image: String,
     @SerializedName("price") val price: Int,
     @SerializedName("location") val location: String,
     @SerializedName("time") val time: String,
-    @SerializedName("created_at") val createdAt: String,
-    @SerializedName("course") val course: Int,
-    @SerializedName("coach") val coach: Int
+    @SerializedName("coach") val coach: CoachDto
 ): Serializable
 
 data class VariantDto(
-    @SerializedName("id") val id: Int,
     @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("image") val image: String,
     @SerializedName("price") val price: Int,
     @SerializedName("location") val location: String,
     @SerializedName("time") val time: String,
-    @SerializedName("created_at") val createdAt: String,
-    @SerializedName("course") val course: Int,
-    @SerializedName("coach") val coach: Int
+    @SerializedName("coach") val coach: CoachDto
+): Serializable
+
+data class CoachDto(
+    @SerializedName("id") val id: Int,
+    @SerializedName("full_name") val fullName: String,
+    @SerializedName("avatar") val avatar: String
 ): Serializable

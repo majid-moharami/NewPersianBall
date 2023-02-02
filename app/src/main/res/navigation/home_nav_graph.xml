@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_homeFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
 
     <fragment
@@ -20,5 +23,14 @@
         <argument
             android:name="academy"
             app:argType="ir.pattern.persianball.data.model.academy.AcademyDto" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="ir.pattern.persianball.presenter.feature.productDetail.ProductDetailFragment"
+        android:label="ProductDetailFragment" >
+        <argument
+            android:name="product"
+            app:argType="ir.pattern.persianball.data.model.home.Product" />
     </fragment>
 </navigation>

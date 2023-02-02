@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shopping_nav_graph"
+    app:startDestination="@id/shoppingCartListFragment">
+
+    <fragment
+        android:id="@+id/shoppingCartListFragment"
+        android:name="ir.pattern.persianball.presenter.feature.shopping.ShoppingCartListFragment"
+        android:label="ShoppingCartListFragment"
+        tools:layout="@layout/fragment_shopping_cart_list"/>
+</navigation>

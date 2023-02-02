@@ -55,4 +55,10 @@
     <string name="difficulty">سختی: %s</string>
     <string name="course_duration">مدت دوره: ‏%s ساعت</string>
     <string name="video_count">‏%d ویدیو</string>
+    <string name="products">محصولات</string>
+    <string name="color">رنگ</string>
+    <string name="count">تعداد</string>
+    <string name="size">سایز</string>
+    <string name="product_detail">صفحه محصول</string>
+    <string name="add_product_shopping_cart">اضافه کردن به سبد خرید</string>
 </resources>

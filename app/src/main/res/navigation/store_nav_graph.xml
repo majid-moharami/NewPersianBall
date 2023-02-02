@@ -7,5 +7,28 @@
     <fragment
         android:id="@+id/storeFragment"
         android:name="ir.pattern.persianball.presenter.feature.store.StoreFragment"
-        android:label="StoreFragment" />
+        android:label="StoreFragment" >
+        <action
+            android:id="@+id/action_storeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_storeFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.MovieDetailFragment"
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="academy"
+            app:argType="ir.pattern.persianball.data.model.academy.AcademyDto" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="ir.pattern.persianball.presenter.feature.productDetail.ProductDetailFragment"
+        android:label="ProductDetailFragment" >
+        <argument
+            android:name="product"
+            app:argType="ir.pattern.persianball.data.model.home.Product" />
+    </fragment>
 </navigation>

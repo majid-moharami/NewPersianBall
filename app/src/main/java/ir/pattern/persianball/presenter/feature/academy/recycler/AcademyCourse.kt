@@ -39,13 +39,14 @@ class AcademyCourseViewHolder(
             else -> Assert.fail("binding is incompatible")
         }
     }
+    @SuppressLint("StringFormatMatches")
     override fun onBindView(data: AcademyCourseData?) {
         data?.academy?.also {
             binding.title.text = it.courseTitle
             binding.duration.text = itemView.resources.getString(R.string.course_week, it.weekCount, it.section_count)
             binding.hardness.text = itemView.resources.getString(R.string.difficulty, it.courseDifficulty)
             binding.time.text = itemView.resources.getString(R.string.course_duration, it.courseDuration)
-            Glide.with(itemView).load(it.image).into(binding.shapeableImageView)
+            Glide.with(itemView).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)
     }

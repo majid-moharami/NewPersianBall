@@ -105,6 +105,18 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideShoppingCartApi(
+        userRetrofitBuilder: UserRetrofitBuilder,
+        okHttpClient: OkHttpClient
+    ): ShoppingCartService {
+        return userRetrofitBuilder.retrofitBuilder
+            .client(okHttpClient)
+            .build()
+            .create(ShoppingCartService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideDashboardApi(
         userRetrofitBuilder: UserRetrofitBuilder,
         okHttpClient: OkHttpClient

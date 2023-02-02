@@ -94,7 +94,10 @@
                 app:cardBackgroundColor="#7C8EC2"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
                 <ImageView
                     android:layout_width="46dp"

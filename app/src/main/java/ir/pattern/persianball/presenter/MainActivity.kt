@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +25,7 @@ import ir.pattern.persianball.databinding.ActivityMainBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
-import ir.pattern.persianball.views.PersianBallTextView
+import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -83,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateView(name, context, attrs)
     }
 
+
     private fun setupSmoothBottomMenu() {
         val popupMenu = PopupMenu(this, null)
         popupMenu.inflate(R.menu.bottom_navigation_menu)
@@ -132,6 +132,11 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("IS_LOGIN", true)
                 startActivity(intent)
             }
+        }
+
+        binding.bagIcon.setOnClickListener {
+            val intent = Intent(this, ShoppingCartsActivity::class.java)
+            startActivity(intent)
         }
     }
 
