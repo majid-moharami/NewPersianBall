@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:padding="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_dialog">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:text="@string/sending_method"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_super_huge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radio_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+
+                <RadioButton
+                    android:id="@+id/peick"
+                    style="@android:style/Widget.CompoundButton.CheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/backgraound_sending_method_choosed"
+                    android:buttonTint="#4F507A"
+                    android:checked="true"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:gravity="center|right"
+                    android:layoutDirection="rtl"
+                    android:padding="8dp"
+                    android:text="پیک (فقط تهران)"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_large" />
+
+
+                <RadioButton
+                    android:id="@+id/post"
+                    style="@android:style/Widget.CompoundButton.CheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:buttonTint="#4F507A"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:gravity="center|right"
+                    android:layoutDirection="rtl"
+                    android:padding="8dp"
+                    android:text="پست جمهوری اسلامی"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_large" />
+
+
+                <RadioButton
+                    android:id="@+id/free"
+                    style="@android:style/Widget.CompoundButton.CheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:buttonTint="#4F507A"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:gravity="center|right"
+                    android:layoutDirection="rtl"
+                    android:padding="8dp"
+                    android:text="رایگان (مخصوص سفارش‌های بالای 700 هزار تومان)"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_medium" />
+
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

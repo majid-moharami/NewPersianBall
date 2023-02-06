@@ -53,7 +53,7 @@ class ShopCartViewHolder(
                 binding.language.visibility = View.GONE
                 Glide.with(itemView).load("https://api.persianball.ir/${it.product?.image}").into(binding.image)
                 binding.price.text = itemView.resources.getString(R.string.product_price, it.product?.price)
-                binding.count.text = it.product?.count.toString()
+                binding.count.text = it.quantity.toString()
                 binding.title.text = it.product?.productName
             }else{
                 binding.countLayout.visibility = View.GONE

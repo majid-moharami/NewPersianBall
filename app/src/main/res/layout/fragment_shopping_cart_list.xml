@@ -156,6 +156,7 @@
                 tools:text="70,000+ تومان" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/continue_btn"
                 android:layout_width="124dp"
                 android:layout_height="46dp"
                 android:layout_marginTop="16dp"

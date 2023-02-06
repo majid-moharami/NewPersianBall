@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView3"
+        style="@style/CustomCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:visibility="visible"
+        app:cardElevation="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:text="انتخاب آدرس پستی جهت تحویل"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_huge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:scrollbars="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/send_method"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:listitem="@layout/holder_address_submit" />
+
+            <ImageView
+                android:id="@+id/empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/address_empty"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/iran_sans_bold"
+                android:text="شما هنوز آدرسی ثبت نکرده‌اید!"
+                android:textSize="@dimen/font_size_medium"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/send_method"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empty" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/address"
+                android:layout_width="156dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:shadowColor="#6F71AB"
+                app:cardBackgroundColor="#6F71AB"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/wallet"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:text="انتخاب آدرس"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_large" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_new_address"
+                android:layout_width="156dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:shadowColor="#F5F5F5"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toTopOf="@+id/address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/circle_add"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:text="آدرس جدید"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_large" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/send_method"
+                android:layout_width="156dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:shadowColor="#FFB40A"
+                app:cardBackgroundColor="#FFB40A"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toTopOf="@+id/add_new_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/send_icon"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:text="روش ارسال"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_large" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

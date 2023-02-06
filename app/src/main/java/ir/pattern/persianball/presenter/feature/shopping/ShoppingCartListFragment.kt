@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.shopping
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentShoppingCartListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -46,9 +48,12 @@ class ShoppingCartListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.shopCart.collectLatest {
                 it.price.also { price ->
-                    binding.totalPrice.text =  resources.getString(R.string.product_price, price.totalPrice.toInt())
-                    binding.discountPrice.text =  resources.getString(R.string.product_price, price.discount.toInt())
-                    binding.natPrice.text = resources.getString(R.string.product_price, price.nat.toInt())
+                    binding.totalPrice.text =
+                        resources.getString(R.string.product_price, price.totalPrice.toInt())
+                    binding.discountPrice.text =
+                        resources.getString(R.string.product_price, price.discount.toInt())
+                    binding.natPrice.text =
+                        resources.getString(R.string.product_price, price.nat.toInt())
                 }
             }
         }
@@ -67,17 +72,34 @@ class ShoppingCartListFragment : Fragment() {
 
             it.onAddCartItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.updateItemQuantity(
+                            recyclerData.shoppingCartItemDto.quantity + 1,
+                            recyclerData.shoppingCartItemDto.id
+                        )
+                    }
                 }
 
             it.onMinusCartItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        if (recyclerData.shoppingCartItemDto.quantity > 1) {
+                            viewModel.updateItemQuantity(
+                                recyclerData.shoppingCartItemDto.quantity + 1,
+                                recyclerData.shoppingCartItemDto.id
+                            )
+                        }
+                    }
                 }
+        }
+
+        binding.continueBtn.setOnClickListener {
+            startActivity(Intent(activity, OrderRecordActivity::class.java))
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.recyclerItems.collectLatest {
+
                 it?.let { recyclerData ->
                     pagingAdapter?.submitData(recyclerData)
                 }

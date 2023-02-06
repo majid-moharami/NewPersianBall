@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/order_record_nav_graph"
+    app:startDestination="@id/addressSubmitFragment">
+
+    <fragment
+        android:id="@+id/addressSubmitFragment"
+        android:name="ir.pattern.persianball.presenter.feature.shopping.address.AddressSubmitFragment"
+        android:label="AddressSubmitFragment" >
+        <action
+            android:id="@+id/action_addressSubmitFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="ir.pattern.persianball.presenter.feature.shopping.payment.PaymentFragment"
+        android:label="PaymentFragment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_orderCompleteFragment"
+            app:destination="@id/orderCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderCompleteFragment"
+        android:name="ir.pattern.persianball.presenter.feature.shopping.orderComplete.OrderCompleteFragment"
+        android:label="OrderCompleteFragment" />
+</navigation>

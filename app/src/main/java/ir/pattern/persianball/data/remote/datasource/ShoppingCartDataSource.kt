@@ -4,6 +4,7 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCart
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCartDto
+import ir.pattern.persianball.data.model.shoppingCart.UpdateCartItemDto
 import ir.pattern.persianball.data.remote.api.Request
 import ir.pattern.persianball.data.remote.api.ShoppingCartService
 import javax.inject.Inject
@@ -27,6 +28,12 @@ class ShoppingCartDataSource
     suspend fun getShoppingCart() : Resource<ShoppingCart> {
         return Request.getResponse(
             request = {shoppingCartService.getBasket()}
+        )
+    }
+
+    suspend fun updateCart(updateParam: UpdateCartItemDto, id: Int) : Resource<Any?> {
+        return Request.getResponse(
+            request = {shoppingCartService.updateCartItem(updateParam, id)}
         )
     }
 }

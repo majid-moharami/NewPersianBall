@@ -6,3 +6,7 @@ data class CartItem(
     @SerializedName("course") var course: Int? = null,
     @SerializedName("product") var product: Int? = null
 )
+
+data class UpdateCartItemDto(
+    @SerializedName("quantity") var quantity: Int?,
+)

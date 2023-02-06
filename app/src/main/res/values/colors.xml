@@ -17,4 +17,5 @@
     <color name="transparent">#00000000</color>
     <color name="black_50">#80000000</color>
     <color name="live_red">#FF3144</color>
+    <color name="send_method_card_color">#666F71AB</color>
 </resources>

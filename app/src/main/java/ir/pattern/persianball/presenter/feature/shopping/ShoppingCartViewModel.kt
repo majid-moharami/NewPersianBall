@@ -8,6 +8,7 @@ import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCartDto
+import ir.pattern.persianball.data.model.shoppingCart.UpdateCartItemDto
 import ir.pattern.persianball.data.model.store.StoreDto
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartData
@@ -24,7 +25,7 @@ class ShoppingCartViewModel
 ) : ViewModel() {
     protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
     val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
-    private val recyclerList = mutableListOf<RecyclerItem>()
+    private var recyclerList = mutableListOf<RecyclerItem>()
     val shopCart = MutableSharedFlow<ShoppingCartDto>()
 
     init {
@@ -35,6 +36,7 @@ class ShoppingCartViewModel
 
     private suspend fun getShoppingCart() {
         shoppingCartRepository.getShoppingCart().collect {
+            recyclerList = mutableListOf<RecyclerItem>()
             when (it) {
                 is Resource.Success -> {
                     shopCart.emit(it.data.result[0])
@@ -54,6 +56,30 @@ class ShoppingCartViewModel
     }
 
     suspend fun deleteCartItem(itemId: Int){
-        shoppingCartRepository.deleteCartItem(itemId)
+        shoppingCartRepository.deleteCartItem(itemId).collect{
+            when (it) {
+                is Resource.Success -> {
+                    getShoppingCart()
+                }
+                is Resource.Failure -> {
+                    it.error.code
+                }
+                else -> {}
+            }
+        }
+    }
+
+    suspend fun updateItemQuantity(quantity: Int ,id: Int){
+        shoppingCartRepository.updateCartItem(UpdateCartItemDto(quantity), id).collect{
+            when (it) {
+                is Resource.Success -> {
+                    getShoppingCart()
+                }
+                is Resource.Failure -> {
+                    it.error.code
+                }
+                else -> {}
+            }
+        }
     }
 }

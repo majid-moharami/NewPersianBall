@@ -5,6 +5,7 @@ import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCart
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCartDto
+import ir.pattern.persianball.data.model.shoppingCart.UpdateCartItemDto
 import ir.pattern.persianball.data.remote.datasource.ShoppingCartDataSource
 import ir.pattern.persianball.data.remote.datasource.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
@@ -20,10 +21,26 @@ class ShoppingCartRepository
 constructor(
     private val shoppingCartDataSource: ShoppingCartDataSource
 ) {
-    suspend fun addCartItem(cartItem: CartItem): Resource<Any?> =
-        shoppingCartDataSource.addCart(cartItem)
+    suspend fun addCartItem(cartItem: CartItem): Flow<Resource<Any?>> {
+        return flow {
+            val result = shoppingCartDataSource.addCart(cartItem)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 
-    suspend fun deleteCartItem(itemId: Int) : Resource<Any?> = shoppingCartDataSource.deleteCart(itemId)
+    suspend fun deleteCartItem(itemId: Int) : Flow<Resource<Any?>>{
+        return flow {
+            val result = shoppingCartDataSource.deleteCart(itemId)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun updateCartItem(updateParam: UpdateCartItemDto, itemId: Int) : Flow<Resource<Any?>> {
+        return flow {
+            val result = shoppingCartDataSource.updateCart(updateParam, itemId)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 
     suspend fun getShoppingCart(): Flow<Resource<ShoppingCart>>{
         return flow {
@@ -31,4 +48,6 @@ constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
+
+
 }
