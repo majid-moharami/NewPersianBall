@@ -1,13 +1,18 @@
 package ir.pattern.persianball.presenter.feature.shopping
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R.attr
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.ActivityOrderRecordBinding
-import ir.pattern.persianball.databinding.ActivityShoppingCartsBinding
 
+
+@AndroidEntryPoint
 class OrderRecordActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
@@ -18,5 +23,37 @@ class OrderRecordActivity : AppCompatActivity() {
         binding = ActivityOrderRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = findNavController(R.id.order_nav_host_fragment)
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        //setupActionBarWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+//                R.id.addressSubmitFragment -> {
+//
+//                }
+//                R.id.paymentFragment -> binding.stepView.go(1 , true)
+//                R.id.orderCompleteFragment -> binding.stepView.done(true)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 7) {
+            if (resultCode == RESULT_OK) {
+                data?.also {
+                    val payment = it.getBooleanExtra("isPaymentSuccess", false)
+                    if (payment) {
+                        navController.navigate(R.id.orderCompleteFragment)
+                        Toast.makeText(this, "پرداخت با موفقیت انجام شد.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "پرداخت موفقیت آمیز نبود.", Toast.LENGTH_LONG).show()
+                        finish()
+                    }
+                }
+            }
+        }
     }
 }

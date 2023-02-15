@@ -124,4 +124,5 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.0'
 
     implementation 'com.github.badoualy:stepper-indicator:1.0.7'
+    implementation 'com.github.shuhart:stepview:1.5.1'
 }

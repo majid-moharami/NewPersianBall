@@ -4,9 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class CartItem(
     @SerializedName("course") var course: Int? = null,
-    @SerializedName("product") var product: Int? = null
+    @SerializedName("product") var product: Int? = null,
+    @SerializedName("quantity") var quantity: Int?
 )
 
 data class UpdateCartItemDto(
-    @SerializedName("quantity") var quantity: Int?,
+    @SerializedName("quantity") var quantity: Int?
 )

@@ -104,9 +104,9 @@ class StoreFragment : Fragment() {
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     viewLifecycleOwner.lifecycleScope.launch {
                         if (recyclerData.storeDto.isAcademy) {
-                            viewModel.addCartItem(CartItem(course = recyclerData.storeDto.academyDto?.id))
+                            viewModel.addCartItem(CartItem(course = recyclerData.storeDto.academyDto?.id, quantity = 1))
                         } else {
-                            viewModel.addCartItem(CartItem(product = recyclerData.storeDto.product?.id))
+                            viewModel.addCartItem(CartItem(product = recyclerData.storeDto.product?.id, quantity = 1))
                         }
                     }
                 }

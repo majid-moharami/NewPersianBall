@@ -14,6 +14,7 @@ import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.home.Slide
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.LoginRepository
+import ir.pattern.persianball.presenter.adapter.BaseViewModel
 import ir.pattern.persianball.presenter.feature.home.recycler.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,10 +25,10 @@ class HomeViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val homeRepository: HomeRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
-    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
-    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
+//    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
+//    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
     private val recyclerList = mutableListOf<RecyclerItem>()
 
     private suspend fun getGallery() {

@@ -62,4 +62,5 @@
     <string name="product_detail">صفحه محصول</string>
     <string name="add_product_shopping_cart">اضافه کردن به سبد خرید</string>
     <string name="sending_method">روش ارسال</string>
+    <string name="postal_code">کد پستی: %s</string>
 </resources>

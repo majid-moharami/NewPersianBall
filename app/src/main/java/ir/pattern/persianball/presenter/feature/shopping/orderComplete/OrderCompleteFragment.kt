@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentOrderCompleteBinding
 
+@AndroidEntryPoint
 class OrderCompleteFragment : Fragment() {
 
     lateinit var binding: FragmentOrderCompleteBinding

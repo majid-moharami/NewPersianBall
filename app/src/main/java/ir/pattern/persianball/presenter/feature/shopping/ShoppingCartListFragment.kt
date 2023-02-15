@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.shape.CornerFamily
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.databinding.FragmentShoppingCartListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
@@ -85,7 +87,7 @@ class ShoppingCartListFragment : Fragment() {
                     viewLifecycleOwner.lifecycleScope.launch {
                         if (recyclerData.shoppingCartItemDto.quantity > 1) {
                             viewModel.updateItemQuantity(
-                                recyclerData.shoppingCartItemDto.quantity + 1,
+                                recyclerData.shoppingCartItemDto.quantity - 1,
                                 recyclerData.shoppingCartItemDto.id
                             )
                         }
@@ -98,8 +100,25 @@ class ShoppingCartListFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recyclerItems.collectLatest {
+            viewModel.cartList.collectLatest {
+                when (it) {
+                    is Resource.Success -> {
+                        if (it.data.result[0].items.isEmpty() || it.data.result.isEmpty()) {
+                            binding.continueBtn.isEnabled = false
+                        }
+                    }
+                    is Resource.Failure -> {
 
+                    }
+                    else -> {
+                        Toast.makeText(activity, "LOADING", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recyclerItems.collectLatest {
                 it?.let { recyclerData ->
                     pagingAdapter?.submitData(recyclerData)
                 }

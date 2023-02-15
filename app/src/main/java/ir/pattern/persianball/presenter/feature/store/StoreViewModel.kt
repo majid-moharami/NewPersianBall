@@ -11,6 +11,7 @@ import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.model.store.StoreDto
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
+import ir.pattern.persianball.presenter.adapter.BaseViewModel
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeCoursesRowData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
@@ -28,9 +29,9 @@ class StoreViewModel
 @Inject constructor(
     private val homeRepository: HomeRepository,
     private val shoppingCartRepository: ShoppingCartRepository
-) : ViewModel() {
-    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
-    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
+) : BaseViewModel() {
+//    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
+//    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
     private val recyclerList = mutableListOf<RecyclerItem>()
 
     init {

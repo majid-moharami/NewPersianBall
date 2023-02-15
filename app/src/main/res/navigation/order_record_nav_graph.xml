@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_paymentFragment_to_orderCompleteFragment"
             app:destination="@id/orderCompleteFragment" />
+        <argument
+            android:name="deliveryMethod"
+            app:argType="string" />
+        <argument
+            android:name="addressId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/orderCompleteFragment"

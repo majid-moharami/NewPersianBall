@@ -62,6 +62,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <EditText
+                    android:id="@+id/discountTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFB703"
@@ -90,6 +91,7 @@
                 app:layout_constraintTop_toTopOf="@+id/cardView5">
 
                 <ImageView
+                    android:id="@+id/discount"
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:padding="8dp"

@@ -6,7 +6,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             app:cardBackgroundColor="#807C8EC2"
@@ -48,7 +48,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/picture"
-                    android:layout_width="144dp"
+                    android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -62,7 +62,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/priceCardView"
-                    android:layout_width="144dp"
+                    android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -130,7 +130,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/descriptionCardView"
-                    android:layout_width="144dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
@@ -155,7 +155,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
-                    android:layout_width="144dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -168,13 +168,14 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/add_product_cardView"
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="29dp"
-                        app:cardBackgroundColor="#6F71AB"
-                        app:cardCornerRadius="8dp"
+                        android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless">
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        app:cardBackgroundColor="#6F71AB"
+                        app:cardCornerRadius="8dp">
 
                         <ImageView
                             android:layout_width="16dp"
@@ -185,14 +186,15 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/product_detail_cardView"
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="29dp"
                         android:layout_marginLeft="4dp"
-                        app:cardBackgroundColor="#6F71AB"
-                        app:cardCornerRadius="8dp"
+                        android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless">
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        app:cardBackgroundColor="#6F71AB"
+                        app:cardCornerRadius="8dp">
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:layout_width="wrap_content"
