@@ -5,6 +5,7 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/controller_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#99000000"
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingLeft="20dp"
             android:paddingTop="25dp"
@@ -57,7 +59,7 @@
             tool:layout_editor_absoluteY="12dp" />
 
         <ImageButton
-            android:id="@+id/exo_rew"
+            android:id="@+id/imgBwd"
             style="@style/ExoMediaButton.Rewind"
             android:layout_marginRight="40dp"
             android:src="@drawable/ic_exo_icon_rewind"
@@ -67,7 +69,7 @@
             app:layout_constraintTop_toTopOf="@id/exo_play" />
 
         <ImageButton
-            android:id="@+id/exo_ffwd"
+            android:id="@+id/imgFwd"
             style="@style/ExoMediaButton.FastForward"
             android:layout_marginLeft="40dp"
             android:src="@drawable/ic_exo_icon_fastforward"
@@ -128,6 +130,7 @@
                 android:minWidth="50dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@id/exo_progress"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/exo_progress"
@@ -153,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="right"
+                android:gravity="center"
                 android:minWidth="50dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"

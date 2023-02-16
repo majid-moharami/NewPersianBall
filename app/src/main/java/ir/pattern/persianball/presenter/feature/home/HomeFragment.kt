@@ -58,11 +58,11 @@ class HomeFragment : BaseFragment() {
 
             it.onProductClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-//                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
-//                    startActivity(intent)
-                    val directions =
-                        HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(recyclerData.product)
-                    findNavController().navigate(directions)
+                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                    startActivity(intent)
+//                    val directions =
+//                        HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(recyclerData.product)
+//                    findNavController().navigate(directions)
                 }
         }
 
