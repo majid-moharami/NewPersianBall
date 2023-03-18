@@ -10,7 +10,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,12 +30,106 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
-                    android:drawableEnd="@drawable/ic_frame"
+                    android:drawableEnd="@drawable/ic_profile_track_title"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/iran_sans_bold"
                     android:text="اطلاعات تماس وآدرس"
                     android:textColor="#6F71AB"
                     android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ir.pattern.persianball.views.PersianBallTextView
+                                android:id="@+id/phone_number_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:drawableEnd="@drawable/ic_profile_call_home"
+                                android:drawablePadding="5dp"
+                                android:text="شماره تلفن همراه"
+                                android:textColor="#6F71AB"
+                                android:textSize="10sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ir.pattern.persianball.views.PersianBallTextView
+                                android:id="@+id/phone_number_content"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:fontFamily="@font/iran_sans_bold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/phone_number_title"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/phone_number_title" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ir.pattern.persianball.views.PersianBallTextView
+                                android:id="@+id/home_number_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:drawableEnd="@drawable/ic_profile_call_mobile"
+                                android:drawablePadding="5dp"
+                                android:text="شماره تلفن ثابت"
+                                android:textColor="#6F71AB"
+                                android:textSize="10sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ir.pattern.persianball.views.PersianBallTextView
+                                android:id="@+id/home_number_content"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:fontFamily="@font/iran_sans_bold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/home_number_title"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/home_number_title" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -52,17 +146,14 @@
                             android:id="@+id/address_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_frame"
+                            android:drawableEnd="@drawable/ic_profile_address"
                             android:drawablePadding="5dp"
                             android:text="آدرس"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/address_persianBallImageButton"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
@@ -76,129 +167,10 @@
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/address_title"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/address_persianBallImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/address_title" />
 
-                        <ir.pattern.persianball.views.PersianBallImageButton
-                            android:id="@+id/address_persianBallImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_edit_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/phone_number_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_frame"
-                            android:drawablePadding="5dp"
-                            android:text="شماره تلفن همراه"
-                            android:textColor="#6F71AB"
-                            android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/phone_number_persianBallImageButton"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/phone_number_content"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/iran_sans_bold"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/phone_number_title"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/phone_number_persianBallImageButton"
-                            app:layout_constraintTop_toBottomOf="@+id/phone_number_title" />
-
-                        <ir.pattern.persianball.views.PersianBallImageButton
-                            android:id="@+id/phone_number_persianBallImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_edit_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/home_number_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_frame"
-                            android:drawablePadding="5dp"
-                            android:text="شماره تلفن ثابت"
-                            android:textColor="#6F71AB"
-                            android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/home_number_persianBallImageButton"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/home_number_content"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/iran_sans_bold"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/home_number_title"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/home_number_persianBallImageButton"
-                            app:layout_constraintTop_toBottomOf="@+id/home_number_title" />
-
-                        <ir.pattern.persianball.views.PersianBallImageButton
-                            android:id="@+id/home_number_persianBallImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_edit_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -217,17 +189,14 @@
                             android:id="@+id/email_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_frame"
+                            android:drawableEnd="@drawable/ic_profile_email"
                             android:drawablePadding="5dp"
                             android:text="ایمیل"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/email_persianBallImageButton"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
@@ -241,74 +210,55 @@
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/email_title"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/email_persianBallImageButton"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/email_title" />
 
-                        <ir.pattern.persianball.views.PersianBallImageButton
-                            android:id="@+id/email_persianBallImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_edit_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="4dp"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/postal_code_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
+                            android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_frame"
+                            android:drawableEnd="@drawable/ic_profile_address"
                             android:drawablePadding="5dp"
                             android:text="کد پستی"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/postal_code_persianBallImageButton"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/postal_code_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
+                            android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/postal_code_title"
-                            app:layout_constraintHorizontal_bias="1"
-                            app:layout_constraintStart_toEndOf="@+id/postal_code_persianBallImageButton"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/postal_code_title" />
 
-                        <ir.pattern.persianball.views.PersianBallImageButton
-                            android:id="@+id/postal_code_persianBallImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:src="@drawable/ic_edit_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -317,7 +267,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/ripple"
@@ -334,9 +285,9 @@
                         android:focusable="true"
                         android:fontFamily="@font/iran_sans_bold"
                         android:gravity="center"
-                        android:text="@string/submit"
+                        android:text="@string/change_info"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/font_size_large"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

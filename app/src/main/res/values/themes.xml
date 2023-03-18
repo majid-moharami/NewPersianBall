@@ -23,9 +23,25 @@
 
     </style>
 
-        <style name="roundedCornersImageView" parent="">
+    <style name="roundedCornersImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="circelCornersImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50dp</item>
+    </style>
+
+    <style name="raisedButton">
+        <item name="android:background">@drawable/raised_btn_selector</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:layout_height">@dimen/relation_button_height</item>
+        <item name="android:layout_width">@dimen/relation_button_width</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="roundedCornersRegisteredCourseImageView" parent="">
@@ -83,8 +99,11 @@
     </style>
     <!-- region TextInputLayout & TextInputEditText styles -->
     <style name="TextInputLayout.OutlineBox.CustomFont" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:theme">@style/ThemeOverlay.TextInputEditText.OutlinedBox.CustomFont</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded</item>
+        <item name="android:theme">@style/ThemeOverlay.TextInputEditText.OutlinedBox.CustomFont
+        </item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded
+        </item>
     </style>
 
     <style name="ThemeOverlay.TextInputEditText.OutlinedBox.CustomFont" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
@@ -118,7 +137,8 @@
     </style>
 
     <style name="MyAutofilledHighlight" parent="Theme.App">
-        <item name="android:autofilledHighlight" tools:targetApi="o">@drawable/autofill_background</item>
+        <item name="android:autofilledHighlight" tools:targetApi="o">@drawable/autofill_background
+        </item>
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">

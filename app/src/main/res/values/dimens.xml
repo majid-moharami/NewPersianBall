@@ -61,4 +61,7 @@
     <dimen name="defaultbarHeight">3dp</dimen>
 
     <dimen name="item_small_icon">12dp</dimen>
+
+    <dimen name="relation_button_width">100dp</dimen>
+    <dimen name="relation_button_height">30dp</dimen>
 </resources>

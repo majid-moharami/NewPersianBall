@@ -17,7 +17,8 @@ data class Address(
     @SerializedName("receiver_home_phone") var homePhone: String? = null,
     @SerializedName("receiver_mobile_phone") var mobilePhone: String? = null,
     @SerializedName("email") var email: String? = null,
-) {
+    @SerializedName("address_name") var addressName: String? = null
+) : java.io.Serializable{
     fun isEmpty(): Boolean =
         postalCode == null && address.isNullOrEmpty() && homePhone.isNullOrEmpty() && mobilePhone.isNullOrEmpty() && email.isNullOrEmpty()
 }

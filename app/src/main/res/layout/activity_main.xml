@@ -37,41 +37,59 @@
                 android:id="@+id/frame"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <FrameLayout
                     android:id="@+id/notification_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
+
                     <ir.pattern.persianball.views.PersianBallImageButton
                         android:id="@+id/notification_icon"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:background="@drawable/notification_icon_background"
                         android:padding="8dp"
-                        android:src="@drawable/ic_notification"
-                        />
+                        android:src="@drawable/ic_notification" />
                 </FrameLayout>
             </FrameLayout>
 
-            <ir.pattern.persianball.views.PersianBallImageButton
-                android:id="@+id/bag_icon"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bag_icons_background"
-                android:padding="8dp"
-                android:src="@drawable/ic_bag"
+
+            <FrameLayout
+                android:id="@+id/frameShop"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 app:layout_constraintBottom_toBottomOf="@+id/frame"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/frame"
-                app:layout_constraintTop_toTopOf="@+id/frame" />
+                app:layout_constraintTop_toTopOf="@+id/frame">
+
+                <FrameLayout
+                    android:id="@+id/shop_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ir.pattern.persianball.views.PersianBallImageButton
+                        android:id="@+id/shop_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/bag_icons_background"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_bag"
+                        app:layout_constraintBottom_toBottomOf="@+id/frame"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@+id/frame"
+                        app:layout_constraintTop_toTopOf="@+id/frame" />
+                </FrameLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/login_layout"
@@ -79,12 +97,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:orientation="horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/bag_icon"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/frameShop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/bag_icon"
-                app:layout_constraintTop_toTopOf="@+id/bag_icon">
+                app:layout_constraintTop_toTopOf="@+id/frameShop">
 
 
                 <ir.pattern.persianball.views.PersianBallTextView
@@ -115,12 +133,12 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/bag_icon"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/frameShop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/bag_icon"
-                app:layout_constraintTop_toTopOf="@+id/bag_icon">
+                app:layout_constraintTop_toTopOf="@+id/frameShop">
 
                 <ir.pattern.persianball.views.PersianBallTextView
                     android:id="@+id/hi_user"
@@ -128,7 +146,8 @@
                     android:layout_height="45dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
-                    android:text="@string/hi_user" />
+                    android:text="@string/hi_user"
+                    android:visibility="gone" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profile_image"
@@ -138,7 +157,7 @@
                     android:padding="15dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                    app:srcCompat="@drawable/tom" />
+                    />
             </LinearLayout>
 
 

@@ -1,11 +1,13 @@
 package ir.pattern.persianball.presenter.feature.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +18,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.ChangePassword
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.databinding.FragmentChangePasswordBinding
+import ir.pattern.persianball.error.ErrorDTO
 import ir.pattern.persianball.manager.AccountManager
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,10 +59,24 @@ class ChangePasswordFragment : Fragment() {
                 when (it) {
                     is Resource.Success -> {
                         accountManager.updatePassword(binding.passwordEditText.text.toString())
+                        val resultIntent = Intent()
+                        activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                         activity?.finish()
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage : String = when(it.error.code){
+                            ErrorDTO.SAME_PASSWORD -> {
+                                resources.getString(R.string.same_password)
+                            }
+                            ErrorDTO.WRONG_PASSWORD -> {
+                                resources.getString(R.string.wrong_password)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

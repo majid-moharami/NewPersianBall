@@ -12,12 +12,17 @@ data class AcademyDto(
     @SerializedName("section_count") val section_count: Int,
     @SerializedName("week_count") val weekCount: Int,
     @SerializedName("course_title") val courseTitle: String,
-    @SerializedName("image") val image: String,
+    @SerializedName("image") val image: String?,
     @SerializedName("course_description") val courseDescription: String,
     @SerializedName("course_difficulty") val courseDifficulty: String,
     @SerializedName("course_duration") val courseDuration: Int,
     @SerializedName("detail") val detail: MovieDetailDto,
-    @SerializedName("variants") val variants: List<VariantDto?>
+    @SerializedName("variants") val variants: List<VariantDto?>,
+    @SerializedName("discount_percentage") val discountPercentage: Int?,
+    @SerializedName("course_price") val coursePrice: Int?,
+    @SerializedName("images") val images: List<String?>,
+    @SerializedName("video") val video: String?,
+    @SerializedName("category") val category: CategoryDto?
 ): Serializable
 
 data class MovieDetailDto(
@@ -41,7 +46,7 @@ data class SectionDto(
 
 data class TimeAndLocationsDto(
     @SerializedName("is_active") val isActive: Boolean,
-    @SerializedName("image") val image: String,
+    @SerializedName("image") val image: String?,
     @SerializedName("price") val price: Int,
     @SerializedName("location") val location: String,
     @SerializedName("time") val time: String,
@@ -61,4 +66,9 @@ data class CoachDto(
     @SerializedName("id") val id: Int,
     @SerializedName("full_name") val fullName: String,
     @SerializedName("avatar") val avatar: String
+): Serializable
+
+data class CategoryDto(
+    @SerializedName("name_farsi") val nameFarsi: String?,
+    @SerializedName("image") val image: String?,
 ): Serializable

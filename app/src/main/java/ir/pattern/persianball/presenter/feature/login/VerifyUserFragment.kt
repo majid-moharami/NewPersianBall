@@ -1,11 +1,13 @@
 package ir.pattern.persianball.presenter.feature.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +21,7 @@ import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.model.VerifyUser
 import ir.pattern.persianball.databinding.FragmentOtpForgetPasswordBinding
 import ir.pattern.persianball.databinding.FragmentOtpRegisterBinding
+import ir.pattern.persianball.error.ErrorDTO
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
@@ -73,13 +76,23 @@ class VerifyUserFragment : Fragment() {
                                     args.password,
                                     tokenDto.access,
                                     tokenDto.refresh
-                                )
+                                ,"")
                             )
+                            val resultIntent = Intent()
+                            activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                             activity?.finish()
                         }
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage = when(it.error.code){
+                            ErrorDTO.INVALID_CODE -> {
+                                resources.getString(R.string.invalid_code)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

@@ -2,6 +2,7 @@ package ir.pattern.persianball.presenter.feature.store.recycler
 
 import android.annotation.SuppressLint
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
@@ -47,30 +48,34 @@ class StoreViewHolder(
         data?.storeDto?.also {
             if (it.isAcademy) {
                 it.academyDto?.also { academy ->
-                    binding.title.text = academy.courseTitle
+                    binding.name.text = academy.courseTitle
                     Glide.with(itemView).load("https://api.persianball.ir/${academy.image}")
                         .into(binding.picture)
-                    binding.description.text = academy.courseDescription
+//                    binding.realPrice.text = itemView.resources.getString(R.string.product_price, academy.price)
+                    binding.percent.isVisible = false
                 }
             } else {
                 it.product?.also { product ->
-                    binding.title.text = product.nameFarsi
+                    binding.name.text = product.nameFarsi
                     Glide.with(itemView).load(product.image).into(binding.picture)
                     binding.realPrice.text =
                         itemView.resources.getString(R.string.product_price, product.price)
                     product.price?.also { price ->
                         if (product.discountPercentage != null) {
+                            if (product.discountPercentage > 0) {
+                                binding.percent.isVisible = true
+                                binding.discountPercent.text = "%${product.discountPercentage}"
+                            }
                             binding.discountedPrice.text = itemView.resources.getString(
                                 R.string.product_price,
                                 (price - (price * product.discountPercentage / 100))
                             )
                         }
                     }
-                    binding.description.text = product.description
                 }
             }
         }
-        setOnClickListener(binding.productDetailCardView, onProductPageClickListener, this, data)
-        setOnClickListener(binding.addProductCardView, onShoppingCartClickListener, this, data)
+//        setOnClickListener(binding.productDetailCardView, onProductPageClickListener, this, data)
+//        setOnClickListener(binding.addProductCardView, onShoppingCartClickListener, this, data)
     }
 }

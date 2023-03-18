@@ -21,12 +21,14 @@ constructor(
         val passwordKey = context.getString(R.string.share_pref_password)
         val accessTokenKey = context.getString(R.string.share_pref_token)
         val refreshTokenKey = context.getString(R.string.share_pref_refresh_token)
+        val profileImageUrl = context.getString(R.string.share_pref_profile_image_url)
 
         return UserCredential(
             sharedPref.getString(usernameKey, "").toString(),
             sharedPref.getString(passwordKey, "").toString(),
             sharedPref.getString(accessTokenKey, "").toString(),
-            sharedPref.getString(refreshTokenKey, "").toString()
+            sharedPref.getString(refreshTokenKey, "").toString(),
+            sharedPref.getString(profileImageUrl, "").toString()
         )
     }
 
@@ -41,11 +43,13 @@ constructor(
         val passwordKey = context.getString(R.string.share_pref_password)
         val accessTokenKey = context.getString(R.string.share_pref_token)
         val refreshTokenKey = context.getString(R.string.share_pref_refresh_token)
+        val profileImageUrl = context.getString(R.string.share_pref_profile_image_url)
 
         editor.putString(usernameKey, user.userName)
         editor.putString(passwordKey, user.password)
         editor.putString(accessTokenKey, user.token)
         editor.putString(refreshTokenKey, user.refreshToken)
+        editor.putString(profileImageUrl, user.profileImageUrl)
 
         editor.apply()
     }
@@ -71,6 +75,14 @@ constructor(
             context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
         val usernameKey = context.getString(R.string.share_pref_username)
         editor.putString(usernameKey, username)
+        editor.apply()
+    }
+
+    fun updateProfileImage(url: String?){
+        val editor =
+            context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE).edit()
+        val profileImageUrl = context.getString(R.string.share_pref_profile_image_url)
+        editor.putString(profileImageUrl, "https://api.persianball.ir/media/$url")
         editor.apply()
     }
 

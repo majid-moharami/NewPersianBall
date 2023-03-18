@@ -11,10 +11,7 @@ import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
 import ir.pattern.persianball.presenter.feature.setting.registered.recycler.RegisteredCoursesData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,25 +24,36 @@ class RegisteredCoursesViewModel
     val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
     private val recyclerList = mutableListOf<RecyclerItem>()
 
+    private val _cartList = MutableSharedFlow<Resource<Any?>>()
+    val cartList = _cartList.asSharedFlow()
+
+    private val _isEmpty = MutableSharedFlow<Boolean>()
+    val isEmpty = _isEmpty.asSharedFlow()
+
     init {
         viewModelScope.launch {
             getDashboard()
         }
     }
 
-    private suspend fun getDashboard() {
+    suspend fun getDashboard() {
+        _cartList.emit(Resource.Loading())
         dashboardRepository.getDashboard().collect {
             when (it) {
                 is Resource.Success -> {
+                    _cartList.emit(it)
+                    _isEmpty.emit(it.data.results.isEmpty())
                     it.data.results.map { dashboardDto ->
                         recyclerList.add(RecyclerItem(RegisteredCoursesData(dashboardDto)))
                     }
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
-                else -> {}
+                else -> {
+                    _cartList.emit(Resource.Loading())
+                }
             }
         }
     }

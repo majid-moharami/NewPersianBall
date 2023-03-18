@@ -15,6 +15,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.SignUp
 import ir.pattern.persianball.databinding.FragmentSignUpBinding
+import ir.pattern.persianball.error.ErrorDTO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -60,7 +61,19 @@ class SignUpFragment : Fragment() {
                         findNavController().navigate(action)
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage : String = when(it.error.code){
+                            ErrorDTO.INVALID_MOBILE -> {
+                                resources.getString(R.string.invalid_phone_number)
+                            }
+                            ErrorDTO.MOBILE_EXIST -> {
+                                resources.getString(R.string.mobile_exist)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

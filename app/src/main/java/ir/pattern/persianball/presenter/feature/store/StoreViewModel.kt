@@ -16,11 +16,10 @@ import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeCoursesRowData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeRecyclerHeaderData
+import ir.pattern.persianball.presenter.feature.store.recycler.FilterData
+import ir.pattern.persianball.presenter.feature.store.recycler.SearchData
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,10 +29,9 @@ class StoreViewModel
     private val homeRepository: HomeRepository,
     private val shoppingCartRepository: ShoppingCartRepository
 ) : BaseViewModel() {
-//    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
-//    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
     private val recyclerList = mutableListOf<RecyclerItem>()
-
+    private val _cartList = MutableSharedFlow<Resource<Any?>>()
+    val cartList = _cartList.asSharedFlow()
     init {
         viewModelScope.launch {
             getCourses()
@@ -41,22 +39,25 @@ class StoreViewModel
     }
 
     suspend fun getCourses() {
+        _cartList.emit(Resource.Loading())
         homeRepository.getCourses().collect {
             when (it) {
                 is Resource.Success -> {
+                    RecyclerItem(SearchData())
+                    RecyclerItem(FilterData())
                     it.data.result.map { course ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(true, academyDto = course)))
                         )
                     }
-                    viewModelScope.launch {
-                        getProducts()
-                    }
+                    getProducts()
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
-                else -> {}
+                else -> {
+                    _cartList.emit(Resource.Loading())
+                }
             }
         }
     }
@@ -65,6 +66,7 @@ class StoreViewModel
         homeRepository.getProducts().collect {
             when (it) {
                 is Resource.Success -> {
+                    _cartList.emit(it)
                     it.data.products.map { product ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(false, product = product)))
@@ -73,9 +75,11 @@ class StoreViewModel
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
-                else -> {}
+                else -> {
+                    _cartList.emit(Resource.Loading())
+                }
             }
         }
     }

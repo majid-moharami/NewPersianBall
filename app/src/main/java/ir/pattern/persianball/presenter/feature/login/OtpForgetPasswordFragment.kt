@@ -19,6 +19,7 @@ import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.model.VerifyUser
 import ir.pattern.persianball.databinding.FragmentForgetPasswordBinding
 import ir.pattern.persianball.databinding.FragmentOtpForgetPasswordBinding
+import ir.pattern.persianball.error.ErrorDTO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -67,7 +68,15 @@ class OtpForgetPasswordFragment : Fragment() {
                         findNavController().navigate(action)
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage = when(it.error.code){
+                            ErrorDTO.INVALID_CODE -> {
+                                resources.getString(R.string.invalid_code)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

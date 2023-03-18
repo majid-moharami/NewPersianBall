@@ -4,5 +4,6 @@ data class UserCredential(
     val username: String,
     var password: String,
     var token: String,
-    var refreshToken: String
+    var refreshToken: String,
+    var profileImageUrl: String
 )

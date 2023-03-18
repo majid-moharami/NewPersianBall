@@ -133,7 +133,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             // Image resolution will be less than 1080 x 1920
             .maxResultSize(1080, 1920)
             .start(MainActivity.GALLERY_SELECT_IMAGE_REQUEST_CODE)
-
     }
 
     private fun openCameraForImage() {

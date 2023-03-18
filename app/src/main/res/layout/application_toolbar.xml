@@ -111,8 +111,7 @@
             android:elevation="15dp"
             android:padding="15dp"
             android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-            app:srcCompat="@drawable/tom" />
+            app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
     </LinearLayout>
 
 

@@ -4,5 +4,6 @@ data class User(
     var userName: String?,
     var password: String?,
     var token: String?,
-    var refreshToken: String?
+    var refreshToken: String?,
+    var profileImageUrl: String?
 )

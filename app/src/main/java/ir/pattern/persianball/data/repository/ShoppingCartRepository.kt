@@ -65,6 +65,13 @@ constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun updateAddress(id: Long, orderAddress: OrderAddress): Flow<Resource<Any?>> {
+        return flow {
+            val result = shoppingCartDataSource.updateAddress(id ,orderAddress)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun doOrder(order: Order): Flow<Resource<PaymentLink?>> {
         return flow {
             val result = shoppingCartDataSource.doOrder(order)

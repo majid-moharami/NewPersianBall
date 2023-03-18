@@ -12,6 +12,7 @@ import ir.pattern.persianball.data.model.home.Course
 import ir.pattern.persianball.data.model.home.Courses
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.home.Slide
+import ir.pattern.persianball.data.model.shoppingCart.ShoppingCart
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
@@ -27,11 +28,11 @@ class HomeViewModel
     private val homeRepository: HomeRepository
 ) : BaseViewModel() {
 
-//    protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
-//    val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
     private val recyclerList = mutableListOf<RecyclerItem>()
-
-    private suspend fun getGallery() {
+    private val _cartList = MutableSharedFlow<Resource<Any?>>()
+    val cartList = _cartList.asSharedFlow()
+    suspend fun getGallery() {
+        _cartList.emit(Resource.Loading())
         homeRepository.getGallery().collect {
             when (it) {
                 is Resource.Success -> {
@@ -41,7 +42,7 @@ class HomeViewModel
                     }
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
                 else -> {}
             }
@@ -63,7 +64,7 @@ class HomeViewModel
                     }
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
                 else -> {}
             }
@@ -74,6 +75,7 @@ class HomeViewModel
         homeRepository.getProducts().collect {
             when (it) {
                 is Resource.Success -> {
+                    _cartList.emit(it)
                     recyclerList.add(RecyclerItem(HomeRecyclerHeaderData("محصولات جدید")))
                     it.data.products.map { product ->
                         recyclerList.add(RecyclerItem(HomeProductData(product)))
@@ -81,7 +83,7 @@ class HomeViewModel
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                 }
                 is Resource.Failure -> {
-
+                    _cartList.emit(Resource.Failure(it.error))
                 }
                 else -> {}
             }
@@ -93,40 +95,6 @@ class HomeViewModel
             viewModelScope.launch {
                 getGallery()
             }
-//           // val l = listOf(Course("1"),Course("1"),Course("1"),Course("1"),Course("1"))
-//            val list_course = mutableListOf<RecyclerItem>()
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            list_course.add(RecyclerItem(HomeCourseData(Course("1"))))
-//            val co = RecyclerData(flowOf(PagingData.from(list_course)))
-//            val list = mutableListOf<RecyclerItem>()
-//            list.add(RecyclerItem(HomeSliderData(Slide("slier"))))
-//            list.add(RecyclerItem(HomeCoursesRowData(co)))
-//
-//            list.add(RecyclerItem(HomeRecyclerHeaderData()))
-//            list.add(RecyclerItem(HomeProductData(Product("1"))))
-//            list.add(RecyclerItem(HomeProductData(Product("2"))))
-//            list.add(RecyclerItem(HomeProductData(Product("3"))))
-//            list.add(RecyclerItem(HomeProductData(Product("4"))))
-//            list.add(RecyclerItem(HomeProductData(Product("5"))))
-//            list.add(RecyclerItem(HomeProductData(Product("6"))))
-//            list.add(RecyclerItem(HomeProductData(Product("7"))))
-//            list.add(RecyclerItem(HomeProductData(Product("8"))))
-//            list.add(RecyclerItem(HomeProductData(Product("9"))))
-//            list.add(RecyclerItem(HomeProductData(Product("10"))))
-//            list.add(RecyclerItem(HomeProductData(Product("11"))))
-//            list.add(RecyclerItem(HomeProductData(Product("12"))))
-//            list.add(RecyclerItem(HomeProductData(Product("13"))))
-//            list.add(RecyclerItem(HomeProductData(Product("14"))))
-//            list.add(RecyclerItem(HomeProductData(Product("15"))))
-//            list.add(RecyclerItem(HomeProductData(Product("16"))))
-//            list.add(RecyclerItem(HomeProductData(Product("17"))))
-//            list.add(RecyclerItem(HomeProductData(Product("18"))))
-//            _recyclerItems.value = RecyclerData(flowOf(PagingData.from(list)))
         }
     }
 }

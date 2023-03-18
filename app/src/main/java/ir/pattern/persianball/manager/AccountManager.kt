@@ -24,7 +24,7 @@ constructor(
 
     val isLogin: Boolean
         get() {
-            return sharedPreferenceUtils.getUserCredentials().refreshToken.isNotBlank()
+            return getUsername().isNotBlank()
         }
 
     fun updatePassword(password: String) {

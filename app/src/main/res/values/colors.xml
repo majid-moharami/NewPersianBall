@@ -20,5 +20,6 @@
     <color name="send_method_card_color">#666F71AB</color>
     <color name="selected_order_address_background">#4BFFB703</color>
     <color name="other_order_address_background">#FCFCFC</color>
-
+    <color name="search_filter_selected">#6F71AB</color>
+    <color name="search_filter_unselected">#B9C2DC</color>
 </resources>

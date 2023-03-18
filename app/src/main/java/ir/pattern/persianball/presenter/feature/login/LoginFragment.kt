@@ -1,11 +1,14 @@
 package ir.pattern.persianball.presenter.feature.login
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +19,7 @@ import ir.pattern.persianball.data.model.Login
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.databinding.FragmentLoginBinding
+import ir.pattern.persianball.error.ErrorDTO
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,13 +59,24 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                 User(
                                     binding.userNameEditText.text.toString(),
                                     binding.passwordEditText.text.toString(),
-                                    tokenDto.access, tokenDto.refresh)
+                                    tokenDto.access, tokenDto.refresh, "")
                             )
+                            val resultIntent = Intent()
+                            activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                             activity?.finish()
                         }
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage : String = when(it.error.code){
+                            ErrorDTO.USER_NOT_FOUND -> {
+                                resources.getString(R.string.user_not_found)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

@@ -20,6 +20,10 @@ class AddAddressViewModel
         return shoppingCartRepository.addAddress(address)
     }
 
+    suspend fun updateAddress(id: Long, address: OrderAddress) : Flow<Resource<Any?>> {
+        return shoppingCartRepository.updateAddress(id, address)
+    }
+
     fun addressAdded(a: Boolean) {
         viewModelScope.launch {
             shoppingCartRepository.setAddressAdded(a)

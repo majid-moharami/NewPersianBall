@@ -6,6 +6,7 @@
     <string name="share_pref_password">share_pref_password</string>
     <string name="share_pref_token">share_pref_token</string>
     <string name="share_pref_refresh_token">share_pref_refresh_token</string>
+    <string name="share_pref_profile_image_url">share_pref_profile_image_url</string>
     <string name="home">خانه</string>
     <string name="store">فروشگاه</string>
     <string name="profile">پروفایل</string>
@@ -37,6 +38,7 @@
     <string name="signup_by_email">ثبت‌نام با ایمیل</string>
     <string name="get_code">دریافت کد</string>
     <string name="submit">ثبت</string>
+    <string name="change_info">ویرایش اطلاعات</string>
     <string name="login_to_show_profile">برای مشاهده این صفحه لاگین کنید</string>
     <string name="personal_info">اطلاعات شخصی</string>
     <string name="address_phone">تماس و آدرس</string>
@@ -63,4 +65,20 @@
     <string name="add_product_shopping_cart">اضافه کردن به سبد خرید</string>
     <string name="sending_method">روش ارسال</string>
     <string name="postal_code">کد پستی: %s</string>
+    <string name="pre_requisites">پیش نیازها</string>
+    <string name="lessons">درس ها</string>
+    <string name="try_again">مجددا تلاش کنید.</string>
+    <string name="text_try_again">اشکالی در ارتباط با سرور به‌وجود آمده‌است. لطفا دوباره امتحان کنید.</string>
+    <string name="btn_try_again">سعی مجدد</string>
+    <string name="description">توضیحات</string>
+    <string name="videos">ویدیوها</string>
+    <string name="error_dto_default_message">مشکلی در برقراری ارتباط به وجود آمد</string>
+    <string name="check_connection">لطفا اتصال دستگاه به اینترنت را چک کنید.</string>
+    <string name="user_not_found">نام کاربری یا رمز عبور صحیح نیست.</string>
+    <string name="invalid_phone_number">شماره موبایل صحیح نیست.</string>
+    <string name="mobile_exist">شماره قبلا ثبت شده است.</string>
+    <string name="phone_number_not_found">این شماره موبایل قبلا ثبت نشده است.</string>
+    <string name="invalid_code">کد وارد شده صحیح نمیباشد.</string>
+    <string name="same_password">پسورد تکراری است.</string>
+    <string name="wrong_password">پسورد پیشین اشتباه است.</string>
 </resources>

@@ -6,14 +6,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.repository.ProfileRepository
+import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddressViewModel
+class ProfileAddressViewModel
 @Inject constructor(
-    val profileRepository: ProfileRepository
+    val profileRepository: ProfileRepository,
+    private val shoppingCartRepository: ShoppingCartRepository
 ) : ViewModel() {
 
     private val _address = MutableStateFlow<Address?>(null)
@@ -21,6 +23,7 @@ class AddressViewModel
     var address: Address = Address()
     private val _addressResponse = MutableSharedFlow<Resource<Any?>>()
     val addressResponse = _addressResponse.asSharedFlow()
+    var addressAdded = shoppingCartRepository.addressAdded
 
     init {
         viewModelScope.launch {
@@ -28,7 +31,13 @@ class AddressViewModel
         }
     }
 
-    private suspend fun getAddress() {
+    fun setAddressAdded() {
+        viewModelScope.launch {
+            shoppingCartRepository.setAddressAdded(false)
+        }
+    }
+
+    suspend fun getAddress() {
         when (val result = profileRepository.getAddress()) {
             is Resource.Success -> {
                 if (result.data.result.isNotEmpty()) {

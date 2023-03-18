@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
@@ -26,6 +28,7 @@ import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
+import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val CAPTURE_IMAGE_REQUEST_CODE = 1000
         const val GALLERY_SELECT_IMAGE_REQUEST_CODE = 2000
+        const val LOGIN_REQUEST_CODE = 3
     }
 
     private lateinit var navController: NavController
@@ -50,9 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        lifecycleScope.launch {
-//            viewModel.refreshToken()
-//        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,18 +68,28 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.my_nav_host_fragment)
         setupNavigation()
         setupSmoothBottomMenu()
-        setBadge()
+        showToolbar(accountManager.isLogin)
+        lifecycleScope.launch {
+            viewModel.shopBadge.collect {
+                setShopBadge(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.avatar.collect {
+                if (!it.isNullOrEmpty()) {
+                    Glide.with(this@MainActivity)
+                        .load("https://api.persianball.ir/media/$it")
+                        .centerCrop()
+                        .into(binding.profileImage)
+                } else {
+                    binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                }
+            }
+        }
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        lifecycleScope.launch {
-            viewModel.isLogin.collect {
-                showToolbar(it)
-//                binding.frameLayout.visibility = View.GONE
-//                binding.loading.isIndeterminate = false
-//                binding.loading.visibility = View.GONE
-            }
-        }
         return super.onCreateView(name, context, attrs)
     }
 
@@ -98,45 +109,63 @@ class MainActivity : AppCompatActivity() {
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment, R.id.academyFragment,
-                R.id.storeFragment, R.id.dashboardFragment -> {
+                R.id.homeFragment, R.id.academyFragment, R.id.dashboardFragment -> {
+                    lifecycleScope.launch {
+                        viewModel.getShoppingCart()
+                    }
                     binding.toolbar.visibility = View.VISIBLE
-                    binding.bottomBar. visibility = View.VISIBLE
+                    binding.bottomBar.visibility = View.VISIBLE
+                    if (viewModel.getProfileImage().isNotEmpty()) {
+                        Glide.with(this)
+                            .load(viewModel.getProfileImage())
+                            .centerCrop()
+                            .into(binding.profileImage)
+                    } else {
+                        binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                    }
+                }
+                R.id.storeFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                    binding.bottomBar.visibility = View.VISIBLE
                 }
                 R.id.profileFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
                 else -> {
                     binding.toolbar.visibility = View.GONE
-                    binding.bottomBar. visibility = View.GONE
+                    binding.bottomBar.visibility = View.GONE
                 }
             }
         }
     }
 
-    private fun showToolbar(isLogin: Boolean){
+    private fun showToolbar(isLogin: Boolean) {
         if (isLogin) {
             binding.loginLayout.visibility = View.GONE
-            binding.welcomeLayout.visibility =
-                View.VISIBLE
+            binding.welcomeLayout.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                if (viewModel.getProfileImage().isEmpty()) {
+                    viewModel.getUser()
+                }
+            }
         } else {
             binding.loginLayout.visibility = View.VISIBLE
             binding.welcomeLayout.visibility = View.GONE
             binding.signup.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("IS_LOGIN", false)
-                startActivity(intent)
+                startActivityForResult(intent, LOGIN_REQUEST_CODE)
             }
             binding.login.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("IS_LOGIN", true)
-                startActivity(intent)
+                startActivityForResult(intent, LOGIN_REQUEST_CODE)
             }
         }
 
-        binding.bagIcon.setOnClickListener {
+        binding.shopIcon.setOnClickListener {
             val intent = Intent(this, ShoppingCartsActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, LOGIN_REQUEST_CODE)
         }
     }
 
@@ -146,12 +175,26 @@ class MainActivity : AppCompatActivity() {
         badgeDrawable.number = 1
         badgeDrawable.backgroundColor = resources.getColor(R.color.white)
         badgeDrawable.badgeTextColor = resources.getColor(R.color.notification_icon_color)
-        badgeDrawable.badgeGravity = BadgeDrawable.BOTTOM_END
+        badgeDrawable.badgeGravity = BadgeDrawable.TOP_START
         badgeDrawable.setBoundsFor(
             binding.notificationBadge,
             binding.frame
         )
-        binding.notificationBadge.foreground =
+        binding.frame.foreground =
+            badgeDrawable
+    }
+
+    private fun setShopBadge(count: Int) {
+        val badgeDrawable = BadgeDrawable.create(this@MainActivity)
+        badgeDrawable.number = count
+        badgeDrawable.backgroundColor = resources.getColor(R.color.white)
+        badgeDrawable.badgeTextColor = resources.getColor(R.color.notification_icon_color)
+        badgeDrawable.badgeGravity = BadgeDrawable.TOP_START
+        badgeDrawable.setBoundsFor(
+            binding.shopBadge,
+            binding.frameShop
+        )
+        binding.frameShop.foreground =
             badgeDrawable
     }
 
@@ -167,6 +210,12 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE || requestCode == GALLERY_SELECT_IMAGE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 handleImageUri(data)
+            }
+        }
+
+        if (requestCode == LOGIN_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                showToolbar(accountManager.isLogin)
             }
         }
     }

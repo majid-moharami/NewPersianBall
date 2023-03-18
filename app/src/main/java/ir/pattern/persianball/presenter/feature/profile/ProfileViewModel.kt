@@ -14,6 +14,7 @@ import ir.pattern.persianball.data.repository.ProfileRepository
 import ir.pattern.persianball.presenter.feature.profile.recycler.ProfileImageData
 import ir.pattern.persianball.presenter.feature.profile.recycler.ProfileInformationData
 import ir.pattern.persianball.presenter.feature.profile.recycler.ProfileNameData
+import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class ProfileViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    var sharedPreferenceUtils: SharedPreferenceUtils
 ) : ViewModel() {
     protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
     val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
@@ -54,6 +56,7 @@ class ProfileViewModel
                             rvItem
                         } else if (rvItem.data is ProfileImageData) {
                             _avatar.emit(personalDto.avatar)
+                            sharedPreferenceUtils.updateProfileImage(personalDto.avatar)
                             rvItem
                         } else {
                             rvItem
@@ -69,6 +72,7 @@ class ProfileViewModel
             val result = profileRepository.uploadAvatar(username, file)
             if (result is Resource.Success) {
                 _avatar.emit(result.data.avatar)
+                sharedPreferenceUtils.updateProfileImage(result.data.avatar)
             }
         }
     }

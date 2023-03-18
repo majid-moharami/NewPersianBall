@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,34 +13,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.databinding.FragmentAcademyBinding
+import ir.pattern.persianball.databinding.FragmentHomeBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AcademyFragment : Fragment() {
+class AcademyFragment : BaseFragment() {
 
     lateinit var binding: FragmentAcademyBinding
     var pagingAdapter: BasePagingAdapter? = null
     private val viewModel: AcademyViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(activity),
-            R.layout.fragment_academy,
-            container,
-            false
-        )
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getAcademy()
-        }
+    override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
+        binding = FragmentAcademyBinding.inflate(inflater)
         return binding.root
     }
 
@@ -60,6 +52,32 @@ class AcademyFragment : Fragment() {
                         )
                     findNavController().navigate(directions)
                 }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.cartList.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        showLoading(false)
+                        binding.recycler.isVisible = true
+                    }
+                    is Resource.Failure -> {
+                        showLoading(false)
+                        showTryAgainView(true)
+                        binding.recycler.isVisible = false
+                    }
+                    else -> {
+                        showLoading(true)
+                    }
+                }
+            }
+        }
+
+        baseBinding.tryAgainBtn.setOnClickListener {
+            showTryAgainView(false)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.getAcademy()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

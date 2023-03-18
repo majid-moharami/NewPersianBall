@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.databinding.FragmentBaseBinding
 
 @AndroidEntryPoint
-open class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     private var _baseBinding: FragmentBaseBinding? = null
     val baseBinding get() = _baseBinding!!
@@ -18,12 +19,15 @@ open class BaseFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    abstract fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _baseBinding = FragmentBaseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        baseBinding.content.addView(getChildView(layoutInflater, container))
         return baseBinding.root
     }
 
@@ -37,6 +41,14 @@ open class BaseFragment : Fragment() {
             baseBinding.loading.isIndeterminate = false
             baseBinding.loading.visibility = View.GONE
         }
+    }
+
+    fun showTryAgainView(show: Boolean){
+        baseBinding.layoutTryAgain.isVisible = show
+    }
+
+    fun showEmptyLayout(show: Boolean) {
+        baseBinding.emptyLayout.isVisible = show
     }
 
     companion object {

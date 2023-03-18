@@ -9,19 +9,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.ChangePasswordDto
-import ir.pattern.persianball.databinding.FragmentAddressBinding
-import ir.pattern.persianball.databinding.FragmentProfileBinding
 import ir.pattern.persianball.databinding.FragmentProfilePasswordBinding
-import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
-import ir.pattern.persianball.presenter.feature.profile.address.AddressDataAdapter
-import ir.pattern.persianball.presenter.feature.profile.address.AddressViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

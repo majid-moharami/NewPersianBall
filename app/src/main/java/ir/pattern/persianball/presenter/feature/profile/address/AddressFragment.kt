@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.profile.address
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.address.OrderAddress
+import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.data.model.profile.ItemInfoDto
 import ir.pattern.persianball.databinding.FragmentAddressBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
-import ir.pattern.persianball.presenter.feature.profile.EditInfoDialogFragment
 import ir.pattern.persianball.presenter.feature.profile.EditInfoViewModel
+import ir.pattern.persianball.presenter.feature.shopping.address.add.AddAddressActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -28,9 +31,10 @@ import kotlinx.coroutines.launch
 class AddressFragment : Fragment() {
 
     lateinit var binding: FragmentAddressBinding
-    private val viewModel: AddressViewModel by viewModels({ requireParentFragment() })
+    private val viewModel: ProfileAddressViewModel by viewModels({ requireParentFragment() })
     private val dialogViewModel: EditInfoViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
+    var address: Address? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,58 +52,72 @@ class AddressFragment : Fragment() {
                 if (it != null) {
                     viewModel.address = it
                 }
-                it?.also { address ->
-                    binding.addressContent.text = address.address
-                    binding.phoneNumberContent.text = address.mobilePhone
-                    binding.homeNumberContent.text = address.homePhone
-                    binding.emailContent.text = address.email
-                    binding.postalCodeContent.text = address.postalCode.toString()
+                it?.also { oAddress ->
+                    address = oAddress
+                    binding.addressContent.text = oAddress.address
+                    binding.phoneNumberContent.text = oAddress.mobilePhone
+                    binding.homeNumberContent.text = oAddress.homePhone
+                    binding.emailContent.text = oAddress.email
+                    binding.postalCodeContent.text = oAddress.postalCode.toString()
+                }
+            }
+
+            viewModel.addressAdded.collectLatest {
+                if (it) {
+                    viewModel.getAddress()
+                    viewModel.setAddressAdded()
                 }
             }
         }
 
-        binding.addressPersianBallImageButton.setOnClickListener {
-            val dialog =
-                EditInfoDialogFragment.newInstance(viewModel.address.address, InfoType.ADDRESS)
-            dialog.show(childFragmentManager, "edit_info_dialog")
-        }
-        binding.homeNumberPersianBallImageButton.setOnClickListener {
-            val dialog =
-                EditInfoDialogFragment.newInstance(viewModel.address.homePhone, InfoType.HOME_PHONE)
-            dialog.show(childFragmentManager, "edit_info_dialog")
-        }
-        binding.phoneNumberPersianBallImageButton.setOnClickListener {
-            val dialog = EditInfoDialogFragment.newInstance(
-                viewModel.address.mobilePhone,
-                InfoType.PHONE_NUMBER
-            )
-            dialog.show(childFragmentManager, "edit_info_dialog")
-        }
-        binding.emailPersianBallImageButton.setOnClickListener {
-            val dialog = EditInfoDialogFragment.newInstance(viewModel.address.email, InfoType.EMAIL)
-            dialog.show(childFragmentManager, "edit_info_dialog")
-        }
-        binding.postalCodePersianBallImageButton.setOnClickListener {
-            val dialog = EditInfoDialogFragment.newInstance(
-                viewModel.address.postalCode.toString(),
-                InfoType.POSTAL_CODE
-            )
-            dialog.show(childFragmentManager, "edit_info_dialog")
-        }
+//        binding.addressPersianBallImageButton.setOnClickListener {
+//            val dialog =
+//                EditInfoDialogFragment.newInstance(viewModel.address.address, InfoType.ADDRESS)
+//            dialog.show(childFragmentManager, "edit_info_dialog")
+//        }
+//        binding.homeNumberPersianBallImageButton.setOnClickListener {
+//            val dialog =
+//                EditInfoDialogFragment.newInstance(viewModel.address.homePhone, InfoType.HOME_PHONE)
+//            dialog.show(childFragmentManager, "edit_info_dialog")
+//        }
+//        binding.phoneNumberPersianBallImageButton.setOnClickListener {
+//            val dialog = EditInfoDialogFragment.newInstance(
+//                viewModel.address.mobilePhone,
+//                InfoType.PHONE_NUMBER
+//            )
+//            dialog.show(childFragmentManager, "edit_info_dialog")
+//        }
+//        binding.emailPersianBallImageButton.setOnClickListener {
+//            val dialog = EditInfoDialogFragment.newInstance(viewModel.address.email, InfoType.EMAIL)
+//            dialog.show(childFragmentManager, "edit_info_dialog")
+//        }
+//        binding.postalCodePersianBallImageButton.setOnClickListener {
+//            val dialog = EditInfoDialogFragment.newInstance(
+//                viewModel.address.postalCode.toString(),
+//                InfoType.POSTAL_CODE
+//            )
+//            dialog.show(childFragmentManager, "edit_info_dialog")
+//        }
         binding.submitBtn.setOnClickListener {
-            if (viewModel.address.isEmpty()) {
-                Toast.makeText(
-                    requireActivity(),
-                    "هیچ اطلاعاتی وارد نکرده‌اید!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                if (allDataFilled()) {
-                    viewModel.createAddress(viewModel.address)
+//            if (viewModel.address.isEmpty()) {
+//                Toast.makeText(
+//                    requireActivity(),
+//                    "هیچ اطلاعاتی وارد نکرده‌اید!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            } else {
+//                if (allDataFilled()) {
+//                    viewModel.createAddress(viewModel.address)
+//                }
+//            }
+//            viewLifecycleOwner.lifecycleScope.launch {
+//            }
+            val intent = Intent(activity, AddAddressActivity::class.java).apply {
+                address?.also {
+                    putExtra(ADDRESS_OBJECT_EXTRA_CODE, it)
                 }
             }
-            viewLifecycleOwner.lifecycleScope.launch {
-            }
+            startActivityForResult(intent, ADDRESS_REQUEST_CODE)
         }
         return binding.root
     }
@@ -243,6 +261,9 @@ class AddressFragment : Fragment() {
     }
 
     companion object {
+        const val ADDRESS_REQUEST_CODE = 1234
+        const val ADDRESS_OBJECT_EXTRA_CODE = "ADDRESS_OBJECT_EXTRA_CODE"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

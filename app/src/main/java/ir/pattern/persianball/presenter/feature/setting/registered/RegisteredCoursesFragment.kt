@@ -5,36 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.databinding.FragmentRegisteredCoursesBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
+import ir.pattern.persianball.presenter.feature.BaseFragment
 import ir.pattern.persianball.presenter.feature.profile.password.ProfilePasswordFragment
 import ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegisteredCoursesFragment : Fragment() {
+class RegisteredCoursesFragment : BaseFragment() {
     lateinit var binding: FragmentRegisteredCoursesBinding
     var pagingAdapter: BasePagingAdapter? = null
     private val viewModel: RegisteredCoursesViewModel by viewModels()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(activity),
-            R.layout.fragment_registered_courses,
-            container,
-            false
-        )
+    override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
+        binding = FragmentRegisteredCoursesBinding.inflate(inflater)
         return binding.root
     }
 
@@ -45,6 +40,38 @@ class RegisteredCoursesFragment : Fragment() {
 
         pagingAdapter = RegisteredCoursesAdapter().also {
             binding.recyclerView.adapter = it
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isEmpty.collect{
+                showEmptyLayout(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.cartList.collect {
+                when (it) {
+                    is Resource.Success -> {
+                        showLoading(false)
+                        binding.recyclerView.isVisible = true
+                    }
+                    is Resource.Failure -> {
+                        showLoading(false)
+                        showTryAgainView(true)
+                        binding.recyclerView.isVisible = false
+                    }
+                    else -> {
+                        showLoading(true)
+                    }
+                }
+            }
+        }
+
+        baseBinding.tryAgainBtn.setOnClickListener {
+            showTryAgainView(false)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.getDashboard()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

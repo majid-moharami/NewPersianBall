@@ -20,7 +20,7 @@ import ir.pattern.persianball.presenter.feature.setting.progress.ProgressFragmen
 import ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesFragment
 
 @AndroidEntryPoint
-class DashboardFragment : BaseFragment() {
+class DashboardFragment : Fragment() {
     lateinit var binding: FragmentSettingBinding
     var pagingAdapter: BasePagingAdapter? = null
     private val viewModel: DashboardViewModel by viewModels()

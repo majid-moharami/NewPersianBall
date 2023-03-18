@@ -9,8 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.address.OrderAddress
+import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import ir.pattern.persianball.databinding.ActivityAddAddressBinding
+import ir.pattern.persianball.presenter.feature.profile.address.AddressFragment
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,52 +21,128 @@ import javax.inject.Inject
 class AddAddressActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddAddressBinding
     private val viewModel: AddAddressViewModel by viewModels()
+
     @Inject
     lateinit var shoppingCartRepository: ShoppingCartRepository
+    var address: Address? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        address = try {
+            intent.getSerializableExtra(AddressFragment.ADDRESS_OBJECT_EXTRA_CODE) as Address
+        }catch (e:Exception){
+            null
+        }
+        address?.also {
+            setView(it)
+        }
         binding.addBtn.setOnClickListener {
-            addAddress()
+            addAddress(address != null)
+        }
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
         }
     }
 
-    private fun addAddress() {
+    private fun setView(address: Address) {
+        binding.addressName.setText(address.addressName)
+        binding.phoneNumber.setText(address.mobilePhone)
+        binding.address.setText(address.address)
+        binding.email.setText(address.email)
+        address.postalCode?.let { binding.postalCode.setText(it.toString()) }
+    }
+
+    private fun addAddress(isUpdate: Boolean) {
         if (!binding.phoneNumber.text.isNullOrBlank() && !binding.province.text.isNullOrBlank() &&
-            !binding.eparchy.text.isNullOrBlank() && !binding.address.text.isNullOrBlank() &&
-            !binding.postalCode.text.isNullOrBlank()
+            !binding.eparchy.text.isNullOrBlank() && !binding.address.text.isNullOrBlank()
         ) {
-            binding.also {
-                lifecycleScope.launch {
-                    viewModel.addAddress(
-                        OrderAddress(
-                            it.addressName.text?.toString(),
-                            it.postalCode.text.toString(),
-                            "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
-                            it.homePhone.text.toString(),
-                            it.phoneNumber.text.toString()
-                        )
-                    ).collect {
-                        when (it) {
-                            is Resource.Success -> {
-                                viewModel.addressAdded(true)
-                                this@AddAddressActivity.finish()
+            if (binding.postalCode.text.isNullOrEmpty() || binding.postalCode.text.length != 10) {
+                Toast.makeText(
+                    this@AddAddressActivity,
+                    "لطفا کد پستی 10 رقمی را وارد کنید.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                if (isUpdate) {
+                    binding.also {
+                        lifecycleScope.launch {
+                            address?.id?.let { it1 ->
+                                viewModel.updateAddress(
+                                    it1,
+                                    OrderAddress(
+                                        it.addressName.text?.toString(),
+                                        it.postalCode.text.toString(),
+                                        "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                        it.homePhone.text.toString(),
+                                        it.phoneNumber.text.toString()
+                                    ).apply {
+                                        if (!it.email.text.isNullOrEmpty()) {
+                                            this.email = it.email.text.toString()
+                                        }
+                                        if (!it.homePhone.text.isNullOrEmpty()) {
+                                            this.receiverHomePhone = it.homePhone.text.toString()
+                                        }
+                                    }
+                                ).collect {
+                                    when (it) {
+                                        is Resource.Success -> {
+                                            viewModel.addressAdded(true)
+                                            this@AddAddressActivity.finish()
+                                        }
+                                        is Resource.Failure -> {
+                                            Toast.makeText(
+                                                this@AddAddressActivity,
+                                                "لطفا موارد اجباری را پر کنید.",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                        else -> {}
+                                    }
+                                }
                             }
-                            is Resource.Failure -> {
-                                Toast.makeText(
-                                    this@AddAddressActivity,
-                                    "لطفا جاهای خالی را پر کنید.",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                        }
+                    }
+                } else {
+                    binding.also {
+                        lifecycleScope.launch {
+                            viewModel.addAddress(
+                                OrderAddress(
+                                    it.addressName.text?.toString(),
+                                    it.postalCode.text.toString(),
+                                    "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                    it.homePhone.text.toString(),
+                                    it.phoneNumber.text.toString()
+                                ).apply {
+                                    if (!it.email.text.isNullOrEmpty()) {
+                                        this.email = it.email.text.toString()
+                                    }
+                                    if (!it.homePhone.text.isNullOrEmpty()) {
+                                        this.receiverHomePhone = it.homePhone.text.toString()
+                                    }
+                                }
+                            ).collect {
+                                when (it) {
+                                    is Resource.Success -> {
+                                        viewModel.addressAdded(true)
+                                        this@AddAddressActivity.finish()
+                                    }
+                                    is Resource.Failure -> {
+                                        Toast.makeText(
+                                            this@AddAddressActivity,
+                                            "لطفا موارد اجباری را پر کنید.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                    else -> {}
+                                }
                             }
-                            else -> {}
                         }
                     }
                 }
             }
         } else {
-            Toast.makeText(this, "لطفا جاهای خالی را پر کنید.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "لطفا موارد اجباری را پر کنید.", Toast.LENGTH_LONG).show()
         }
     }
 }

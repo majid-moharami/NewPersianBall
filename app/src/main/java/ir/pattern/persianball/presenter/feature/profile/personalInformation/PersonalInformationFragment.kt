@@ -198,7 +198,7 @@ class PersonalInformationFragment : Fragment() {
                             }
                             birthDate?.also {
                                 viewModel.personalData.birthDate = it
-                                binding.bithdateContent.text = it.toString()
+                                binding.bithdateContent.text = getPersianDate(it.toString())
                             }
                             gender?.also {
                                 viewModel.personalData.gender = it
@@ -338,6 +338,20 @@ class PersonalInformationFragment : Fragment() {
                     }
                 }
             }
+        }
+
+    }
+
+    fun getPersianDate(date: String?): String {
+        if (date.isNullOrEmpty()) {
+            return ""
+        } else {
+            val format = SimpleDateFormat("yyyy-MM-dd")
+            val date: Date = format.parse(date)
+            val c = Calendar.getInstance()
+            c.time = date
+            val persianDate = DateConverter.civilToPersian(CivilDate(c))
+            return "${persianDate.year}/${persianDate.month}/${persianDate.dayOfMonth}"
         }
     }
 

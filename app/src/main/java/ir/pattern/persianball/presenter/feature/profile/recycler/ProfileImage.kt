@@ -75,13 +75,13 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         job = Job()
         CoroutineScope(Dispatchers.Main.immediate + job!!).launch {
             data?.avatar?.collectLatest {
-                if (it.isNullOrEmpty()) {
+//                if (it.isNullOrEmpty()) {
                     binding.profileImage.setOnClickListener {
                         uploadImager.invoke()
                     }
-                } else {
-                    binding.profileImage.setOnClickListener(null)
-                }
+//                } else {
+//                    binding.profileImage.setOnClickListener(null)
+//                }
             }
         }
     }

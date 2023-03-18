@@ -22,7 +22,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:drawableEnd="@drawable/ic_frame"
+
                 android:drawablePadding="5dp"
                 android:text="نام"
                 android:textColor="#6F71AB"
@@ -48,7 +48,7 @@
                 app:layout_constraintStart_toEndOf="@+id/persianBallImageButton"
                 app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
-            <ir.pattern.persianball.views.PersianBallImageButton
+            <ImageView
                 android:id="@+id/persianBallImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

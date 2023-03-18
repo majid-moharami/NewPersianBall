@@ -4,208 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#CECFE8"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardBackgroundColor="#807C8EC2"
-            app:cardCornerRadius="15dp"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/picture"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="140dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_ball"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:background="#6F71AB"
-                    android:gravity="center|right"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/priceCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/picture">
 
-                    <ir.pattern.persianball.views.PersianBallTextView
-                        android:id="@+id/title"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="2dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/percent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/iran_sans_bold"
-                        android:maxLines="1"
-                        android:text="توپ آتشین"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_size_large" />
+                        android:layout_marginStart="8dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/red"
+                        app:cardCornerRadius="13dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/real_price"
+                        app:layout_constraintStart_toEndOf="@+id/discounted_price"
+                        app:layout_constraintTop_toTopOf="@+id/discounted_price">
 
-                </LinearLayout>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/picture"
-                    android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_ball"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/priceCardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/picture">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="2dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardView2"
+                        <TextView
+                            android:id="@+id/discount_percent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:cardBackgroundColor="#EAEDF5"
-                            app:cardCornerRadius="4dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
-                                android:src="@drawable/ic_discount" />
-                        </androidx.cardview.widget.CardView>
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/discounted_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
+                            android:layout_margin="4dp"
                             android:fontFamily="@font/iran_sans_bold"
-                            android:gravity="center"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/font_size_very_small"
-                            app:layout_constraintBottom_toTopOf="@+id/real_price"
-                            app:layout_constraintEnd_toStartOf="@+id/cardView2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="30000 تومان" />
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:id="@+id/real_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/strike"
-                            android:textColor="#717171"
-                            android:textSize="@dimen/font_size_very_small"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/cardView2"
-                            app:layout_constraintTop_toBottomOf="@+id/discounted_price"
-                            tools:text="40000 تومان" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/descriptionCardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="#E0E0E0"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/priceCardView">
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/font_size_small"
+                            tools:text="%20" />
+                    </androidx.cardview.widget.CardView>
 
                     <ir.pattern.persianball.views.PersianBallTextView
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/iran_sans"
-                        android:maxLines="3"
-                        android:textColor="#8F8D93"
-                        android:textSize="@dimen/font_size_small" />
-                </androidx.cardview.widget.CardView>
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/iran_sans_bold"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="توپ" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/descriptionCardView">
+                    <ir.pattern.persianball.views.PersianBallTextView
+                        android:id="@+id/discounted_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/iran_sans_bold"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/font_size_normal"
+                        app:layout_constraintBottom_toTopOf="@+id/real_price"
+                        app:layout_constraintEnd_toEndOf="@+id/name"
+                        app:layout_constraintStart_toStartOf="@+id/name"
+                        app:layout_constraintTop_toBottomOf="@+id/name"
+                        tools:text="30000 تومان" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/add_product_cardView"
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        app:cardBackgroundColor="#6F71AB"
-                        app:cardCornerRadius="8dp">
+                    <ir.pattern.persianball.views.PersianBallTextView
+                        android:id="@+id/real_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/strike"
+                        android:textColor="#717171"
+                        android:textSize="@dimen/font_size_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/discounted_price"
+                        app:layout_constraintStart_toStartOf="@+id/discounted_price"
+                        app:layout_constraintTop_toBottomOf="@+id/discounted_price"
+                        tools:text="40000 تومان" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/shopping_cart" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/product_detail_cardView"
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        app:cardBackgroundColor="#6F71AB"
-                        app:cardCornerRadius="8dp">
-
-                        <ir.pattern.persianball.views.PersianBallTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/iran_sans_bold"
-                            android:text="@string/product_detail"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_small" />
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

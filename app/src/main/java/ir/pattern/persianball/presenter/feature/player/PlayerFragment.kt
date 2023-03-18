@@ -97,7 +97,7 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
         binding.playerView.player = player
         binding.controller.player = player
         val mediaItem =
-            MediaItem.fromUri("https://stream9.myket.ir/hls/v2/movie/gapfilm/ODM2AR0XBP/ApSxbqTyvSyR5c98YEsg_w/master.m3u8?md5=3HUM3QrWXEJ8Si1ifpHRDw&expires=1677253822&isp=rightel")
+            MediaItem.fromUri("https://ahmadrezafs.arvanvod.ir/b7lBak2goN/x5zyMey8Yq/h_,144_200,240_400,360_800,480_838,720_838,k.mp4.list/master.m3u8")
         val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
         val mediaSource =
             HlsMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)

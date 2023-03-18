@@ -16,6 +16,7 @@ import ir.pattern.persianball.data.model.ForgetPassword
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.databinding.FragmentForgetPasswordBinding
+import ir.pattern.persianball.error.ErrorDTO
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,18 @@ class ForgerPasswordFragment : Fragment() {
                         findNavController().navigate(action)
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(activity, it.error.toString(), Toast.LENGTH_LONG).show()
+                        val massage = when (it.error.code) {
+                            ErrorDTO.INVALID_MOBILE -> {
+                                resources.getString(R.string.invalid_phone_number)
+                            }
+                            ErrorDTO.USER_NOT_FOUND -> {
+                                resources.getString(R.string.phone_number_not_found)
+                            }
+                            else -> {
+                                it.error.toString()
+                            }
+                        }
+                        Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {
 

@@ -27,8 +27,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedCornersRegisteredCourseImageView"
-                tools:src="@drawable/pics" />
+                app:shapeAppearanceOverlay="@style/roundedCornersRegisteredCourseImageView" />
 
             <TextView
                 android:id="@+id/title"

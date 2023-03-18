@@ -45,8 +45,9 @@ constructor(
             val accessToken = sharedPreferenceUtils.getUserCredentials().token
             val refreshToken =
                 sharedPreferenceUtils.getUserCredentials().refreshToken
+            val profileImageUrl = sharedPreferenceUtils.getUserCredentials().profileImageUrl
             sharedPreferenceUtils.putUserCredentials(
-                User(username, password, accessToken, refreshToken)
+                User(username, password, accessToken, refreshToken, profileImageUrl)
             )
             token = (it as Resource.Success).data?.access
         }

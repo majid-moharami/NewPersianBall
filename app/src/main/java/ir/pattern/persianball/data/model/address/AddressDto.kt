@@ -21,7 +21,7 @@ data class OrderAddress(
     @SerializedName("address_name") val addressName: String?,
     @SerializedName("postal_code") val postalCode: String,
     @SerializedName("address") val address: String,
-    @SerializedName("receiver_home_phone") val receiverHomePhone: String,
+    @SerializedName("receiver_home_phone") var receiverHomePhone: String,
     @SerializedName("receiver_mobile_phone") val receiverMobilePhone: String,
-    @SerializedName("email") val email: String? = null
+    @SerializedName("email") var email: String? = null
 )
