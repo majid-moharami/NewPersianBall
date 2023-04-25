@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -30,6 +31,11 @@ android {
 
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -126,4 +132,9 @@ dependencies {
 
     implementation 'com.github.badoualy:stepper-indicator:1.0.7'
     implementation 'com.github.shuhart:stepview:1.5.1'
+
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation "com.google.firebase:firebase-analytics-ktx:21.2.2"
+    implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
+    implementation "com.google.firebase:firebase-messaging:23.1.2"
 }

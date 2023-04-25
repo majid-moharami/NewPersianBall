@@ -10,7 +10,6 @@ import ir.pattern.persianball.presenter.feature.store.recycler.*
 
 class StoreAdapter : BasePagingAdapter() {
     lateinit var onProductPageClickListener: BaseViewHolder.OnClickListener<StoreViewHolder, StoreData>
-    lateinit var onShoppingCartClickListener: BaseViewHolder.OnClickListener<StoreViewHolder, StoreData>
 
     lateinit var onSearchClickListener: BaseViewHolder.OnClickListener<SearchViewHolder, SearchData>
 
@@ -20,7 +19,7 @@ class StoreAdapter : BasePagingAdapter() {
 
     override fun getViewHolder(parent: ViewGroup, viewType: Int, view: View): BaseViewHolder<*>? {
         return when (viewType) {
-            StoreData.VIEW_TYPE -> StoreViewHolder(view, onProductPageClickListener, onShoppingCartClickListener)
+            StoreData.VIEW_TYPE -> StoreViewHolder(view, onProductPageClickListener)
             FilterData.VIEW_TYPE -> FilterViewHolder(view, onCoursesClickListener, onProductClickListener, onClassesClickListener)
             SearchData.VIEW_TYPE -> SearchViewHolder(view, onSearchClickListener)
             else -> null

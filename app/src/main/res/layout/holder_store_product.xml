@@ -67,20 +67,21 @@
                         android:layout_marginStart="8dp"
                         android:visibility="gone"
                         app:cardBackgroundColor="@color/red"
-                        app:cardCornerRadius="13dp"
+                        app:cardCornerRadius="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/real_price"
                         app:layout_constraintStart_toEndOf="@+id/discounted_price"
                         app:layout_constraintTop_toTopOf="@+id/discounted_price">
 
                         <TextView
                             android:id="@+id/discount_percent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:layout_margin="4dp"
+                            android:gravity="center"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_small"
-                            tools:text="%20" />
+                            android:textSize="@dimen/font_size_very_small"
+                            tools:text="%10" />
                     </androidx.cardview.widget.CardView>
 
                     <ir.pattern.persianball.views.PersianBallTextView

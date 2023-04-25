@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.NotificationCounter
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.model.UserCredential
 import javax.inject.Inject
@@ -13,6 +14,12 @@ class SharedPreferenceUtils
 constructor(
     val context: Application
 ){
+
+    fun getNotificationCounter(): NotificationCounter {
+        val sharedPref = context.getSharedPreferences(NOTIFICATION_COUNTER, Context.MODE_PRIVATE)
+        val counterKey = context.getString(R.string.notification_counter)
+        return NotificationCounter(sharedPref.getInt(counterKey, 0))
+    }
 
     fun getUserCredentials(): UserCredential {
         val sharedPref = context.getSharedPreferences(USER_CREDENTIALS_FILE, Context.MODE_PRIVATE)
@@ -30,6 +37,14 @@ constructor(
             sharedPref.getString(refreshTokenKey, "").toString(),
             sharedPref.getString(profileImageUrl, "").toString()
         )
+    }
+
+    fun putNotificationCounter(count : Int) {
+        val editor = context.getSharedPreferences(NOTIFICATION_COUNTER, Context.MODE_PRIVATE).edit()
+        val counterKey = context.getString(R.string.notification_counter)
+        editor.putInt(counterKey, count)
+
+        editor.apply()
     }
 
     fun putUserCredentials(user: User) {
@@ -97,5 +112,6 @@ constructor(
         const val TAG = "Utils.SharedPreference"
         // User Authentication
         const val USER_CREDENTIALS_FILE = "UserCredentials"
+        const val NOTIFICATION_COUNTER = "NotificationCounter"
     }
 }

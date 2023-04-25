@@ -43,14 +43,17 @@ class HomeFragment : BaseFragment() {
             it.onCourseClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     val directions =
-                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(recyclerData.academy)
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(recyclerData.academy.id)
                     findNavController().navigate(directions)
                 }
             baseBinding.loading
             it.onProductClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
-                    startActivity(intent)
+//                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
+//                    startActivity(intent)
+                    val directions =
+                        HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(recyclerData.product.id)
+                    findNavController().navigate(directions)
                 }
         }
 

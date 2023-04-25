@@ -30,7 +30,7 @@ class MainActivityViewModel
     private val accountManager: AccountManager,
     private val loginRemoteDataSource: LoginRemoteDataSource,
     private val shoppingCartRepository: ShoppingCartRepository,
-    private val sharedPreferenceUtils: SharedPreferenceUtils,
+    val sharedPreferenceUtils: SharedPreferenceUtils,
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
@@ -41,10 +41,6 @@ class MainActivityViewModel
     private val _avatar = MutableSharedFlow<String?>()
     val avatar = _avatar.asSharedFlow()
     suspend fun refreshToken() {
-        viewModelScope.launch {
-            _isLogin.emit(false)
-        }
-
         if (accountManager.getRefreshToken().isNotBlank()) {
             when (val result =
                 loginRemoteDataSource.refreshToken(RefreshTokenDto(accountManager.getRefreshToken()))) {
@@ -56,14 +52,11 @@ class MainActivityViewModel
                 }
 
                 is Resource.Failure<*> -> {
-//                    if (result.error.code == ErrorDTO.CODE_SERVER_SING_OUT ||
-//                        result.error.code == ErrorDTO.CODE_ACCESS_DENIED
-//                    ) {
-//                        loginRepository.logout()
-//                        viewModelScope.launch {
-//                            _isLogin.emit(false)
-//                        }
-//                    }
+                    if(result.error.code == "token_not_valid"){
+                        viewModelScope.launch {
+                            _isLogin.emit(false)
+                        }
+                    }
                 }
                 else -> {}
             }

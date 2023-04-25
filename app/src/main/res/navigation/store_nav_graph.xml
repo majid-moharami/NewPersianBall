@@ -14,21 +14,47 @@
         <action
             android:id="@+id/action_storeFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_storeFragment_to_storeSearchFragment"
+            app:destination="@id/storeSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="ir.pattern.persianball.presenter.feature.movie.MovieDetailFragment"
         android:label="MovieDetailFragment" >
         <argument
-            android:name="academy"
-            app:argType="ir.pattern.persianball.data.model.academy.AcademyDto" />
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_sectionListFragment"
+            app:destination="@id/sectionListFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="ir.pattern.persianball.presenter.feature.productDetail.ProductDetailFragment"
         android:label="ProductDetailFragment" >
         <argument
-            android:name="product"
-            app:argType="ir.pattern.persianball.data.model.home.Product" />
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/sectionListFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.SectionListFragment"
+        android:label="SectionListFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/storeSearchFragment"
+        android:name="ir.pattern.persianball.presenter.feature.store.search.StoreSearchFragment"
+        android:label="StoreSearchFragment" >
+        <action
+            android:id="@+id/action_storeSearchFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_storeSearchFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
 </navigation>

@@ -9,6 +9,7 @@ import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderStoreFilterBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class FilterData(): PersianBallRecyclerData, Equatable {
     companion object {
@@ -18,6 +19,8 @@ class FilterData(): PersianBallRecyclerData, Equatable {
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int = javaClass.hashCode()
 }

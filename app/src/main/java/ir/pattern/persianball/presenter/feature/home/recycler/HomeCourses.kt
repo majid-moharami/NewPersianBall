@@ -7,6 +7,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.*
 import ir.pattern.persianball.data.model.home.Courses
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class HomeCoursesHorizontalDataAdapter() : PagingHorizontalDataAdapter() {
 
@@ -70,6 +71,8 @@ class HomeCoursesRowData(private val homeCourses: RecyclerData) :
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
 //        var result = courses.hashCode()

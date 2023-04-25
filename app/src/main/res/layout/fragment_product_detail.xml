@@ -31,7 +31,8 @@
         <ImageView
             android:id="@+id/poster"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,23 +50,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/header_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/iran_sans_bold"
                     android:textColor="#4F6F79"
                     android:textSize="@dimen/font_size_super_huge"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView"
                     tools:text="جاتوپی پرشین بال" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
@@ -182,27 +191,28 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent">
 
-                            <ImageView
-                                android:id="@+id/imageView62"
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
+                            <Spinner
+                                android:id="@+id/color_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:src="@drawable/arrow_down"
+                                android:gravity="right"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toEndOf="@+id/color_selected"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/color_selected"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginStart="8dp"
+                                app:cardCornerRadius="8dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:fontFamily="@font/iran_sans"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/font_size_large"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/imageView62"
-                                app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -234,6 +244,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <ImageView
+                                android:id="@+id/plus"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_marginEnd="8dp"
@@ -243,6 +254,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
+                                android:id="@+id/product_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/iran_sans_bold"
@@ -254,6 +266,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
+                                android:id="@+id/minus"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_marginStart="8dp"
@@ -291,27 +304,15 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent">
 
-                            <ImageView
-                                android:id="@+id/imageView6"
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:layout_marginStart="8dp"
-                                android:src="@drawable/arrow_down"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
+                            <Spinner
+                                android:id="@+id/size_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="16dp"
-                                android:fontFamily="@font/iran_sans"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/font_size_large"
+                                android:gravity="right"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>

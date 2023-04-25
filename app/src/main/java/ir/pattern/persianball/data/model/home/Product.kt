@@ -16,8 +16,9 @@ data class Product(
     @SerializedName("price") val price: Int?,
     @SerializedName("created_at") val createdAt: String?,
     @SerializedName("variants") val variants: List<VariantsDto?>?,
-    @SerializedName("images") val images: List<String?>?,
-    @SerializedName("video") val video: String?
+    @SerializedName("images") val images: List<String>?,
+    @SerializedName("video") val video: String?,
+    @SerializedName("video_thumbnail") val videoThumbnail: String?
 ): Serializable
 
 data class VariantsDto(

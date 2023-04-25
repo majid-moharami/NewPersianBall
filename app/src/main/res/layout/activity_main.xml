@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:backgroundTint="#00FFFFFF"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -156,8 +157,7 @@
                     android:elevation="15dp"
                     android:padding="15dp"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                    />
+                    app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
             </LinearLayout>
 
 

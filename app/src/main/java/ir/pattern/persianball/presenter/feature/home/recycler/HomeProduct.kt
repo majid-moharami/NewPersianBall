@@ -12,6 +12,7 @@ import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.databinding.HomeNewProductViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class HomeProductData(var product: Product) : PersianBallRecyclerData, Equatable {
 
@@ -22,6 +23,8 @@ class HomeProductData(var product: Product) : PersianBallRecyclerData, Equatable
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

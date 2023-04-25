@@ -17,6 +17,7 @@ import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.profile.address.AddressFragment
 import ir.pattern.persianball.presenter.feature.profile.personalInformation.PersonalInformationFragment
 import ir.pattern.persianball.presenter.feature.profile.password.ProfilePasswordFragment
+import java.util.*
 
 class ProfileInformationData() : PersianBallRecyclerData, Equatable {
 
@@ -27,6 +28,8 @@ class ProfileInformationData() : PersianBallRecyclerData, Equatable {
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return viewType

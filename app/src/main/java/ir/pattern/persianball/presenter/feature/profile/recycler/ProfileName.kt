@@ -10,6 +10,7 @@ import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderProfileNameBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import kotlinx.coroutines.flow.StateFlow
+import java.util.*
 
 class ProfileNameData(var firstName: String? = "", var lastName: String? = "", var name: StateFlow<String?>) : PersianBallRecyclerData, Equatable{
 
@@ -28,6 +29,8 @@ class ProfileNameData(var firstName: String? = "", var lastName: String? = "", v
 
         return true
     }
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         var result = firstName?.hashCode() ?: 0

@@ -13,6 +13,7 @@ import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.data.model.profile.ItemInfoDto
 import ir.pattern.persianball.databinding.PersonalInformationViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class InfoItemData(val content: String, val infoType: InfoType) : PersianBallRecyclerData,
     Equatable {
@@ -24,6 +25,8 @@ class InfoItemData(val content: String, val infoType: InfoType) : PersianBallRec
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

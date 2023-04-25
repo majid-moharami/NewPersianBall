@@ -128,7 +128,8 @@ class ShoppingCartListFragment : BaseFragment() {
                         baseBinding.empty.isVisible = false
                         showLoading(false)
                         binding.recyclerView.isVisible = true
-                        binding.bottomBar.isVisible = it.data.result.isEmpty()
+                        binding.bottomBar.isVisible = true
+                        binding.continueBtn.isEnabled = true
                     }
                     is Resource.Failure -> {
                         baseBinding.empty.isVisible = false

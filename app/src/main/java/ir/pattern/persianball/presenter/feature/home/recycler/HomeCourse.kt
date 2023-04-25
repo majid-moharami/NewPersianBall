@@ -15,6 +15,7 @@ import ir.pattern.persianball.data.model.home.Course
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class HomeCourseData(var academy: AcademyDto) : PersianBallRecyclerData, Equatable {
     companion object {
@@ -24,6 +25,8 @@ class HomeCourseData(var academy: AcademyDto) : PersianBallRecyclerData, Equatab
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentLessonsBinding
@@ -23,8 +24,14 @@ class LocationOrSupportFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location_or_support, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(activity),
+            R.layout.fragment_location_or_support,
+            container,
+            false
+        )
+        binding.txt.text = arguments?.getString("DESCRIPTION")
+        return binding.root
     }
 
     companion object {
@@ -38,10 +45,10 @@ class LocationOrSupportFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(description: String?) =
             LocationOrSupportFragment().apply {
                 arguments = Bundle().apply {
-
+                    putString("DESCRIPTION", description)
                 }
             }
     }

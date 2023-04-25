@@ -13,6 +13,7 @@ import ir.pattern.persianball.databinding.HolderShopCartItemBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreData
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreViewHolder
+import java.util.*
 
 class ShoppingCartData(val shoppingCartItemDto: ShoppingCartItemDto) : PersianBallRecyclerData, Equatable {
 
@@ -23,6 +24,8 @@ class ShoppingCartData(val shoppingCartItemDto: ShoppingCartItemDto) : PersianBa
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int = javaClass.hashCode()
 }

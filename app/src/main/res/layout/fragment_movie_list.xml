@@ -6,13 +6,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.feature.movie.MovieListFragment">
+        tools:context=".presenter.feature.movie.SectionListFragment">
 
         <ImageView
             android:id="@+id/poster"
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="130dp"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,11 +23,12 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:fontFamily="@font/iran_sans_bold"
             android:textColor="@color/white"
             android:textSize="21sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="دوره دریبل وی" />
@@ -41,6 +43,7 @@
             android:fontFamily="@font/iran_sans_bold"
             android:textColor="@color/white"
             android:textSize="19sp"
+            android:visibility="gone"
             app:drawableRightCompat="@drawable/ic_clock"
             app:layout_constraintBottom_toBottomOf="@+id/poster"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -56,6 +59,7 @@
             android:fontFamily="@font/iran_sans_bold"
             android:textColor="@color/white"
             android:textSize="19sp"
+            android:visibility="gone"
             app:drawableRightCompat="@drawable/ic_play_circle"
             app:layout_constraintBottom_toBottomOf="@+id/poster"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +75,25 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/poster" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

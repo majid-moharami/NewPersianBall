@@ -164,14 +164,17 @@
                 app:layout_constraintTop_toTopOf="@+id/exo_progress"
                 tool:text="dssdd" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/hd_icon"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_margin="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:src="@drawable/hd"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_medium"
+                android:fontFamily="@font/iran_sans_bold"
+                android:text="HD"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

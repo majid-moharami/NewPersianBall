@@ -48,7 +48,7 @@ class AcademyFragment : BaseFragment() {
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     val directions =
                         AcademyFragmentDirections.actionAcademyFragmentToMovieDetailFragment(
-                            recyclerData.academy
+                            recyclerData.academy.id
                         )
                     findNavController().navigate(directions)
                 }

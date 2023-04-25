@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969192049743",
+    "project_id": "persianball",
+    "storage_bucket": "persianball.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969192049743:android:5fc9221e1513208b732e3a",
+        "android_client_info": {
+          "package_name": "ir.pattern.persianball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969192049743-l0bgrciprbbq51v4i6hqe8g0iigsaipi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVrTC56P4qUeAPY9YXMqib8G2JOcre8PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969192049743-l0bgrciprbbq51v4i6hqe8g0iigsaipi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

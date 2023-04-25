@@ -41,6 +41,9 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
     lateinit var binding: FragmentPlayerBinding
     lateinit var player: ExoPlayer
 
+    @Inject
+    lateinit var repository: PlayerRepository
+
     private var controller: MovieController? = null
     private var movieVideoController: MovieController
         set(value) {
@@ -54,9 +57,9 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
         }
         get() = iMovieController!!
     private var iMovieController: IMovieVideoController? = null
-    private var trackSelector:DefaultTrackSelector?=null
+    private var trackSelector: DefaultTrackSelector? = null
     var qualityList = ArrayList<Pair<String, TrackSelectionOverrides.Builder>>()
-    private var qualityPopUp: PopupMenu?=null
+    private var qualityPopUp: PopupMenu? = null
     private lateinit var trackNameProvider: TrackNameProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +78,9 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
             false
         )
         initController()
-        initPlayer()
+        repository.videoUrl?.also {
+            initPlayer(it)
+        }
         setListener()
         return binding.root
     }
@@ -90,14 +95,14 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
             }
     }
 
-    private fun initPlayer() {
+    private fun initPlayer(url: String) {
         trackSelector = DefaultTrackSelector(requireContext(), AdaptiveTrackSelection.Factory())
         player = ExoPlayer.Builder(requireContext()).setTrackSelector(trackSelector!!).build()
         binding.playerView.controllerAutoShow = false
         binding.playerView.player = player
         binding.controller.player = player
         val mediaItem =
-            MediaItem.fromUri("https://ahmadrezafs.arvanvod.ir/b7lBak2goN/x5zyMey8Yq/h_,144_200,240_400,360_800,480_838,720_838,k.mp4.list/master.m3u8")
+            MediaItem.fromUri(url)
         val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
         val mediaSource =
             HlsMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
@@ -110,7 +115,7 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
     }
 
     override fun onPlaybackStateChanged(playbackState: Int) {
-        if (playbackState==Player.STATE_READY){
+        if (playbackState == Player.STATE_READY) {
             trackSelector?.generateQualityList()?.let {
                 qualityList = it
                 setUpQualityList()
@@ -120,14 +125,17 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
 
 
     private fun setUpQualityList() {
-        qualityPopUp = PopupMenu(requireContext(), controller?.controllerBinding?.hdIcon, Gravity.RIGHT)
+        qualityPopUp =
+            PopupMenu(requireContext(), controller?.controllerBinding?.hdIcon, Gravity.RIGHT)
         qualityList.let {
             for ((i, videoQuality) in it.withIndex()) {
                 qualityPopUp?.menu?.add(0, i, 0, videoQuality.first)
             }
         }
         qualityPopUp?.setOnMenuItemClickListener { menuItem ->
+
             qualityList[menuItem.itemId].let {
+                controller?.controllerBinding?.hdIcon?.text = it.first
                 trackSelector?.apply {
                     parameters = parameters.buildUpon()
                         .setTrackSelectionOverrides(it.second.build())
@@ -223,6 +231,16 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
     override fun onDestroy() {
         player.release()
         super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        play(false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        play(true)
     }
 
 

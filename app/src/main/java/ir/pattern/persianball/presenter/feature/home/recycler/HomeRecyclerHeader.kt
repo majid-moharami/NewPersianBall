@@ -10,6 +10,7 @@ import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderHomeRecyclerTitleBinding
 import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class HomeRecyclerHeaderData(val title: String) : PersianBallRecyclerData, Equatable {
     companion object {
@@ -21,6 +22,8 @@ class HomeRecyclerHeaderData(val title: String) : PersianBallRecyclerData, Equat
     override fun equals(other: Any?): Boolean {
         TODO("Not yet implemented")
     }
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

@@ -6,7 +6,9 @@ import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.base.RecyclerData
+import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.model.store.StoreDto
 import ir.pattern.persianball.data.repository.HomeRepository
@@ -32,6 +34,14 @@ class StoreViewModel
     private val recyclerList = mutableListOf<RecyclerItem>()
     private val _cartList = MutableSharedFlow<Resource<Any?>>()
     val cartList = _cartList.asSharedFlow()
+
+    private lateinit var courseList: List<AcademyDto>
+    private lateinit var productList: List<Product>
+
+    var isClassFilter = false
+    var isProductFilter = false
+    var isCourseFilter = false
+
     init {
         viewModelScope.launch {
             getCourses()
@@ -45,6 +55,7 @@ class StoreViewModel
                 is Resource.Success -> {
                     RecyclerItem(SearchData())
                     RecyclerItem(FilterData())
+                    courseList = it.data.result
                     it.data.result.map { course ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(true, academyDto = course)))
@@ -67,6 +78,7 @@ class StoreViewModel
             when (it) {
                 is Resource.Success -> {
                     _cartList.emit(it)
+                    productList = it.data.products
                     it.data.products.map { product ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(false, product = product)))
@@ -84,7 +96,61 @@ class StoreViewModel
         }
     }
 
-    suspend fun addCartItem(item: CartItem){
+    fun filterProducts() {
+        val filteredList = mutableListOf<RecyclerItem>()
+
+        if (!isCourseFilter && !isClassFilter && !isProductFilter) {
+            _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
+            return
+        }
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(filteredList)))
+        if (isCourseFilter) {
+            courseList.map {
+                if (it.category?.nameFarsi == "دوره ها") {
+                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+                }
+            }
+        }
+        if (isClassFilter) {
+            courseList.map {
+                if (it.category?.nameFarsi == "کلاس ها") {
+                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+                }
+            }
+        }
+        if (isProductFilter) {
+            productList.map {
+                filteredList.add(RecyclerItem(StoreData(StoreDto(false, product = it))))
+            }
+        }
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(filteredList)))
+    }
+
+    fun search(query: String?) {
+        val searchedList = mutableListOf<RecyclerItem>()
+        if (!query.isNullOrEmpty()) {
+            courseList.map { course ->
+                if (course.courseTitle.contains(query, true)) {
+                    searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = course))))
+                }
+            }
+            productList.map { product ->
+                if (product.nameFarsi.contains(query, true)) {
+                    searchedList.add(RecyclerItem(StoreData(StoreDto(false, product = product))))
+                }
+            }
+        } else {
+            courseList.map {
+                searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+            }
+            productList.map { product ->
+                searchedList.add(RecyclerItem(StoreData(StoreDto(false, product = product))))
+            }
+        }
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(searchedList)))
+    }
+
+    suspend fun addCartItem(item: CartItem) {
         shoppingCartRepository.addCartItem(item)
     }
 }

@@ -18,7 +18,18 @@
         android:name="ir.pattern.persianball.presenter.feature.movie.MovieDetailFragment"
         android:label="MovieDetailFragment">
         <argument
-            android:name="academy"
-            app:argType="ir.pattern.persianball.data.model.academy.AcademyDto" />
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_sectionListFragment"
+            app:destination="@id/sectionListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sectionListFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.SectionListFragment"
+        android:label="SectionListFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>

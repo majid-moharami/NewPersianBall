@@ -15,12 +15,16 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.ActivityMainBinding
@@ -29,6 +33,9 @@ import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -49,8 +56,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModels()
 
+    private val _changeAvatar = MutableSharedFlow<Boolean>()
+    val changeAvatar = _changeAvatar.asSharedFlow()
+
     @Inject
     lateinit var accountManager: AccountManager
+    lateinit var sharedPreferenceUtils: SharedPreferenceUtils
 
     override fun onResume() {
         super.onResume()
@@ -65,6 +76,16 @@ class MainActivity : AppCompatActivity() {
             viewModel.refreshToken()
         }
         setContentView(binding.root)
+
+        FirebaseApp.initializeApp(this)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                val s = it.result
+                Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+                return@addOnCompleteListener
+            }
+        }
+        sharedPreferenceUtils = SharedPreferenceUtils(application)
         navController = findNavController(R.id.my_nav_host_fragment)
         setupNavigation()
         setupSmoothBottomMenu()
@@ -82,6 +103,29 @@ class MainActivity : AppCompatActivity() {
                         .load("https://api.persianball.ir/media/$it")
                         .centerCrop()
                         .into(binding.profileImage)
+                    sharedPreferenceUtils.updateProfileImage(it)
+                } else {
+                    binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.isLogin.collect {
+                showToolbar(it)
+                if (!it) {
+                    sharedPreferenceUtils.clearCredentials()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            changeAvatar.collect {
+                if (sharedPreferenceUtils.getUserCredentials().profileImageUrl.isNotEmpty()) {
+                    Glide.with(this@MainActivity)
+                        .load(viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl)
+                        .centerCrop()
+                        .into(binding.profileImage)
                 } else {
                     binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
                 }
@@ -92,7 +136,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         return super.onCreateView(name, context, attrs)
     }
-
 
     private fun setupSmoothBottomMenu() {
         val popupMenu = PopupMenu(this, null)
@@ -108,6 +151,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
+
             when (destination.id) {
                 R.id.homeFragment, R.id.academyFragment, R.id.dashboardFragment -> {
                     lifecycleScope.launch {
@@ -115,13 +159,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomBar.visibility = View.VISIBLE
-                    if (viewModel.getProfileImage().isNotEmpty()) {
-                        Glide.with(this)
-                            .load(viewModel.getProfileImage())
-                            .centerCrop()
-                            .into(binding.profileImage)
-                    } else {
-                        binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                    lifecycleScope.launch {
+                        _changeAvatar.emit(true)
                     }
                 }
                 R.id.storeFragment -> {
@@ -140,12 +179,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToolbar(isLogin: Boolean) {
+        binding.toolbar.isVisible = true
         if (isLogin) {
             binding.loginLayout.visibility = View.GONE
             binding.welcomeLayout.visibility = View.VISIBLE
             lifecycleScope.launch {
                 if (viewModel.getProfileImage().isEmpty()) {
                     viewModel.getUser()
+                } else {
+                    Glide.with(this@MainActivity)
+                        .load(viewModel.getProfileImage())
+                        .centerCrop()
+                        .into(binding.profileImage)
                 }
             }
         } else {
@@ -166,6 +211,10 @@ class MainActivity : AppCompatActivity() {
         binding.shopIcon.setOnClickListener {
             val intent = Intent(this, ShoppingCartsActivity::class.java)
             startActivityForResult(intent, LOGIN_REQUEST_CODE)
+        }
+
+        binding.notificationIcon.setOnClickListener {
+            Toast.makeText(this, sharedPreferenceUtils.getNotificationCounter().count.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

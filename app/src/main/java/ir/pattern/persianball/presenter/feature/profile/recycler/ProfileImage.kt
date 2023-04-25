@@ -17,6 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBallRecyclerData,
     Equatable {
@@ -37,6 +38,8 @@ class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBall
 
         return true
     }
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return avatar.hashCode() ?: 0

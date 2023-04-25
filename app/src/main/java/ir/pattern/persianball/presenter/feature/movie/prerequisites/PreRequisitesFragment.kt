@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.databinding.FragmentLessonsBinding
 import ir.pattern.persianball.databinding.FragmentPreRequisitesBinding
@@ -13,6 +15,7 @@ import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.feature.movie.courses.LessonsViewModel
 import ir.pattern.persianball.presenter.feature.setting.progress.ProgressFragment
 
+@AndroidEntryPoint
 class PreRequisitesFragment : Fragment() {
 
     lateinit var binding: FragmentPreRequisitesBinding
@@ -22,9 +25,15 @@ class PreRequisitesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pre_requisites, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(activity),
+            R.layout.fragment_pre_requisites,
+            container,
+            false
+        )
+        binding.txt.text = arguments?.getString("REQUISITES")
+        return binding.root
     }
 
     companion object {
@@ -38,10 +47,10 @@ class PreRequisitesFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(requisites: String?) =
             PreRequisitesFragment().apply {
                 arguments = Bundle().apply {
-
+                    putString("REQUISITES", requisites)
                 }
             }
     }

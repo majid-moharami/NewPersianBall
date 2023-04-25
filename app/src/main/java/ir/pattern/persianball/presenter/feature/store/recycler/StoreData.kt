@@ -14,23 +14,34 @@ import ir.pattern.persianball.databinding.HolderStoreProductBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseViewHolder
+import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
+import java.util.*
 
 class StoreData(val storeDto: StoreDto) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.holder_store_product
     }
 
+    val id = UUID.randomUUID().toString()
+
     override val viewType: Int = VIEW_TYPE
 
-    override fun equals(other: Any?): Boolean = true
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as StoreData
+        if (id != other.id) return false
+        return true
+    }
+
+    override fun getUniqueId(): String = id
 
     override fun hashCode(): Int = javaClass.hashCode()
 }
 
 class StoreViewHolder(
     itemView: View,
-    private val onProductPageClickListener: OnClickListener<StoreViewHolder, StoreData>?,
-    private val onShoppingCartClickListener: OnClickListener<StoreViewHolder, StoreData>?
+    private val onProductPageClickListener: OnClickListener<StoreViewHolder, StoreData>?
 ) : BaseViewHolder<StoreData>(itemView) {
 
     lateinit var binding: HolderStoreProductBinding
@@ -51,31 +62,47 @@ class StoreViewHolder(
                     binding.name.text = academy.courseTitle
                     Glide.with(itemView).load("https://api.persianball.ir/${academy.image}")
                         .into(binding.picture)
-//                    binding.realPrice.text = itemView.resources.getString(R.string.product_price, academy.price)
-                    binding.percent.isVisible = false
+                    academy.coursePrice?.also { price ->
+                        if (academy.discountPercentage != null) {
+                            if (academy.discountPercentage > 0) {
+                                binding.realPrice.text =
+                                    itemView.resources.getString(R.string.product_price, academy.coursePrice)
+                                binding.percent.isVisible = true
+                                binding.discountedPrice.text = itemView.resources.getString(
+                                    R.string.product_price,
+                                    (price - (price * academy.discountPercentage / 100))
+                                )
+                                binding.discountPercent.text = "%${academy.discountPercentage}"
+                            }else {
+                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, academy.coursePrice)
+                            }
+                        }
+                    }
                 }
             } else {
                 it.product?.also { product ->
                     binding.name.text = product.nameFarsi
-                    Glide.with(itemView).load(product.image).into(binding.picture)
-                    binding.realPrice.text =
-                        itemView.resources.getString(R.string.product_price, product.price)
+                    Glide.with(itemView).load("https://api.persianball.ir/${product.image}")
+                        .into(binding.picture)
                     product.price?.also { price ->
                         if (product.discountPercentage != null) {
                             if (product.discountPercentage > 0) {
+                                binding.realPrice.text =
+                                    itemView.resources.getString(R.string.product_price, product.price)
                                 binding.percent.isVisible = true
+                                binding.discountedPrice.text = itemView.resources.getString(
+                                    R.string.product_price,
+                                    (price - (price * product.discountPercentage / 100))
+                                )
                                 binding.discountPercent.text = "%${product.discountPercentage}"
+                            }else {
+                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, product.price)
                             }
-                            binding.discountedPrice.text = itemView.resources.getString(
-                                R.string.product_price,
-                                (price - (price * product.discountPercentage / 100))
-                            )
                         }
                     }
                 }
             }
         }
-//        setOnClickListener(binding.productDetailCardView, onProductPageClickListener, this, data)
-//        setOnClickListener(binding.addProductCardView, onShoppingCartClickListener, this, data)
+        setOnClickListener(binding.cardView, onProductPageClickListener, this, data)
     }
 }

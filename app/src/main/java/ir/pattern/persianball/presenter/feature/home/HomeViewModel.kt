@@ -75,6 +75,7 @@ class HomeViewModel
         homeRepository.getProducts().collect {
             when (it) {
                 is Resource.Success -> {
+                    homeRepository.products = it.data
                     _cartList.emit(it)
                     recyclerList.add(RecyclerItem(HomeRecyclerHeaderData("محصولات جدید")))
                     it.data.products.map { product ->

@@ -7,12 +7,23 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var playerRepository: PlayerRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        val haveUrl = intent.getBooleanExtra("HAVE_URL", false)
+        if (haveUrl){
+            playerRepository.videoUrl = null
+            playerRepository.videoUrl = intent.getStringExtra("URL")
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

@@ -25,9 +25,9 @@ abstract class BasePagingAdapter : PagingDataAdapter<RecyclerItem, BaseViewHolde
     object DiffUtilCallBack : DiffUtil.ItemCallback<RecyclerItem>() {
         override fun areItemsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
             if (oldItem.data is Equatable && newItem.data is Equatable) {
-                return oldItem.hashCode() == newItem.hashCode()
+                return (oldItem.data as Equatable).getUniqueId() == (newItem.data as Equatable).getUniqueId()
             }
-            return oldItem.data.javaClass.name == newItem.data.javaClass.name
+            return false
         }
 
         override fun areContentsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {

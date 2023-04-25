@@ -5,9 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.Academy
-import ir.pattern.persianball.data.model.home.Courses
-import ir.pattern.persianball.data.model.home.Gallery
-import ir.pattern.persianball.data.model.home.Products
+import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
 import ir.pattern.persianball.data.remote.datasource.HomeRemoteDataSource
 import ir.pattern.persianball.utils.singlePagingConfig
@@ -32,6 +30,8 @@ class HomeRepository
 //        }
 //    ).flow
 
+    lateinit var products : Products
+
     suspend fun getCourses(): Flow<Resource<Academy>> {
         return flow {
             val result = homeRemoteDataSource.getCourses()
@@ -46,7 +46,7 @@ class HomeRepository
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getGallery(): Flow<Resource<Gallery>> {
+    suspend fun getGallery(): Flow<Resource<SliderList>> {
         return flow {
             val result = homeRemoteDataSource.getGalley()
             emit(result)

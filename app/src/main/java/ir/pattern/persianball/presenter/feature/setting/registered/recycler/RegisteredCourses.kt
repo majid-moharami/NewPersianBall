@@ -11,6 +11,7 @@ import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.data.model.dashboard.DashboardDto
 import ir.pattern.persianball.databinding.HolderRegisteredCourseBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class RegisteredCoursesData(val dashboardDto: DashboardDto) : PersianBallRecyclerData, Equatable {
 
@@ -21,6 +22,8 @@ class RegisteredCoursesData(val dashboardDto: DashboardDto) : PersianBallRecycle
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
         return javaClass.hashCode()

@@ -33,10 +33,6 @@ class StoreFragment : BaseFragment() {
     var pagingAdapter: BasePagingAdapter? = null
     private val viewModel: StoreViewModel by viewModels()
 
-    private var isClassFilter = false
-    private var isProductFilter = false
-    private var isCourseFilter = false
-
     override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentStoreBinding.inflate(inflater)
         return binding.root
@@ -85,39 +81,18 @@ class StoreFragment : BaseFragment() {
                         recyclerData.storeDto.academyDto?.also { academyDto ->
                             val action =
                                 StoreFragmentDirections.actionStoreFragmentToMovieDetailFragment(
-                                    academyDto
+                                    academyDto.id
                                 )
                             findNavController().navigate(action)
                         }
                     } else {
                         recyclerData.storeDto.product?.also { product ->
-                            val s = product
                             val action =
                                 StoreFragmentDirections.actionStoreFragmentToProductDetailFragment(
-                                    s
+                                    product.id
                                 )
                             findNavController().navigate(action)
-                        }
-                    }
-                }
 
-            it.onShoppingCartClickListener =
-                BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        if (recyclerData.storeDto.isAcademy) {
-                            viewModel.addCartItem(
-                                CartItem(
-                                    course = recyclerData.storeDto.academyDto?.id,
-                                    quantity = 1
-                                )
-                            )
-                        } else {
-                            viewModel.addCartItem(
-                                CartItem(
-                                    product = recyclerData.storeDto.product?.id,
-                                    quantity = 1
-                                )
-                            )
                         }
                     }
                 }
@@ -158,30 +133,68 @@ class StoreFragment : BaseFragment() {
         }
 
         binding.classesFilter.setOnClickListener {
-            isClassFilter = !isClassFilter
-            if (isClassFilter) {
-                binding.classes.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_selected))
-            }else{
-                binding.classes.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_unselected))
+            viewModel.isClassFilter = !viewModel.isClassFilter
+            if (viewModel.isClassFilter) {
+                binding.classes.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_selected
+                    )
+                )
+            } else {
+                binding.classes.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_unselected
+                    )
+                )
             }
+            viewModel.filterProducts()
         }
 
         binding.coursesFilter.setOnClickListener {
-            isCourseFilter = !isCourseFilter
-            if (isCourseFilter) {
-                binding.courses.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_selected))
-            }else{
-                binding.courses.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_unselected))
+            viewModel.isCourseFilter = !viewModel.isCourseFilter
+            if (viewModel.isCourseFilter) {
+                binding.courses.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_selected
+                    )
+                )
+            } else {
+                binding.courses.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_unselected
+                    )
+                )
             }
+            viewModel.filterProducts()
         }
 
         binding.productsFilter.setOnClickListener {
-            isProductFilter = !isProductFilter
-            if (isProductFilter) {
-                binding.products.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_selected))
-            }else{
-                binding.products.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.search_filter_unselected))
+            viewModel.isProductFilter = !viewModel.isProductFilter
+            if (viewModel.isProductFilter) {
+                binding.products.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_selected
+                    )
+                )
+            } else {
+                binding.products.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.search_filter_unselected
+                    )
+                )
             }
+            viewModel.filterProducts()
+        }
+
+        binding.search.setOnClickListener {
+            val direction = StoreFragmentDirections.actionStoreFragmentToStoreSearchFragment()
+            findNavController().navigate(direction)
         }
     }
 }

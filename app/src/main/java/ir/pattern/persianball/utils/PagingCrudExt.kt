@@ -10,7 +10,6 @@ sealed class PagingCrudFunctions {
     class Edit(val predict: (RecyclerItem) -> Boolean,
                val editData: (index: Int, RecyclerItem) -> RecyclerItem) : PagingCrudFunctions()
 
-
     class Remove(val predict: ((RecyclerItem) -> Boolean)) : PagingCrudFunctions()
 }
 

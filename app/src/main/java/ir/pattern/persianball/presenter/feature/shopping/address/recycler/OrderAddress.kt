@@ -14,6 +14,7 @@ import ir.pattern.persianball.databinding.HolderShopCartItemBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.shopping.recycler.ShopCartViewHolder
 import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartData
+import java.util.*
 
 class OrderAddressData(val addressDto: AddressDto, var isDefault: Boolean) :
     PersianBallRecyclerData, Equatable {
@@ -24,6 +25,8 @@ class OrderAddressData(val addressDto: AddressDto, var isDefault: Boolean) :
     override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = false
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int = javaClass.hashCode()
 }

@@ -30,11 +30,18 @@ class OrderRecordActivity : AppCompatActivity() {
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-//                R.id.addressSubmitFragment -> {
-//
-//                }
-//                R.id.paymentFragment -> binding.stepView.go(1 , true)
-//                R.id.orderCompleteFragment -> binding.stepView.done(true)
+                R.id.addressSubmitFragment -> {
+                    binding.stepper.done(false)
+                    binding.stepper.go(0,true)
+                }
+                R.id.paymentFragment -> {
+                    binding.stepper.done(false)
+                    binding.stepper.go(1,true)
+                }
+                R.id.orderCompleteFragment -> {
+                    binding.stepper.done(false)
+                    binding.stepper.go(2,true)
+                }
             }
         }
     }

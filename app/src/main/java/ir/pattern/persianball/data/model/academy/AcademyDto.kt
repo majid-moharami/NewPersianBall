@@ -22,6 +22,7 @@ data class AcademyDto(
     @SerializedName("course_price") val coursePrice: Int?,
     @SerializedName("images") val images: List<String?>,
     @SerializedName("video") val video: String?,
+    @SerializedName("video_thumbnail") val videoThumbnail: String?,
     @SerializedName("category") val category: CategoryDto?
 ): Serializable
 
@@ -35,7 +36,7 @@ data class MovieDetailDto(
 
 data class SectionsDto(
     @SerializedName("week_number") val weekNumber: String,
-    @SerializedName("sections") val sections: List<SectionDto?>
+    @SerializedName("sections") val sections: List<SectionDto>
 ): Serializable
 
 data class SectionDto(
@@ -45,21 +46,29 @@ data class SectionDto(
 ): Serializable
 
 data class TimeAndLocationsDto(
+    @SerializedName("id") val id: Int,
     @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("image") val image: String?,
     @SerializedName("price") val price: Int,
-    @SerializedName("location") val location: String,
-    @SerializedName("time") val time: String,
-    @SerializedName("coach") val coach: CoachDto
+    @SerializedName("discount_percentage") val discountPercentage: Int?,
+    @SerializedName("location") val location: String?,
+    @SerializedName("time") val time: String?,
+    @SerializedName("coach") val coach: CoachDto?,
+    @SerializedName("course_name") val courseName: String,
+    @SerializedName("gift_product") val giftProduct: GiftProductDto?
 ): Serializable
 
 data class VariantDto(
+    @SerializedName("id") val id: Int,
     @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("image") val image: String,
     @SerializedName("price") val price: Int,
+    @SerializedName("discount_percentage") val discountPercentage: Int?,
     @SerializedName("location") val location: String,
     @SerializedName("time") val time: String,
-    @SerializedName("coach") val coach: CoachDto
+    @SerializedName("coach") val coach: CoachDto,
+    @SerializedName("course_name") val courseName: String,
+    @SerializedName("gift_product") val giftProduct: GiftProductDto?
 ): Serializable
 
 data class CoachDto(
@@ -72,3 +81,15 @@ data class CategoryDto(
     @SerializedName("name_farsi") val nameFarsi: String?,
     @SerializedName("image") val image: String?,
 ): Serializable
+
+data class GiftProductDto(
+    @SerializedName("image") val image: String?,
+    @SerializedName("discount_percentage") val discountPercentage: Int,
+    @SerializedName("price") val price: Int,
+    @SerializedName("size") val size: String?,
+    @SerializedName("color") val color: String?,
+    @SerializedName("color_rgb") val colorRgb: String?,
+    @SerializedName("count") val count: Int,
+    @SerializedName("product_name") val productName: String?,
+    @SerializedName("id") val id: String?
+)

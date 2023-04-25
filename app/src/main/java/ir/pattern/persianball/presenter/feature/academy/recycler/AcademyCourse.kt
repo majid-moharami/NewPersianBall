@@ -11,14 +11,19 @@ import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderAcademyItemBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.util.*
 
 class AcademyCourseData(val academy: AcademyDto) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.holder_academy_item
     }
-    override val viewType: Int =  VIEW_TYPE
+
+    override val viewType: Int = VIEW_TYPE
 
     override fun equals(other: Any?): Boolean = true
+
+    override fun getUniqueId(): String = UUID.randomUUID().toString()
+
     override fun hashCode(): Int {
         return javaClass.hashCode()
     }
@@ -39,14 +44,19 @@ class AcademyCourseViewHolder(
             else -> Assert.fail("binding is incompatible")
         }
     }
+
     @SuppressLint("StringFormatMatches")
     override fun onBindView(data: AcademyCourseData?) {
         data?.academy?.also {
             binding.title.text = it.courseTitle
-            binding.duration.text = itemView.resources.getString(R.string.course_week, it.weekCount, it.section_count)
-            binding.hardness.text = itemView.resources.getString(R.string.difficulty, it.courseDifficulty)
-            binding.time.text = itemView.resources.getString(R.string.course_duration, it.courseDuration)
-            Glide.with(itemView).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
+            binding.duration.text =
+                itemView.resources.getString(R.string.course_week, it.weekCount, it.section_count)
+            binding.hardness.text =
+                itemView.resources.getString(R.string.difficulty, it.courseDifficulty)
+            binding.time.text =
+                itemView.resources.getString(R.string.course_duration, it.courseDuration)
+            Glide.with(itemView).load("https://api.persianball.ir/${it.image}")
+                .into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)
     }
