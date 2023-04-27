@@ -49,7 +49,7 @@ class GiftProductItemViewHolder(
     }
 
     override fun onBindView(data: GiftProductItemData) {
-        Glide.with(itemView).load("https://api.persianball.ir/${data.giftProductDto.image}").into(binding.image)
+        Glide.with(itemView.context).load("https://api.persianball.ir/${data.giftProductDto.image}").into(binding.image)
         binding.name.text = data.giftProductDto.productName
         setOnClickListener(binding.clickableLayout, onGiftItemListener, this, data)
     }

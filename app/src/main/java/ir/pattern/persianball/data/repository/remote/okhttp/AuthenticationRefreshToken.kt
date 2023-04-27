@@ -1,4 +1,4 @@
-package ir.pattern.persianball.data.remote.okhttp
+package ir.pattern.persianball.data.repository.remote.okhttp
 
 import okhttp3.Interceptor
 import okhttp3.Response

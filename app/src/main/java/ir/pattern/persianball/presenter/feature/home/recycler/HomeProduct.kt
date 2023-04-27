@@ -56,7 +56,7 @@ class HomeProductViewHolder(
                     (it.price?.minus((it.price * it.discountPercentage / 100)))
                 )
             }
-            Glide.with(itemView).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
+            Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onProductClickListener, this, data)
     }

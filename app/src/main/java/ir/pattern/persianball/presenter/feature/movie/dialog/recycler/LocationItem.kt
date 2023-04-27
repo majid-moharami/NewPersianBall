@@ -48,7 +48,7 @@ class LocationItemViewHolder(
     }
 
     override fun onBindView(data: LocationItemData) {
-        Glide.with(itemView).load("https://api.persianball.ir/${data.timeAndLocationsDto.image}").into(binding.image)
+        Glide.with(itemView.context).load("https://api.persianball.ir/${data.timeAndLocationsDto.image}").into(binding.image)
         binding.location.text = data.timeAndLocationsDto.location
         binding.time.text = data.timeAndLocationsDto.time
         setOnClickListener(binding.clickableLayout, onLocationItemListener, this, data)

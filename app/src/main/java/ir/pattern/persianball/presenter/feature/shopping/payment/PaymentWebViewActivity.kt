@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import ir.pattern.persianball.databinding.ActivityPaymentWebViewBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -18,6 +19,7 @@ class PaymentWebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentWebViewBinding
     override fun onResume() {
         super.onResume()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -68,7 +70,7 @@ class PaymentWebViewActivity : AppCompatActivity() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @JavascriptInterface
-    fun showAndroidToast(isSuccessFul: String) {
+    fun showAndroidToast(isSuccessFul: Boolean) {
         val resultIntent = Intent()
 //        when (isSuccessFul) {
 //            "true" -> {

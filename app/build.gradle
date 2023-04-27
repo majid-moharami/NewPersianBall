@@ -21,14 +21,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        persianball{
+            storeFile file("docs/Signing_Key/persianball_key.jks")
+            storePassword "PersianBall1990!!!"
+            keyAlias "persianball application"
+            keyPassword "PersianBall1990!!!"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.persianball
         }
 
         debug {
-
+            signingConfig signingConfigs.persianball
         }
     }
 
@@ -49,7 +59,7 @@ android {
 }
 
 dependencies {
-    final glide_version = '4.12.0'
+    final glide_version = '3.7.0'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
@@ -83,7 +93,7 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
 
     //Room
     implementation "androidx.room:room-ktx:2.4.3"
@@ -137,4 +147,6 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics-ktx:21.2.2"
     implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
     implementation "com.google.firebase:firebase-messaging:23.1.2"
+
+    implementation "com.github.MoeidHeidari:banner:1.04"
 }

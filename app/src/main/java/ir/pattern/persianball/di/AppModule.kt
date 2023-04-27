@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.pattern.persianball.data.remote.api.AppApi
-import ir.pattern.persianball.data.remote.okhttp.AuthenticationRefreshToken
+import ir.pattern.persianball.data.repository.remote.api.AppApi
+import ir.pattern.persianball.data.repository.remote.okhttp.AuthenticationRefreshToken
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

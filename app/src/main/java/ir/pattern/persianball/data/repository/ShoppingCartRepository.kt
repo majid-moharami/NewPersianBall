@@ -5,8 +5,8 @@ import ir.pattern.persianball.data.model.address.AddressResult
 import ir.pattern.persianball.data.model.address.OrderAddress
 import ir.pattern.persianball.data.model.profile.Address
 import ir.pattern.persianball.data.model.shoppingCart.*
-import ir.pattern.persianball.data.remote.datasource.ShoppingCartDataSource
-import ir.pattern.persianball.data.remote.datasource.UserRemoteDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.ShoppingCartDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

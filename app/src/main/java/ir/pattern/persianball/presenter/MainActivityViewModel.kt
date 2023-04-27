@@ -1,23 +1,16 @@
 package ir.pattern.persianball.presenter
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.pattern.persianball.data.RefreshTokenDto
-import ir.pattern.persianball.data.model.RecyclerItem
+import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.TokenDto
-import ir.pattern.persianball.data.model.User
-import ir.pattern.persianball.data.model.base.RecyclerData
-import ir.pattern.persianball.data.remote.datasource.LoginRemoteDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.LoginRemoteDataSource
 import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.data.repository.ProfileRepository
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
-import ir.pattern.persianball.error.ErrorDTO
 import ir.pattern.persianball.manager.AccountManager
-import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartData
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

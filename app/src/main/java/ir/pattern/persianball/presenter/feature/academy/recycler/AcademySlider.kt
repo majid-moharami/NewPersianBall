@@ -1,88 +1,78 @@
-package ir.pattern.persianball.presenter.feature.home.recycler
+package ir.pattern.persianball.presenter.feature.academy.recycler
 
+import android.R.attr.banner
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.interfaces.ItemClickListener
-import com.denzcoskun.imageslider.models.SlideModel
+import com.example.moeidbannerlibrary.banner.BaseBannerAdapter
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.data.model.home.Slider
 import ir.pattern.persianball.data.model.home.SliderList
-import ir.pattern.persianball.databinding.HolderHomeSliderBinding
+import ir.pattern.persianball.databinding.HolderAcademySliderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.academy.AcademyFragmentDirections
 import ir.pattern.persianball.presenter.feature.home.HomeFragmentDirections
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import java.util.*
 
-class HomeSliderData constructor(var slider: SliderList) : PersianBallRecyclerData, Equatable {
+
+class AcademySliderData constructor(var slider: List<Slider>) : PersianBallRecyclerData, Equatable {
+
     companion object {
-        const val VIEW_TYPE = R.layout.holder_home_slider
+        const val VIEW_TYPE = R.layout.holder_academy_slider
     }
 
     override val viewType: Int = VIEW_TYPE
-    override fun equals(other: Any?): Boolean {
-        TODO("Not yet implemented")
-    }
+
+    override fun equals(other: Any?): Boolean = true
 
     override fun getUniqueId(): String = UUID.randomUUID().toString()
 
     override fun hashCode(): Int {
-        return viewType
+        return slider.hashCode()
     }
-
 }
 
+class AcademySliderViewHolder(itemView: View) : BaseViewHolder<AcademySliderData>(itemView) {
 
-class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(itemView) {
-
-    private lateinit var binding: HolderHomeSliderBinding
+    private lateinit var binding: HolderAcademySliderBinding
 
     @SuppressLint("RestrictedApi")
     override fun setViewDataBinding(viewDataBinding: ViewDataBinding?) {
         super.setViewDataBinding(viewDataBinding)
         when (viewDataBinding) {
-            is HolderHomeSliderBinding -> binding = viewDataBinding
+            is HolderAcademySliderBinding -> binding = viewDataBinding
             else -> Assert.fail("binding is incompatible")
         }
     }
 
-    override fun onBindView(data: HomeSliderData) {
-        val imageList = mutableListOf<SlideModel>()
-        data.slider.slider.map {
-            if (it.category == 1) {
-                imageList.add(
-                    SlideModel(
-                        "https://api.persianball.ir/${it.image}",
-                        ScaleTypes.CENTER_CROP
-                    )
-                )
-            }
+    override fun onBindView(data: AcademySliderData?) {
+        val urls = data?.slider?.map {
+            "https://api.persianball.ir/${it.image}"
         }
-        binding.imageSlider.setImageList(imageList)
-        binding.imageSlider.setItemClickListener(object : ItemClickListener {
-            override fun onItemSelected(position: Int) {
-                for (i in 0 until data.slider.slider.size - 1) {
-                    if (i == position) {
-                        when (data.slider.slider[i].sliderType) {
+        val webBannerAdapter = BaseBannerAdapter(itemView.context, urls)
+        webBannerAdapter.setOnBannerItemClickListener {
+            data?.also { data ->
+                for (i in 0 until data.slider.size - 1) {
+                    if (i == it) {
+                        when (data.slider[i].sliderType) {
                             "video" -> {
                                 val intent = Intent(itemView.context, PlayerActivity::class.java)
                                 intent.putExtra("HAVE_URL", true)
-                                intent.putExtra("URL", data.slider.slider[i].url)
+                                intent.putExtra("URL", data.slider[i].url)
                                 itemView.context.startActivity(intent)
                             }
 
-                            "course" -> {
-                                data.slider.slider[i].let {
+                            "course", "class" -> {
+                                data.slider[i].let {
                                     it.uniqueId?.also { id ->
                                         itemView.findNavController().navigate(
-                                            HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(
+                                            AcademyFragmentDirections.actionAcademyFragmentToMovieDetailFragment(
                                                 id
                                             )
                                         )
@@ -91,7 +81,7 @@ class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(item
                             }
 
                             "product" -> {
-                                data.slider.slider[i].let {
+                                data.slider[i].let {
                                     it.uniqueId?.also { id ->
                                         itemView.findNavController().navigate(
                                             HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(
@@ -104,9 +94,8 @@ class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(item
                         }
                     }
                 }
-
             }
-        })
+        }
+        binding.Banner.setAdapter(webBannerAdapter)
     }
 }
-

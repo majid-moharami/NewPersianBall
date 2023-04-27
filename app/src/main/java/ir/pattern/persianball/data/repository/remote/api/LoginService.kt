@@ -1,10 +1,9 @@
-package ir.pattern.persianball.data.remote.api
+package ir.pattern.persianball.data.repository.remote.api
 
-import ir.pattern.persianball.data.RefreshTokenDto
+import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.*
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface LoginService {

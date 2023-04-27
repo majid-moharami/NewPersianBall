@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        FirebaseApp.initializeApp(this)
+        FirebaseApp.initializeApp(this.applicationContext)
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (it.isSuccessful) {
                 val s = it.result

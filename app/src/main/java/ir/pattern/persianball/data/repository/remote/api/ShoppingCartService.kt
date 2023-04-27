@@ -1,4 +1,4 @@
-package ir.pattern.persianball.data.remote.api
+package ir.pattern.persianball.data.repository.remote.api
 
 import ir.pattern.persianball.data.model.SignUp
 import ir.pattern.persianball.data.model.address.AddressDto

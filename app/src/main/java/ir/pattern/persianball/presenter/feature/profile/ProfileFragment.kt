@@ -41,6 +41,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     @Inject
     lateinit var accountManager: AccountManager
+
     private val isLogin = MutableSharedFlow<Boolean>()
     override fun onResume() {
         super.onResume()

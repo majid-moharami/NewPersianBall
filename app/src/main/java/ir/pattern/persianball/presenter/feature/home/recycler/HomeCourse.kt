@@ -50,7 +50,7 @@ class HomeCourseViewHolder(
 
     override fun onBindView(data: HomeCourseData) {
         data.academy.also {
-            Glide.with(itemView)
+            Glide.with(itemView.context)
                 .load("https://api.persianball.ir/${it.image}")
                 .into(binding.image)
             binding.title.text = it.courseTitle

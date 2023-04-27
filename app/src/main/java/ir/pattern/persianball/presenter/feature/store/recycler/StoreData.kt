@@ -60,7 +60,7 @@ class StoreViewHolder(
             if (it.isAcademy) {
                 it.academyDto?.also { academy ->
                     binding.name.text = academy.courseTitle
-                    Glide.with(itemView).load("https://api.persianball.ir/${academy.image}")
+                    Glide.with(itemView.context).load("https://api.persianball.ir/${academy.image}")
                         .into(binding.picture)
                     academy.coursePrice?.also { price ->
                         if (academy.discountPercentage != null) {
@@ -82,7 +82,7 @@ class StoreViewHolder(
             } else {
                 it.product?.also { product ->
                     binding.name.text = product.nameFarsi
-                    Glide.with(itemView).load("https://api.persianball.ir/${product.image}")
+                    Glide.with(itemView.context).load("https://api.persianball.ir/${product.image}")
                         .into(binding.picture)
                     product.price?.also { price ->
                         if (product.discountPercentage != null) {

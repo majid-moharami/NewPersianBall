@@ -54,7 +54,7 @@ class ShopCartViewHolder(
                 binding.countLayout.visibility = View.VISIBLE
                 binding.time.visibility = View.GONE
                 binding.language.visibility = View.GONE
-                Glide.with(itemView).load("https://api.persianball.ir/${it.product?.image}").into(binding.image)
+                Glide.with(itemView.context).load("https://api.persianball.ir/${it.product?.image}").into(binding.image)
                 binding.price.text = itemView.resources.getString(R.string.product_price, it.product?.price)
                 binding.count.text = it.quantity.toString()
                 binding.title.text = it.product?.productName
@@ -62,7 +62,7 @@ class ShopCartViewHolder(
                 binding.countLayout.visibility = View.GONE
                 binding.time.visibility = View.VISIBLE
                 binding.language.visibility = View.VISIBLE
-                Glide.with(itemView).load("https://api.persianball.ir/${it.course?.image}").into(binding.image)
+                Glide.with(itemView.context).load("https://api.persianball.ir/${it.course?.image}").into(binding.image)
                 binding.title.text = it.course?.courseName
                 binding.price.text = itemView.resources.getString(R.string.product_price, it.course?.price)
                 binding.time.text = it.course?.time

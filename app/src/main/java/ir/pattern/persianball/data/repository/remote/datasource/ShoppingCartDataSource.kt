@@ -1,11 +1,11 @@
-package ir.pattern.persianball.data.remote.datasource
+package ir.pattern.persianball.data.repository.remote.datasource
 
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.address.AddressResult
 import ir.pattern.persianball.data.model.address.OrderAddress
 import ir.pattern.persianball.data.model.shoppingCart.*
-import ir.pattern.persianball.data.remote.api.Request
-import ir.pattern.persianball.data.remote.api.ShoppingCartService
+import ir.pattern.persianball.data.repository.remote.api.Request
+import ir.pattern.persianball.data.repository.remote.api.ShoppingCartService
 import ir.pattern.persianball.error.ErrorTranslator
 import retrofit2.Response
 import javax.inject.Inject

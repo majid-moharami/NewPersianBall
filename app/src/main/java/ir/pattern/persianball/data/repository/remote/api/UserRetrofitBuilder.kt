@@ -1,4 +1,4 @@
-package ir.pattern.persianball.data.remote.api
+package ir.pattern.persianball.data.repository.remote.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

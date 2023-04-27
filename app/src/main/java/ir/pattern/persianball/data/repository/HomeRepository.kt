@@ -7,7 +7,7 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
-import ir.pattern.persianball.data.remote.datasource.HomeRemoteDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
 import ir.pattern.persianball.utils.singlePagingConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +31,7 @@ class HomeRepository
 //    ).flow
 
     lateinit var products : Products
+    lateinit var sliderList: List<Slider>
 
     suspend fun getCourses(): Flow<Resource<Academy>> {
         return flow {

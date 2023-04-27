@@ -8,10 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
-import ir.pattern.persianball.data.model.home.Course
-import ir.pattern.persianball.data.model.home.Courses
-import ir.pattern.persianball.data.model.home.Product
-import ir.pattern.persianball.data.model.home.Slide
+import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.shoppingCart.ShoppingCart
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.LoginRepository
@@ -36,6 +33,13 @@ class HomeViewModel
         homeRepository.getGallery().collect {
             when (it) {
                 is Resource.Success -> {
+                    val list = mutableListOf<Slider>()
+                    it.data.slider.map { slide ->
+                        if (slide.category == 2) {
+                            list.add(slide)
+                        }
+                    }
+                    homeRepository.sliderList = list
                     recyclerList.add(RecyclerItem(HomeSliderData(it.data)))
                     viewModelScope.launch {
                         getCourses()

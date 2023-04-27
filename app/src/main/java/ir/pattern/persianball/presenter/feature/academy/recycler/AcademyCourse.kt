@@ -55,7 +55,7 @@ class AcademyCourseViewHolder(
                 itemView.resources.getString(R.string.difficulty, it.courseDifficulty)
             binding.time.text =
                 itemView.resources.getString(R.string.course_duration, it.courseDuration)
-            Glide.with(itemView).load("https://api.persianball.ir/${it.image}")
+            Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}")
                 .into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)

@@ -137,7 +137,7 @@ class SectionListFragment : Fragment() {
     }
 
     private fun initView() {
-        Glide.with(this).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
+        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
         if (movie.courseDuration > 0) {
             binding.videoTime.text =
                 resources.getString(R.string.course_duration, movie.courseDuration.toString())

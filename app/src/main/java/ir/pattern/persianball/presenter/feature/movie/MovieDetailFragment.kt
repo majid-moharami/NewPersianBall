@@ -143,11 +143,11 @@ class MovieDetailFragment : BaseFragment() {
                     viewModel.setSelectedGift(it1)
                     viewModel.selectedGifts = it1
                 }
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${it?.avatar}")
                     .into(binding.supportImage)
                 binding.supportName.text = it?.fullName
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                     .into(binding.productImage)
                 binding.productChooseName.text = firstProduct?.get(0)?.productName
@@ -177,11 +177,11 @@ class MovieDetailFragment : BaseFragment() {
             viewModel.selectedLocation.collect {
                 val firstProduct = viewModel.locationMap[it]
                 viewModel.selectedGifts = firstProduct?.get(0)
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${it?.image}")
                     .into(binding.supportImage)
                 binding.supportName.text = "${it?.location} \n ${it?.time}"
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                     .into(binding.productImage)
                 binding.productChooseName.text = firstProduct?.get(0)?.productName
@@ -205,7 +205,7 @@ class MovieDetailFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedGift.collect {
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${it?.image}")
                     .into(binding.productImage)
                 binding.productChooseName.text = it?.productName
@@ -214,7 +214,7 @@ class MovieDetailFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedGift.collect {
-                Glide.with(this@MovieDetailFragment)
+                Glide.with(requireContext())
                     .load("https://api.persianball.ir/${it?.image}")
                     .into(binding.productImage)
                 binding.productChooseName.text = it?.productName
@@ -231,7 +231,7 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun initView() {
         binding.headerTitle.text = movie.courseTitle
-        Glide.with(this).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
+        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
         if (movie.courseDuration > 0) {
             binding.videoTime.text =
                 resources.getString(R.string.course_duration, movie.courseDuration.toString())

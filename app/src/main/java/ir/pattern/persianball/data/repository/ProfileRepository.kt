@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
 import ir.pattern.persianball.data.model.profile.*
-import ir.pattern.persianball.data.remote.datasource.UserRemoteDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import okhttp3.MultipartBody

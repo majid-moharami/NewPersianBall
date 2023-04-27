@@ -47,7 +47,7 @@ class RegisteredCoursesViewHolder(
     override fun onBindView(data: RegisteredCoursesData?) {
        data?.dashboardDto?.also {
            binding.title.text = it.courseTitle
-           Glide.with(itemView).load("http://api.persianball.ir/media/course/cordless-screwdriver.jpg").into(binding.shapeableImageView)
+           Glide.with(itemView.context).load("http://api.persianball.ir/media/course/cordless-screwdriver.jpg").into(binding.shapeableImageView)
            binding.teacherText.text = "مدرس: ${it.coach}"
            binding.progressView.progress = it.completionPercent.toFloat()
            binding.duration.text = " ${it.weekCount}هفته"

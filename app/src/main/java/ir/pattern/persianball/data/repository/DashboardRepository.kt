@@ -3,8 +3,8 @@ package ir.pattern.persianball.data.repository
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.dashboard.DashboardsDto
-import ir.pattern.persianball.data.remote.datasource.DashboardDataSource
-import ir.pattern.persianball.data.remote.datasource.HomeRemoteDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.DashboardDataSource
+import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

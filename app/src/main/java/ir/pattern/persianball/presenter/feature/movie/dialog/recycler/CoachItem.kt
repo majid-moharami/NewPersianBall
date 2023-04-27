@@ -49,7 +49,7 @@ class CoachItemViewHolder(
     }
 
     override fun onBindView(data: CoachItemData) {
-        Glide.with(itemView).load("https://api.persianball.ir/${data.coachDto.avatar}").into(binding.image)
+        Glide.with(itemView.context).load("https://api.persianball.ir/${data.coachDto.avatar}").into(binding.image)
         binding.name.text = data.coachDto.fullName
         setOnClickListener(binding.clickableLayout, onCoachItemListener, this, data)
     }

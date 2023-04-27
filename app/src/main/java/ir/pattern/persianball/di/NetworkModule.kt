@@ -8,8 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ir.pattern.persianball.data.remote.api.*
-import ir.pattern.persianball.data.remote.okhttp.AuthenticationRefreshToken
+import ir.pattern.persianball.data.repository.remote.okhttp.AuthenticationRefreshToken
+import ir.pattern.persianball.data.repository.remote.api.*
 import ir.pattern.persianball.manager.TokenAuthenticator
 import ir.pattern.persianball.manager.TokenInterceptor
 import okhttp3.Dispatcher

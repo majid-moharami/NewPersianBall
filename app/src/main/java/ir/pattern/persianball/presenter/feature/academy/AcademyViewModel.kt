@@ -1,14 +1,17 @@
 package ir.pattern.persianball.presenter.feature.academy
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
+import ir.pattern.persianball.presenter.feature.academy.recycler.AcademySliderData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeRecyclerHeaderData
 import kotlinx.coroutines.flow.*
@@ -37,10 +40,13 @@ open class AcademyViewModel
     suspend fun getAcademy() {
         _cartList.emit(Resource.Loading())
         if (recyclerList.isEmpty()) {
+
             homeRepository.getAcademy().collect {
                 when (it) {
                     is Resource.Success -> {
                         _cartList.emit(it)
+                        val s = homeRepository.sliderList
+                        recyclerList.add(RecyclerItem(AcademySliderData(s)))
                         it.data.result.map { academyDto ->
                             recyclerList.add(RecyclerItem(AcademyCourseData(academyDto)))
                         }

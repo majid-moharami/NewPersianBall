@@ -1,11 +1,10 @@
 package ir.pattern.persianball.manager
 
-import ir.pattern.persianball.data.RefreshTokenDto
+import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.utils.SharedPreferenceUtils
-import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
