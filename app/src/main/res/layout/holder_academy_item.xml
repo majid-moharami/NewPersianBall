@@ -7,19 +7,25 @@
         android:id="@+id/clickableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackgroundBorderless">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layoutDirection="ltr"
+            android:padding="8dp"
+            >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/shapeableImageView"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +43,7 @@
                 android:fontFamily="@font/iran_sans_bold"
                 android:textColor="@color/black"
                 android:textSize="13sp"
+                android:textAlignment="viewEnd"
                 app:layout_constraintBottom_toTopOf="@+id/duration"
                 app:layout_constraintEnd_toStartOf="@+id/shapeableImageView"
                 app:layout_constraintHorizontal_bias="0.5"
