@@ -2,6 +2,7 @@ package ir.pattern.persianball.presenter.feature.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,7 @@ import javax.inject.Inject
 class VerifyUserFragment : Fragment() {
 
     lateinit var binding: FragmentOtpRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels({ requireParentFragment() })
+    private val viewModel: RegisterViewModel by viewModels()
     private val args: VerifyUserFragmentArgs by navArgs()
     var code = 0
 
@@ -78,6 +79,7 @@ class VerifyUserFragment : Fragment() {
                                     tokenDto.refresh
                                 ,"")
                             )
+                            Log.d("LOGIN", "${sharedPreferenceUtils.getUserCredentials().username}, ${sharedPreferenceUtils.getUserCredentials().password}, ${sharedPreferenceUtils.getUserCredentials().token}, ${sharedPreferenceUtils.getUserCredentials().refreshToken}")
                             val resultIntent = Intent()
                             activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                             activity?.finish()

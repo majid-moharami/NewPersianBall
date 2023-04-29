@@ -33,6 +33,9 @@ import ir.pattern.persianball.presenter.feature.movie.locationOrsupports.Locatio
 import ir.pattern.persianball.presenter.feature.movie.prerequisites.PreRequisitesFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 @AndroidEntryPoint
 class MovieDetailFragment : BaseFragment() {
@@ -43,6 +46,10 @@ class MovieDetailFragment : BaseFragment() {
     lateinit var movie: AcademyDto
     private var movieId: Int = -1
     private lateinit var args: MovieDetailFragmentArgs
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -89,9 +96,11 @@ class MovieDetailFragment : BaseFragment() {
                         initView()
                         loading(show = false)
                     }
+
                     is Resource.Failure -> {
                         loading(show = true)
                     }
+
                     else -> {
                         loading(show = true)
                     }
@@ -109,7 +118,11 @@ class MovieDetailFragment : BaseFragment() {
                                 quantity = 1
                             )
                         )
-                    } ?: Toast.makeText(requireContext(), "مشکلی در فرایند به وجود آمده", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(
+                        requireContext(),
+                        "مشکلی در فرایند به وجود آمده",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     viewModel.getSelectedLocation(movie)?.also {
                         viewModel.addCartItem(
@@ -118,7 +131,11 @@ class MovieDetailFragment : BaseFragment() {
                                 quantity = 1
                             )
                         )
-                    } ?: Toast.makeText(requireContext(), "مشکلی در فرایند به وجود آمده", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(
+                        requireContext(),
+                        "مشکلی در فرایند به وجود آمده",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -158,14 +175,20 @@ class MovieDetailFragment : BaseFragment() {
                     if (s != null) {
                         binding.realPrice.isVisible = true
                         binding.realPrice.text =
-                            resources.getString(R.string.product_price, variant.price)
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(variant.price)
+                            )
                         binding.discountedPrice.text = resources.getString(
                             R.string.product_price,
-                            (variant.price.minus((variant.price * s / 100)))
+                            (decimalForm.format(variant.price.minus((variant.price * s / 100))))
                         )
                     } else {
                         binding.discountedPrice.text =
-                            resources.getString(R.string.product_price, variant?.price)
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(variant?.price)
+                            )
                         binding.realPrice.isVisible = false
                     }
                 }
@@ -190,15 +213,21 @@ class MovieDetailFragment : BaseFragment() {
                 val s = it?.discountPercentage
                 if (s != null) {
                     binding.realPrice.isVisible = true
-                    binding.realPrice.text = resources.getString(R.string.product_price, it?.price)
+                    binding.realPrice.text =
+                        resources.getString(R.string.product_price, decimalForm.format(it?.price))
                     binding.discountedPrice.text = resources.getString(
                         R.string.product_price,
-                        (it.price.minus((it.price * s / 100)))
+                        (decimalForm.format(it.price.minus((it.price * s / 100))))
                     )
                 } else {
-                    binding.discountedPrice.text =
-                        resources.getString(R.string.product_price, it?.price)
-                    binding.realPrice.isVisible = false
+                    if (it?.price != null) {
+                        binding.discountedPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(it.price)
+                            )
+                        binding.realPrice.isVisible = false
+                    }
                 }
             }
         }
@@ -231,7 +260,8 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun initView() {
         binding.headerTitle.text = movie.courseTitle
-        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
+        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}")
+            .into(binding.poster)
         if (movie.courseDuration > 0) {
             binding.videoTime.text =
                 resources.getString(R.string.course_duration, movie.courseDuration.toString())
@@ -242,12 +272,13 @@ class MovieDetailFragment : BaseFragment() {
             if (movie.category?.nameFarsi != "کلاس ها") View.VISIBLE else View.INVISIBLE
         binding.videoCount.text = resources.getString(R.string.video_count, movie.section_count)
         movie.coursePrice?.also {
-            binding.realPrice.text = resources.getString(R.string.product_price, it)
+            binding.realPrice.text =
+                resources.getString(R.string.product_price, decimalForm.format(it))
             val s = movie.discountPercentage
             if (s != null) {
                 binding.discountedPrice.text = resources.getString(
                     R.string.product_price,
-                    (it.minus((it * s / 100)))
+                    (decimalForm.format(it.minus((it * s / 100))))
                 )
             }
         }

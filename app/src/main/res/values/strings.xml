@@ -44,7 +44,7 @@
     <string name="personal_info">اطلاعات شخصی</string>
     <string name="address_phone">تماس و آدرس</string>
     <string name="change_password">تغییر رمز عبور</string>
-    <string name="product_price">‏%d تومان</string>
+    <string name="product_price">‏%s تومان</string>
     <string name="own_courses">دوره‌های‌ ثبت‌نام شده</string>
     <string name="the_progress">میزان پیشرفت</string>
     <!-- TODO: Remove or change this placeholder text -->

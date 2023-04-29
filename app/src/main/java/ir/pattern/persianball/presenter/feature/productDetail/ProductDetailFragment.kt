@@ -29,6 +29,9 @@ import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -44,6 +47,10 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var currentColorIndex = 0
     private var productCount = 1
     var pagingAdapter: BasePagingAdapter? = null
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
 
     @Inject
     lateinit var playerRepository: PlayerRepository
@@ -126,13 +133,13 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .into(poster)
                 headerTitle.text = it.nameFarsi
                 description.text = it.description
-                realPrice.text = resources.getString(R.string.product_price, it.price)
+                realPrice.text = resources.getString(R.string.product_price, decimalForm.format(it.price))
                 it.price?.also { price ->
                     val s = it.discountPercentage
                     if (s != null) {
                         discountedPrice.text = resources.getString(
                             R.string.product_price,
-                            (price.minus((price * s / 100)))
+                            (decimalForm.format(price.minus((price * s / 100))))
                         )
                     }
                 }
@@ -241,12 +248,12 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
             product?.also {
                 val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
-                binding.realPrice.text = variant?.price.toString()
+                binding.realPrice.text = resources.getString(R.string.product_price, decimalForm.format(variant?.price))
                 variant?.price?.also { price ->
                     val s = variant.discountPercentage
                     binding.discountedPrice.text = resources.getString(
                         R.string.product_price,
-                        (price.minus((price * s / 100)))
+                        (decimalForm.format(price.minus((price * s / 100))))
                     )
                 }
             }
@@ -256,12 +263,12 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.colorSelected.setCardBackgroundColor(Color.parseColor("#$color"))
             product?.also {
                 val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
-                binding.realPrice.text = variant?.price.toString()
+                binding.realPrice.text =resources.getString(R.string.product_price, decimalForm.format(variant?.price))
                 variant?.price?.also { price ->
                     val s = variant.discountPercentage
                     binding.discountedPrice.text = resources.getString(
                         R.string.product_price,
-                        (price.minus((price * s / 100)))
+                        (decimalForm.format(price.minus((price * s / 100))))
                     )
                 }
             }

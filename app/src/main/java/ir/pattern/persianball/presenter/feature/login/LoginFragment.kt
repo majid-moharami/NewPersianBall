@@ -3,6 +3,7 @@ package ir.pattern.persianball.presenter.feature.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,6 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                     binding.passwordEditText.text.toString(),
                                     tokenDto.access, tokenDto.refresh, "")
                             )
+                            Log.d("LOGIN", "${sharedPreferenceUtils.getUserCredentials().username}, ${sharedPreferenceUtils.getUserCredentials().password}, ${sharedPreferenceUtils.getUserCredentials().token}, ${sharedPreferenceUtils.getUserCredentials().refreshToken}")
                             val resultIntent = Intent()
                             activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                             activity?.finish()

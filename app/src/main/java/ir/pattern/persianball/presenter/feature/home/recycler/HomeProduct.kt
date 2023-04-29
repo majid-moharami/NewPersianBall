@@ -12,6 +12,8 @@ import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.databinding.HomeNewProductViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 
 class HomeProductData(var product: Product) : PersianBallRecyclerData, Equatable {
@@ -49,14 +51,25 @@ class HomeProductViewHolder(
     override fun onBindView(data: HomeProductData) {
         data.product.also {
             binding.title.text = it.nameFarsi
-            binding.realPrice.text = itemView.resources.getString(R.string.product_price, it.price)
+            val decimalForm =
+                DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+                    groupingSeparator = ','
+                })
+            if (it.price != null) {
+                binding.realPrice.text = itemView.resources.getString(
+                    R.string.product_price,
+                    decimalForm.format(it.price)
+                )
+            }
+
             if (it.discountPercentage != null) {
                 binding.discountedPrice.text = itemView.resources.getString(
                     R.string.product_price,
-                    (it.price?.minus((it.price * it.discountPercentage / 100)))
+                    decimalForm.format(it.price?.minus((it.price * it.discountPercentage / 100)))
                 )
             }
-            Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}").into(binding.shapeableImageView)
+            Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}")
+                .into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onProductClickListener, this, data)
     }
