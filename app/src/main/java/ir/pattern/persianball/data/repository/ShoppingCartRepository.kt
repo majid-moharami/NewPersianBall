@@ -27,8 +27,12 @@ constructor(
         _addressAdded.emit(boolean)
     }
 
-    suspend fun addCartItem(cartItem: CartItem): Resource<Any?> =
-        shoppingCartDataSource.addCart(cartItem)
+    suspend fun addCartItem(cartItem: CartItem): Flow<Resource<Any?>> {
+        return flow {
+            val result = shoppingCartDataSource.addCart(cartItem)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 
     suspend fun deleteCartItem(itemId: Int) : Flow<Resource<Any?>>{
         return flow {

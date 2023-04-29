@@ -27,6 +27,9 @@ class MovieDetailViewModel
     val academyDto = _academyDto.asSharedFlow()
     lateinit var detail: MovieDetailDto
 
+    private val _addingCartFlow = MutableSharedFlow<String>()
+    val addingCartFlow = _addingCartFlow.asSharedFlow()
+
     var supportMap = mutableMapOf<CoachDto, List<GiftProductDto?>>()
     var locationMap = mutableMapOf<TimeAndLocationsDto, List<GiftProductDto?>>()
 
@@ -36,7 +39,7 @@ class MovieDetailViewModel
     val selectedLocation = _selectedLocation.asStateFlow()
     private val _selectedGift = MutableStateFlow<GiftProductDto?>(null)
     val selectedGift = _selectedGift.asStateFlow()
-    var selectedGifts : GiftProductDto? = null
+    var selectedGifts: GiftProductDto? = null
 
     suspend fun getAcademyById(id: Int) {
         _academyDto.emit(Resource.Loading())
@@ -50,9 +53,11 @@ class MovieDetailViewModel
                         }
                     }
                 }
+
                 is Resource.Failure -> {
                     _academyDto.emit(Resource.Failure(it.error))
                 }
+
                 else -> {}
             }
         }
@@ -105,7 +110,7 @@ class MovieDetailViewModel
         return null
     }
 
-    fun getSelectedLocation(movie: AcademyDto) : TimeAndLocationsDto? {
+    fun getSelectedLocation(movie: AcademyDto): TimeAndLocationsDto? {
         movie.detail.timeAndLocation.map {
             if (it?.id == selectedLocation.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
         }
@@ -132,7 +137,21 @@ class MovieDetailViewModel
     }
 
     suspend fun addCartItem(item: CartItem) {
-        shoppingCartRepository.addCartItem(item)
+        _addingCartFlow.emit("در حال اضافه کردن به سبد خرید.")
+        shoppingCartRepository.addCartItem(item).collect {
+            when (it) {
+                is Resource.Success -> {
+                    _addingCartFlow.emit("دوره شما با موفقیت به سبد خرید اضافه شد.")
+                }
+
+                is Resource.Failure -> {
+                    _addingCartFlow.emit("خطا در انجام عملیات.")
+                }
+
+                else -> {
+                }
+            }
+        }
     }
 
 }

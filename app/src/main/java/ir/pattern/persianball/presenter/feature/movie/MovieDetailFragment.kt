@@ -23,6 +23,7 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.databinding.FragmentMovieDetailBinding
+import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.BaseFragment
 import ir.pattern.persianball.presenter.feature.movie.dialog.CourseChooseViewModel
 import ir.pattern.persianball.presenter.feature.movie.dialog.DetailChooseDialogFragment
@@ -31,11 +32,13 @@ import ir.pattern.persianball.presenter.feature.movie.dialog.recycler.GiftProduc
 import ir.pattern.persianball.presenter.feature.movie.dialog.recycler.LocationItemData
 import ir.pattern.persianball.presenter.feature.movie.locationOrsupports.LocationOrSupportFragment
 import ir.pattern.persianball.presenter.feature.movie.prerequisites.PreRequisitesFragment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailFragment : BaseFragment() {
@@ -50,6 +53,9 @@ class MovieDetailFragment : BaseFragment() {
         DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
             groupingSeparator = ','
         })
+
+    @Inject
+    lateinit var accountManager: AccountManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -109,7 +115,16 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.addBtn.setOnClickListener {
+            binding.addBtn.isEnabled = false
             viewLifecycleOwner.lifecycleScope.launch {
+                if (!accountManager.isLogin) {
+                    Toast.makeText(
+                        requireActivity(),
+                        "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@launch
+                }
                 if (movie.category?.nameFarsi == "دوره ها") {
                     viewModel.getSelectedVariant(movie)?.also {
                         viewModel.addCartItem(
@@ -137,6 +152,29 @@ class MovieDetailFragment : BaseFragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.addingCartFlow.collect {
+                when (it) {
+                    "در حال اضافه کردن به سبد خرید." -> {
+                        binding.addBtn.isEnabled = false
+                    }
+
+                    else -> {
+                        lifecycleScope.launch {
+                            delay(4000)
+                            binding.addBtn.isEnabled = true
+                        }
+                    }
+                }
+                Toast.makeText(
+                    requireContext(),
+                    it,
+                    Toast.LENGTH_SHORT
+                ).show()
+
             }
         }
 

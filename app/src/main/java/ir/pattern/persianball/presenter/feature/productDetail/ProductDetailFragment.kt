@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,10 +24,12 @@ import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.databinding.FragmentProductDetailBinding
+import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -54,6 +57,9 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     @Inject
     lateinit var playerRepository: PlayerRepository
+
+    @Inject
+    lateinit var accountManager: AccountManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -87,24 +93,25 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.productCount.text = productCount.toString()
         }
         binding.addProduct.setOnClickListener {
+            binding.addProduct.isEnabled = false
             viewLifecycleOwner.lifecycleScope.launch {
-//                if (recyclerData.storeDto.isAcademy) {
-//                    viewModel.addCartItem(
-//                        CartItem(
-//                            course = recyclerData.storeDto.academyDto?.id,
-//                            quantity = 1
-//                        )
-//                    )
-//                } else {
+                if (!accountManager.isLogin) {
+                    Toast.makeText(
+                        requireActivity(),
+                        "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@launch
+                }
                 product?.also {
-                    if (it.variants == null || it.variants.isEmpty()) {
+                    if (it.variants.isNullOrEmpty()) {
                         viewModel.addCartItem(
                             CartItem(
                                 product = it.id,
                                 quantity = binding.productCount.text.toString().toInt()
                             )
                         )
-                    }else{
+                    } else {
                         viewModel.addCartItem(
                             CartItem(
                                 product = viewModel.getSelectedVariantId(
@@ -117,8 +124,27 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         )
                     }
                 }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.addingCartFlow.collect {
+                when (it) {
+                    "در حال اضافه کردن به سبد خرید." -> {
+                        binding.addProduct.isEnabled = false
+                    }
 
-//                }
+                    else -> {
+                        lifecycleScope.launch {
+                            delay(4000)
+                            binding.addProduct.isEnabled = true
+                        }
+                    }
+                }
+                Toast.makeText(
+                    requireContext(),
+                    it,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return binding.root
@@ -133,7 +159,8 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .into(poster)
                 headerTitle.text = it.nameFarsi
                 description.text = it.description
-                realPrice.text = resources.getString(R.string.product_price, decimalForm.format(it.price))
+                realPrice.text =
+                    resources.getString(R.string.product_price, decimalForm.format(it.price))
                 it.price?.also { price ->
                     val s = it.discountPercentage
                     if (s != null) {
@@ -248,7 +275,8 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
             product?.also {
                 val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
-                binding.realPrice.text = resources.getString(R.string.product_price, decimalForm.format(variant?.price))
+                binding.realPrice.text =
+                    resources.getString(R.string.product_price, decimalForm.format(variant?.price))
                 variant?.price?.also { price ->
                     val s = variant.discountPercentage
                     binding.discountedPrice.text = resources.getString(
@@ -263,7 +291,8 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.colorSelected.setCardBackgroundColor(Color.parseColor("#$color"))
             product?.also {
                 val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
-                binding.realPrice.text =resources.getString(R.string.product_price, decimalForm.format(variant?.price))
+                binding.realPrice.text =
+                    resources.getString(R.string.product_price, decimalForm.format(variant?.price))
                 variant?.price?.also { price ->
                     val s = variant.discountPercentage
                     binding.discountedPrice.text = resources.getString(

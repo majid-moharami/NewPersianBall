@@ -411,6 +411,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:elevation="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:shadowColor="#FCB503"
                     app:cardBackgroundColor="#FCB503"
