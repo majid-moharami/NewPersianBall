@@ -38,6 +38,7 @@ class AddAddressActivity : AppCompatActivity() {
             setView(it)
         }
         binding.addBtn.setOnClickListener {
+            binding.addBtn.isEnabled = false
             addAddress(address != null)
         }
         binding.backBtn.setOnClickListener {
@@ -63,6 +64,7 @@ class AddAddressActivity : AppCompatActivity() {
                     "لطفا کد پستی 10 رقمی را وارد کنید.",
                     Toast.LENGTH_LONG
                 ).show()
+                binding.addBtn.isEnabled = true
             } else {
                 if (isUpdate) {
                     binding.also {
@@ -96,6 +98,7 @@ class AddAddressActivity : AppCompatActivity() {
                                                 "لطفا موارد اجباری را پر کنید.",
                                                 Toast.LENGTH_LONG
                                             ).show()
+                                            binding.addBtn.isEnabled = true
                                         }
                                         else -> {}
                                     }
@@ -133,6 +136,7 @@ class AddAddressActivity : AppCompatActivity() {
                                             "لطفا موارد اجباری را پر کنید.",
                                             Toast.LENGTH_LONG
                                         ).show()
+                                        binding.addBtn.isEnabled = true
                                     }
                                     else -> {}
                                 }
@@ -143,6 +147,7 @@ class AddAddressActivity : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "لطفا موارد اجباری را پر کنید.", Toast.LENGTH_LONG).show()
+            binding.addBtn.isEnabled = true
         }
     }
 }
