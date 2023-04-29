@@ -83,6 +83,9 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
         )
         product = viewModel.getProductById(productId)
         initView()
+        binding.backBtn.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         binding.plus.setOnClickListener {
             productCount += 1
             binding.productCount.text = productCount.toString()

@@ -77,6 +77,9 @@ class MovieDetailFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getAcademyById(movieId)
         }
+        binding.backBtn.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.academyDto.collect {
                 when (it) {
