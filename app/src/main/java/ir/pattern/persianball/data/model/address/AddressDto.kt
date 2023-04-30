@@ -14,7 +14,9 @@ data class AddressDto(
     @SerializedName("address") val address: String,
     @SerializedName("receiver_home_phone") val receiverHomePhone: String,
     @SerializedName("receiver_mobile_phone") val receiverMobilePhone: String,
-    @SerializedName("email") val email: String?
+    @SerializedName("email") val email: String?,
+    @SerializedName("city") var city: String? = null,
+    @SerializedName("province") var province: String? = null
 )
 
 data class OrderAddress(
@@ -23,5 +25,7 @@ data class OrderAddress(
     @SerializedName("address") val address: String,
     @SerializedName("receiver_home_phone") var receiverHomePhone: String,
     @SerializedName("receiver_mobile_phone") val receiverMobilePhone: String,
-    @SerializedName("email") var email: String? = null
+    @SerializedName("email") var email: String? = null,
+    @SerializedName("city") var city: String? = null,
+    @SerializedName("province") var province: String? = null
 )

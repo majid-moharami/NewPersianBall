@@ -75,9 +75,11 @@ class AddAddressActivity : AppCompatActivity() {
                                     OrderAddress(
                                         it.addressName.text?.toString(),
                                         it.postalCode.text.toString(),
-                                        "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                        "${it.address.text}",
                                         it.homePhone.text.toString(),
-                                        it.phoneNumber.text.toString()
+                                        it.phoneNumber.text.toString(),
+                                        city = it.province.text.toString(),
+                                        province = it.eparchy.text.toString()
                                     ).apply {
                                         if (!it.email.text.isNullOrEmpty()) {
                                             this.email = it.email.text.toString()
@@ -113,9 +115,11 @@ class AddAddressActivity : AppCompatActivity() {
                                 OrderAddress(
                                     it.addressName.text?.toString(),
                                     it.postalCode.text.toString(),
-                                    "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                    "${it.address.text}",
                                     it.homePhone.text.toString(),
-                                    it.phoneNumber.text.toString()
+                                    it.phoneNumber.text.toString(),
+                                    city = it.province.text.toString(),
+                                    province = it.eparchy.text.toString()
                                 ).apply {
                                     if (!it.email.text.isNullOrEmpty()) {
                                         this.email = it.email.text.toString()
