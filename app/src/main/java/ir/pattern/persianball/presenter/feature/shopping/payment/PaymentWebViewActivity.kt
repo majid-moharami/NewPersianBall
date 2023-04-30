@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import ir.pattern.persianball.databinding.ActivityPaymentWebViewBinding
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 class PaymentWebViewActivity : AppCompatActivity() {
@@ -28,12 +27,16 @@ class PaymentWebViewActivity : AppCompatActivity() {
         binding = ActivityPaymentWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val url = intent.getStringExtra("url")
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.settings.allowContentAccess = true
-        binding.webView.settings.domStorageEnabled = true
-        binding.webView.webViewClient = WebViewClient()
-        binding.webView.settings.loadsImagesAutomatically = true
-        binding.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+        binding.webView.apply {
+            webViewClient = WebViewClient()
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            with(settings) {
+                javaScriptEnabled = true
+                allowContentAccess = true
+                domStorageEnabled = true
+                loadsImagesAutomatically = true
+            }
+        }
         binding.webView.addJavascriptInterface(this, "Persianball")
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Loading...")
@@ -57,20 +60,21 @@ class PaymentWebViewActivity : AppCompatActivity() {
                 description: String,
                 failingUrl: String
             ) {
-                Toast.makeText(this@PaymentWebViewActivity, "Error:$description", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this@PaymentWebViewActivity,
+                    "Error:$description",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }
         if (url != null) {
             binding.webView.loadUrl(url)
         }
-
     }
 
-
-    @OptIn(ExperimentalCoroutinesApi::class)
     @JavascriptInterface
-    fun showAndroidToast(isSuccessFul: String) {
+    fun paymentResult(isSuccessFul: String) {
         val resultIntent = Intent()
 //        when (isSuccessFul) {
 //            "true" -> {

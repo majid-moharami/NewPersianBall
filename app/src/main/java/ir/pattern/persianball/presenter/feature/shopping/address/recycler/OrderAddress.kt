@@ -67,7 +67,7 @@ class OrderAddressViewHolder(
             binding.addressName.text = it.addressName
             binding.name.text = it.userFullName
             binding.number.text = it.receiverMobilePhone
-            binding.address.text = "${it.address} \n" + itemView.resources.getString(R.string.postal_code, it.postalCode)
+            binding.address.text = "${it.city} ${it.province} ${it.address} \n" + itemView.resources.getString(R.string.postal_code, it.postalCode)
         }
         setOnClickListener(binding.baseLayout, onClickListener, this, data)
     }

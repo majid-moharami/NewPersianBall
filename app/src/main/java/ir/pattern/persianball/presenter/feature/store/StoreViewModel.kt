@@ -149,8 +149,4 @@ class StoreViewModel
         }
         _recyclerItems.value = RecyclerData(flowOf(PagingData.from(searchedList)))
     }
-
-    suspend fun addCartItem(item: CartItem) {
-        shoppingCartRepository.addCartItem(item)
-    }
 }

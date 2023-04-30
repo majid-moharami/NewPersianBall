@@ -15,6 +15,8 @@ import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseViewHolder
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 
 class StoreData(val storeDto: StoreDto) : PersianBallRecyclerData, Equatable {
@@ -45,7 +47,10 @@ class StoreViewHolder(
 ) : BaseViewHolder<StoreData>(itemView) {
 
     lateinit var binding: HolderStoreProductBinding
-
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
     @SuppressLint("RestrictedApi")
     override fun setViewDataBinding(viewDataBinding: ViewDataBinding?) {
         super.setViewDataBinding(viewDataBinding)
@@ -66,15 +71,15 @@ class StoreViewHolder(
                         if (academy.discountPercentage != null) {
                             if (academy.discountPercentage > 0) {
                                 binding.realPrice.text =
-                                    itemView.resources.getString(R.string.product_price, academy.coursePrice)
+                                    itemView.resources.getString(R.string.product_price, decimalForm.format(academy.coursePrice))
                                 binding.percent.isVisible = true
                                 binding.discountedPrice.text = itemView.resources.getString(
                                     R.string.product_price,
-                                    (price - (price * academy.discountPercentage / 100))
+                                    (decimalForm.format(price - (price * academy.discountPercentage / 100)))
                                 )
                                 binding.discountPercent.text = "%${academy.discountPercentage}"
                             }else {
-                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, academy.coursePrice)
+                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, decimalForm.format(academy.coursePrice))
                             }
                         }
                     }
@@ -88,15 +93,15 @@ class StoreViewHolder(
                         if (product.discountPercentage != null) {
                             if (product.discountPercentage > 0) {
                                 binding.realPrice.text =
-                                    itemView.resources.getString(R.string.product_price, product.price)
+                                    itemView.resources.getString(R.string.product_price, decimalForm.format(product.price))
                                 binding.percent.isVisible = true
                                 binding.discountedPrice.text = itemView.resources.getString(
                                     R.string.product_price,
-                                    (price - (price * product.discountPercentage / 100))
+                                    (decimalForm.format(price - (price * product.discountPercentage / 100)))
                                 )
                                 binding.discountPercent.text = "%${product.discountPercentage}"
                             }else {
-                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, product.price)
+                                binding.discountedPrice.text = itemView.resources.getString(R.string.product_price, decimalForm.format(product.price))
                             }
                         }
                     }

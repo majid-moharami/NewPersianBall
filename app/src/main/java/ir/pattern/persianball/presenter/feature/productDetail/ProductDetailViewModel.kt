@@ -3,6 +3,7 @@ package ir.pattern.persianball.presenter.feature.productDetail
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
+import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.home.VariantsDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
@@ -10,6 +11,8 @@ import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
 import ir.pattern.persianball.presenter.feature.productDetail.recycler.ImageData
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +24,9 @@ class ProductDetailViewModel
 ) : BaseViewModel() {
 
     lateinit var currentColorMap: Map<String, String>
+
+    private val _addingCartFlow = MutableSharedFlow<String>()
+    val addingCartFlow = _addingCartFlow.asSharedFlow()
 
     fun getProductById(id: Int): Product? {
         for (i in homeRepository.products.products) {
@@ -96,6 +102,20 @@ class ProductDetailViewModel
 
 
     suspend fun addCartItem(item: CartItem) {
-        shoppingCartRepository.addCartItem(item)
+        _addingCartFlow.emit("در حال اضافه کردن به سبد خرید.")
+        shoppingCartRepository.addCartItem(item).collect {
+            when (it) {
+                is Resource.Success -> {
+                    _addingCartFlow.emit("محصول مورد نظر با موفقیت به سبد خرید اضافه شد.")
+                }
+
+                is Resource.Failure -> {
+                    _addingCartFlow.emit("خطا در انجام عملیات.")
+                }
+
+                else -> {
+                }
+            }
+        }
     }
 }

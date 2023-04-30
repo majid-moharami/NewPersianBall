@@ -38,6 +38,7 @@ class AddAddressActivity : AppCompatActivity() {
             setView(it)
         }
         binding.addBtn.setOnClickListener {
+            binding.addBtn.isEnabled = false
             addAddress(address != null)
         }
         binding.backBtn.setOnClickListener {
@@ -63,6 +64,7 @@ class AddAddressActivity : AppCompatActivity() {
                     "لطفا کد پستی 10 رقمی را وارد کنید.",
                     Toast.LENGTH_LONG
                 ).show()
+                binding.addBtn.isEnabled = true
             } else {
                 if (isUpdate) {
                     binding.also {
@@ -73,9 +75,11 @@ class AddAddressActivity : AppCompatActivity() {
                                     OrderAddress(
                                         it.addressName.text?.toString(),
                                         it.postalCode.text.toString(),
-                                        "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                        "${it.address.text}",
                                         it.homePhone.text.toString(),
-                                        it.phoneNumber.text.toString()
+                                        it.phoneNumber.text.toString(),
+                                        city = it.province.text.toString(),
+                                        province = it.eparchy.text.toString()
                                     ).apply {
                                         if (!it.email.text.isNullOrEmpty()) {
                                             this.email = it.email.text.toString()
@@ -96,6 +100,7 @@ class AddAddressActivity : AppCompatActivity() {
                                                 "لطفا موارد اجباری را پر کنید.",
                                                 Toast.LENGTH_LONG
                                             ).show()
+                                            binding.addBtn.isEnabled = true
                                         }
                                         else -> {}
                                     }
@@ -110,9 +115,11 @@ class AddAddressActivity : AppCompatActivity() {
                                 OrderAddress(
                                     it.addressName.text?.toString(),
                                     it.postalCode.text.toString(),
-                                    "${it.province.text}, ${it.eparchy.text}, ${it.address.text}",
+                                    "${it.address.text}",
                                     it.homePhone.text.toString(),
-                                    it.phoneNumber.text.toString()
+                                    it.phoneNumber.text.toString(),
+                                    city = it.province.text.toString(),
+                                    province = it.eparchy.text.toString()
                                 ).apply {
                                     if (!it.email.text.isNullOrEmpty()) {
                                         this.email = it.email.text.toString()
@@ -133,6 +140,7 @@ class AddAddressActivity : AppCompatActivity() {
                                             "لطفا موارد اجباری را پر کنید.",
                                             Toast.LENGTH_LONG
                                         ).show()
+                                        binding.addBtn.isEnabled = true
                                     }
                                     else -> {}
                                 }
@@ -143,6 +151,7 @@ class AddAddressActivity : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "لطفا موارد اجباری را پر کنید.", Toast.LENGTH_LONG).show()
+            binding.addBtn.isEnabled = true
         }
     }
 }

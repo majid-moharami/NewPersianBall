@@ -13,6 +13,8 @@ import ir.pattern.persianball.databinding.HolderShopCartItemBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreData
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreViewHolder
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 
 class ShoppingCartData(val shoppingCartItemDto: ShoppingCartItemDto) : PersianBallRecyclerData, Equatable {
@@ -38,7 +40,10 @@ class ShopCartViewHolder(
 ): BaseViewHolder<ShoppingCartData>(itemView){
 
     lateinit var binding: HolderShopCartItemBinding
-
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
     @SuppressLint("RestrictedApi")
     override fun setViewDataBinding(viewDataBinding: ViewDataBinding?) {
         super.setViewDataBinding(viewDataBinding)
@@ -55,7 +60,7 @@ class ShopCartViewHolder(
                 binding.time.visibility = View.GONE
                 binding.language.visibility = View.GONE
                 Glide.with(itemView.context).load("https://api.persianball.ir/${it.product?.image}").into(binding.image)
-                binding.price.text = itemView.resources.getString(R.string.product_price, it.product?.price)
+                binding.price.text = itemView.resources.getString(R.string.product_price, decimalForm.format(it.product?.price))
                 binding.count.text = it.quantity.toString()
                 binding.title.text = it.product?.productName
             }else{
@@ -64,7 +69,7 @@ class ShopCartViewHolder(
                 binding.language.visibility = View.VISIBLE
                 Glide.with(itemView.context).load("https://api.persianball.ir/${it.course?.image}").into(binding.image)
                 binding.title.text = it.course?.courseName
-                binding.price.text = itemView.resources.getString(R.string.product_price, it.course?.price)
+                binding.price.text = itemView.resources.getString(R.string.product_price, decimalForm.format(it.course?.price))
                 binding.time.text = it.course?.time
                 binding.language.text = it.course?.location
             }

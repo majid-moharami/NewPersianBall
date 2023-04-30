@@ -88,6 +88,7 @@
                 tools:text="دوره دریبل وی" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -411,6 +412,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:elevation="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:shadowColor="#FCB503"
                     app:cardBackgroundColor="#FCB503"

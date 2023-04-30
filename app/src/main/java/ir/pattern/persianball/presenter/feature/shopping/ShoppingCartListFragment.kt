@@ -24,6 +24,9 @@ import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.shopping.recycler.ShoppingCartAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -32,7 +35,10 @@ class ShoppingCartListFragment : BaseFragment() {
     lateinit var binding: FragmentShoppingCartListBinding
     private val viewModel: ShoppingCartViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
-
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
     override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentShoppingCartListBinding.inflate(inflater)
         return binding.root
@@ -46,11 +52,11 @@ class ShoppingCartListFragment : BaseFragment() {
             viewModel.shopCart.collectLatest {
                 it.price.also { price ->
                     binding.totalPrice.text =
-                        resources.getString(R.string.product_price, price.totalPrice.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.totalPrice.toInt()))
                     binding.discountPrice.text =
-                        resources.getString(R.string.product_price, price.discount.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.discount.toInt()))
                     binding.natPrice.text =
-                        resources.getString(R.string.product_price, price.nat.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.nat.toInt()))
                 }
             }
         }

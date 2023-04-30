@@ -23,6 +23,9 @@ import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 @AndroidEntryPoint
 class PaymentFragment : Fragment() {
@@ -30,7 +33,10 @@ class PaymentFragment : Fragment() {
     lateinit var binding: FragmentPaymentBinding
     private val viewModel: ShoppingCartViewModel by viewModels()
     private val args: PaymentFragmentArgs by navArgs()
-
+    private val decimalForm =
+        DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
+            groupingSeparator = ','
+        })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -120,11 +126,11 @@ class PaymentFragment : Fragment() {
             viewModel.shopCart.collectLatest {
                 it.price.also { price ->
                     binding.totalPrice.text =
-                        resources.getString(R.string.product_price, price.totalPrice.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.totalPrice.toInt()))
                     binding.discountPrice.text =
-                        resources.getString(R.string.product_price, price.discount.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.discount.toInt()))
                     binding.natPrice.text =
-                        resources.getString(R.string.product_price, price.nat.toInt())
+                        resources.getString(R.string.product_price, decimalForm.format(price.nat.toInt()))
                 }
             }
         }

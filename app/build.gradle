@@ -1,20 +1,20 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'ir.pattern.persianball'
-    compileSdk 32
+    compileSdk 33
     defaultConfig {
         applicationId "ir.pattern.persianball"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -61,19 +61,19 @@ android {
 dependencies {
     final glide_version = '3.7.0'
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.4'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
     // hilt for di
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-compiler:2.42"
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
     implementation 'androidx.hilt:hilt-work:1.0.0'
 
     implementation 'com.github.dariushm2:PersianCaldroid:1.0.1'
@@ -81,30 +81,30 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.1.1"
 
     // lifeCycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.6.1"
 
     //cardView
     implementation "androidx.cardview:cardview:1.0.0"
 
     // activity
-    implementation "androidx.activity:activity-ktx:1.5.1"
+    implementation "androidx.activity:activity-ktx:1.7.1"
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
 
 
     //Room
-    implementation "androidx.room:room-ktx:2.4.3"
-    kapt "androidx.room:room-compiler:2.4.3"
-    androidTestImplementation "androidx.room:room-testing:2.4.3"
+    implementation "androidx.room:room-ktx:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
+    androidTestImplementation "androidx.room:room-testing:2.5.1"
 
     //persian date picker
     implementation 'com.github.aliab:Persian-Date-Picker-Dialog:1.8.0'
     //coroutines
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -114,8 +114,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // navigation component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     // Http inspector: chucker
     debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
@@ -149,4 +149,8 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:23.1.2"
 
     implementation "com.github.MoeidHeidari:banner:1.04"
+}
+
+kapt {
+    correctErrorTypes true
 }

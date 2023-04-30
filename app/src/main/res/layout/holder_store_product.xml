@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
         app:cardBackgroundColor="#CECFE8"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,41 +24,36 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/picture"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_ball"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/priceCardView"
                 app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/priceCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/picture">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="2dp">
+                    android:padding="@dimen/margin_default_v2_half"
+                    >
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/percent"
@@ -66,8 +61,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:visibility="gone"
+                        app:cardCornerRadius="4dp"
                         app:cardBackgroundColor="@color/red"
-                        app:cardCornerRadius="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/real_price"
                         app:layout_constraintStart_toEndOf="@+id/discounted_price"
                         app:layout_constraintTop_toTopOf="@+id/discounted_price">
@@ -92,6 +87,8 @@
                         android:gravity="center"
                         android:textColor="#000000"
                         android:textSize="@dimen/font_size_medium"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -101,7 +98,7 @@
                         android:id="@+id/discounted_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="4dp"
                         android:fontFamily="@font/iran_sans_bold"
                         android:gravity="center"
                         android:textColor="#000000"
@@ -116,7 +113,6 @@
                         android:id="@+id/real_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         android:background="@drawable/strike"
                         android:textColor="#717171"
                         android:textSize="@dimen/font_size_small"

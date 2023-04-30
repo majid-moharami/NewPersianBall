@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             app:autoPlaying="true"
-            app:centerScale="1.6"
+            app:centerScale="2"
             app:itemSpace="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

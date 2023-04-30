@@ -27,6 +27,9 @@ class MovieDetailViewModel
     val academyDto = _academyDto.asSharedFlow()
     lateinit var detail: MovieDetailDto
 
+    private val _addingCartFlow = MutableSharedFlow<String>()
+    val addingCartFlow = _addingCartFlow.asSharedFlow()
+
     var supportMap = mutableMapOf<CoachDto, List<GiftProductDto?>>()
     var locationMap = mutableMapOf<TimeAndLocationsDto, List<GiftProductDto?>>()
 
@@ -50,9 +53,11 @@ class MovieDetailViewModel
                         }
                     }
                 }
+
                 is Resource.Failure -> {
                     _academyDto.emit(Resource.Failure(it.error))
                 }
+
                 else -> {}
             }
         }
@@ -152,7 +157,21 @@ class MovieDetailViewModel
     }
 
     suspend fun addCartItem(item: CartItem) {
-        shoppingCartRepository.addCartItem(item)
+        _addingCartFlow.emit("در حال اضافه کردن به سبد خرید.")
+        shoppingCartRepository.addCartItem(item).collect {
+            when (it) {
+                is Resource.Success -> {
+                    _addingCartFlow.emit("دوره شما با موفقیت به سبد خرید اضافه شد.")
+                }
+
+                is Resource.Failure -> {
+                    _addingCartFlow.emit("خطا در انجام عملیات.")
+                }
+
+                else -> {
+                }
+            }
+        }
     }
 
 }
