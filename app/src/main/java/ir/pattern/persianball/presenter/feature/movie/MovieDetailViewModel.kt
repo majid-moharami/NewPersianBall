@@ -36,7 +36,7 @@ class MovieDetailViewModel
     val selectedLocation = _selectedLocation.asStateFlow()
     private val _selectedGift = MutableStateFlow<GiftProductDto?>(null)
     val selectedGift = _selectedGift.asStateFlow()
-    var selectedGifts : GiftProductDto? = null
+    var selectedGifts: GiftProductDto? = null
 
     suspend fun getAcademyById(id: Int) {
         _academyDto.emit(Resource.Loading())
@@ -77,6 +77,22 @@ class MovieDetailViewModel
                 }
                 supportMap.put(coach, productList)
             }
+            var noCoachDto: CoachDto? = null
+            movie.variants.map {
+                if (it?.coach == null) {
+                    noCoachDto = CoachDto(-1, "بدون مربی", "")
+                    return@map
+                }
+            }
+            if (noCoachDto != null) {
+                val noCoachProductList = mutableListOf<GiftProductDto>()
+                movie.variants.map {
+                    if (it?.coach == null && it?.giftProduct != null) {
+                        noCoachProductList.add(it.giftProduct)
+                    }
+                }
+                supportMap[noCoachDto!!] = noCoachProductList
+            }
         } else {
             val locationSet = mutableSetOf<TimeAndLocationsDto>()
             movie.detail.timeAndLocation.map {
@@ -100,12 +116,16 @@ class MovieDetailViewModel
 
     fun getSelectedVariant(movie: AcademyDto): VariantDto? {
         movie.variants.map {
-            if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+            if (it?.coach == null && it?.giftProduct?.id == selectedGifts?.id) {
+                return it
+            } else {
+                if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+            }
         }
         return null
     }
 
-    fun getSelectedLocation(movie: AcademyDto) : TimeAndLocationsDto? {
+    fun getSelectedLocation(movie: AcademyDto): TimeAndLocationsDto? {
         movie.detail.timeAndLocation.map {
             if (it?.id == selectedLocation.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
         }

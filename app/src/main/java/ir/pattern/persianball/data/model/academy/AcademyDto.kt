@@ -66,7 +66,7 @@ data class VariantDto(
     @SerializedName("discount_percentage") val discountPercentage: Int?,
     @SerializedName("location") val location: String,
     @SerializedName("time") val time: String,
-    @SerializedName("coach") val coach: CoachDto,
+    @SerializedName("coach") val coach: CoachDto?,
     @SerializedName("course_name") val courseName: String,
     @SerializedName("gift_product") val giftProduct: GiftProductDto?
 ): Serializable

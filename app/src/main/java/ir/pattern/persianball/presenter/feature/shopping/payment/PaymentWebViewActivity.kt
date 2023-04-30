@@ -34,7 +34,7 @@ class PaymentWebViewActivity : AppCompatActivity() {
         binding.webView.webViewClient = WebViewClient()
         binding.webView.settings.loadsImagesAutomatically = true
         binding.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        binding.webView.addJavascriptInterface(this, "persianball")
+        binding.webView.addJavascriptInterface(this, "Persianball")
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Loading...")
         progressDialog.show()
@@ -70,7 +70,7 @@ class PaymentWebViewActivity : AppCompatActivity() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @JavascriptInterface
-    fun showAndroidToast(isSuccessFul: Boolean) {
+    fun showAndroidToast(isSuccessFul: String) {
         val resultIntent = Intent()
 //        when (isSuccessFul) {
 //            "true" -> {
