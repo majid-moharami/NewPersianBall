@@ -24,7 +24,7 @@ data class Product(
 data class VariantsDto(
     @SerializedName("id") val id: Int,
     @SerializedName("is_active") val isActive: Boolean,
-    @SerializedName("image") val image: String,
+    @SerializedName("image") val image: String?,
     @SerializedName("price") val price: Int,
     @SerializedName("discount_percentage") val discountPercentage: Int,
     @SerializedName("size") val size: String,

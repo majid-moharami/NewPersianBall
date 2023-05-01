@@ -65,6 +65,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        lifecycleScope.launch {
+            viewModel.getShoppingCart()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -10,6 +10,7 @@ import ir.pattern.persianball.data.model.academy.MovieDetailDto
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
+import ir.pattern.persianball.presenter.feature.movie.recycler.PosterData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionItemData
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,6 +35,7 @@ class SectionListViewModel
         var selectedOpen: Boolean? = null
         var selectedHeaderId: String = ""
         allList.map {
+            if (it.data is PosterData) tempList.add(it)
             if (it.data is SectionHeaderData) {
                 if ((it.data as SectionHeaderData).id == sectionHeader.id) {
                     selectedHeaderId = (it.data as SectionHeaderData).id
@@ -43,7 +45,14 @@ class SectionListViewModel
                     tempList.add(RecyclerItem(selectedSectionHeader))
                     if (selectedOpen == false) {
                         (it.data as SectionHeaderData).sections?.sections?.map { sectionDto ->
-                            tempList.add(RecyclerItem(SectionItemData(selectedHeaderId, sectionDto)))
+                            tempList.add(
+                                RecyclerItem(
+                                    SectionItemData(
+                                        selectedHeaderId,
+                                        sectionDto
+                                    )
+                                )
+                            )
                         }
                     } else {
 
@@ -52,10 +61,14 @@ class SectionListViewModel
                     tempList.add(it)
                 }
             } else {
-                if ((it.data as SectionItemData).headerId == selectedHeaderId && selectedOpen == true) {
+                if (it.data is SectionItemData) {
+                    if ((it.data as SectionItemData).headerId == selectedHeaderId && selectedOpen == true) {
 
+                    } else {
+                        tempList.add(it)
+                    }
                 } else {
-                    tempList.add(it)
+
                 }
             }
         }

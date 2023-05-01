@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.databinding.ViewDataBinding
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.academy.SectionDto
@@ -50,6 +51,7 @@ class SectionItemViewHolder(
 
 
     override fun onBindView(data: SectionItemData) {
+        Glide.with(itemView.context).load(data.section.videoThumbnail).into(binding.sectionPoster)
         binding.lock.isVisible = data.section.isLocked
         binding.title.text = data.section.title
         setOnClickListener(binding.clickableLayout, onMovieClickListener, this, data)

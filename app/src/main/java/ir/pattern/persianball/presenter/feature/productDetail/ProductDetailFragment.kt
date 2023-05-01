@@ -288,6 +288,13 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     )
                 }
             }
+            product?.let {
+                viewModel.getSelectedVariantImage(it,currentSizeIndex, currentColorIndex)?.also { img ->
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${img}")
+                        .into(binding.poster)
+                }
+            }
         } else {
             currentColorIndex = p2
             val color = viewModel.currentColorMap[viewModel.currentColorMap.keys.toList()[p2]]
@@ -303,7 +310,13 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         (decimalForm.format(price.minus((price * s / 100))))
                     )
                 }
+                viewModel.getSelectedVariantImage(it,currentSizeIndex, currentColorIndex)?.also { img ->
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${img}")
+                        .into(binding.poster)
+                }
             }
+
         }
     }
 

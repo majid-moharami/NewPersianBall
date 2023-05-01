@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.home.recycler.*
-import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
-import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderViewHolder
-import ir.pattern.persianball.presenter.feature.movie.recycler.SectionItemData
-import ir.pattern.persianball.presenter.feature.movie.recycler.SectionItemViewHolder
+import ir.pattern.persianball.presenter.feature.movie.recycler.*
 
 class SectionDataAdapter : BasePagingAdapter()  {
 
@@ -20,6 +17,7 @@ class SectionDataAdapter : BasePagingAdapter()  {
         return when (viewType) {
             SectionHeaderData.VIEW_TYPE -> SectionHeaderViewHolder(view, onSectionHeaderClickListener)
             SectionItemData.VIEW_TYPE -> SectionItemViewHolder(view,onMovieClickListener, onSendClickListener)
+            PosterData.VIEW_TYPE -> PosterDataViewHolder(view)
             else -> null
         }
     }

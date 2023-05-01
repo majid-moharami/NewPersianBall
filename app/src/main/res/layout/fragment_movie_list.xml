@@ -8,63 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".presenter.feature.movie.SectionListFragment">
 
-        <ImageView
-            android:id="@+id/poster"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/fotbal" />
-
-        <TextView
-            android:id="@+id/header_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:fontFamily="@font/iran_sans_bold"
-            android:textColor="@color/white"
-            android:textSize="21sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="دوره دریبل وی" />
-
-        <TextView
-            android:id="@+id/video_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginBottom="8dp"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/iran_sans_bold"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            android:visibility="gone"
-            app:drawableRightCompat="@drawable/ic_clock"
-            app:layout_constraintBottom_toBottomOf="@+id/poster"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="20 دقیقه" />
-
-        <TextView
-            android:id="@+id/video_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/iran_sans_bold"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            android:visibility="gone"
-            app:drawableRightCompat="@drawable/ic_play_circle"
-            app:layout_constraintBottom_toBottomOf="@+id/poster"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="8 ویدیو" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -74,7 +17,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/poster" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/frameLayout"

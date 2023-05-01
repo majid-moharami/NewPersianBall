@@ -27,6 +27,7 @@ import ir.pattern.persianball.databinding.FragmentMovieListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
+import ir.pattern.persianball.presenter.feature.movie.recycler.PosterData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
@@ -110,7 +111,7 @@ class SectionListFragment : Fragment() {
                     is Resource.Success -> {
                         showLoading(false)
                         movie = it.data
-                        initView()
+                        viewModel.allList.add(RecyclerItem(PosterData(movie.image, movie.section_count, movie.courseDuration)))
                         viewModel.allList.addAll(viewModel.detail.sections.map {
                             RecyclerItem(
                                 SectionHeaderData(false, it)
@@ -136,17 +137,6 @@ class SectionListFragment : Fragment() {
         }
     }
 
-    private fun initView() {
-        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}").into(binding.poster)
-        if (movie.courseDuration > 0) {
-            binding.videoTime.text =
-                resources.getString(R.string.course_duration, movie.courseDuration.toString())
-        } else {
-            binding.videoTime.isVisible = false
-        }
-        binding.videoCount.text = resources.getString(R.string.video_count, movie.section_count)
-    }
-
     private fun showLoading(show: Boolean) {
         if (show) {
             binding.frameLayout.visibility = View.VISIBLE
@@ -156,10 +146,6 @@ class SectionListFragment : Fragment() {
             binding.frameLayout.visibility = View.GONE
             binding.loading.isIndeterminate = false
             binding.loading.visibility = View.GONE
-            binding.poster.isVisible = true
-            binding.headerTitle.isVisible = true
-            binding.videoTime.isVisible = true
-            binding.videoCount.isVisible = true
         }
     }
 }

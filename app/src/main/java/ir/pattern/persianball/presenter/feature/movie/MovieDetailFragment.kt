@@ -196,41 +196,43 @@ class MovieDetailFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedCoach.collect {
-                val firstProduct = viewModel.supportMap[it]
-                firstProduct?.get(0)?.let { it1 ->
-                    viewModel.setSelectedGift(it1)
-                    viewModel.selectedGifts = it1
-                }
-                Glide.with(requireContext())
-                    .load("https://api.persianball.ir/${it?.avatar}")
-                    .into(binding.supportImage)
-                binding.supportName.text = it?.fullName
-                Glide.with(requireContext())
-                    .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
-                    .into(binding.productImage)
-                binding.productChooseName.text = firstProduct?.get(0)?.productName
+                if (viewModel.supportMap.isNotEmpty()) {
+                    val firstProduct = viewModel.supportMap[it]
+                    firstProduct?.get(0)?.let { it1 ->
+                        viewModel.setSelectedGift(it1)
+                        viewModel.selectedGifts = it1
+                    }
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${it?.avatar}")
+                        .into(binding.supportImage)
+                    binding.supportName.text = it?.fullName
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
+                        .into(binding.productImage)
+                    binding.productChooseName.text = firstProduct?.get(0)?.productName
 
-                it?.also {
-                    val variant = viewModel.getSelectedVariant(movie)
-                    val s = variant?.discountPercentage
-                    if (s != null) {
-                        binding.realPrice.isVisible = true
-                        binding.realPrice.text =
-                            resources.getString(
+                    it?.also {
+                        val variant = viewModel.getSelectedVariant(movie)
+                        val s = variant?.discountPercentage
+                        if (s != null) {
+                            binding.realPrice.isVisible = true
+                            binding.realPrice.text =
+                                resources.getString(
+                                    R.string.product_price,
+                                    decimalForm.format(variant.price)
+                                )
+                            binding.discountedPrice.text = resources.getString(
                                 R.string.product_price,
-                                decimalForm.format(variant.price)
+                                (decimalForm.format(variant.price.minus((variant.price * s / 100))))
                             )
-                        binding.discountedPrice.text = resources.getString(
-                            R.string.product_price,
-                            (decimalForm.format(variant.price.minus((variant.price * s / 100))))
-                        )
-                    } else {
-                        binding.discountedPrice.text =
-                            resources.getString(
-                                R.string.product_price,
-                                decimalForm.format(variant?.price)
-                            )
-                        binding.realPrice.isVisible = false
+                        } else {
+                            binding.discountedPrice.text =
+                                resources.getString(
+                                    R.string.product_price,
+                                    decimalForm.format(variant?.price)
+                                )
+                            binding.realPrice.isVisible = false
+                        }
                     }
                 }
             }
@@ -239,35 +241,40 @@ class MovieDetailFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedLocation.collect {
-                val firstProduct = viewModel.locationMap[it]
-                viewModel.selectedGifts = firstProduct?.get(0)
-                Glide.with(requireContext())
-                    .load("https://api.persianball.ir/${it?.image}")
-                    .into(binding.supportImage)
-                binding.supportName.text = "${it?.location} \n ${it?.time}"
-                Glide.with(requireContext())
-                    .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
-                    .into(binding.productImage)
-                binding.productChooseName.text = firstProduct?.get(0)?.productName
+                if (viewModel.locationMap.isNotEmpty()) {
+                    val firstProduct = viewModel.locationMap[it]
+                    viewModel.selectedGifts = firstProduct?.get(0)
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${it?.image}")
+                        .into(binding.supportImage)
+                    binding.supportName.text = "${it?.location} \n ${it?.time}"
+                    Glide.with(requireContext())
+                        .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
+                        .into(binding.productImage)
+                    binding.productChooseName.text = firstProduct?.get(0)?.productName
 
 
-                val s = it?.discountPercentage
-                if (s != null) {
-                    binding.realPrice.isVisible = true
-                    binding.realPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(it?.price))
-                    binding.discountedPrice.text = resources.getString(
-                        R.string.product_price,
-                        (decimalForm.format(it.price.minus((it.price * s / 100))))
-                    )
-                } else {
-                    if (it?.price != null) {
-                        binding.discountedPrice.text =
+                    val s = it?.discountPercentage
+                    if (s != null) {
+                        binding.realPrice.isVisible = true
+                        binding.realPrice.text =
                             resources.getString(
                                 R.string.product_price,
-                                decimalForm.format(it.price)
+                                decimalForm.format(it?.price)
                             )
-                        binding.realPrice.isVisible = false
+                        binding.discountedPrice.text = resources.getString(
+                            R.string.product_price,
+                            (decimalForm.format(it.price.minus((it.price * s / 100))))
+                        )
+                    } else {
+                        if (it?.price != null) {
+                            binding.discountedPrice.text =
+                                resources.getString(
+                                    R.string.product_price,
+                                    decimalForm.format(it.price)
+                                )
+                            binding.realPrice.isVisible = false
+                        }
                     }
                 }
             }

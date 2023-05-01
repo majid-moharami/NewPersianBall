@@ -45,7 +45,7 @@ class ProfileViewModel
     }
 
     fun updateUserInfo(personalDto: PersonalDto) {
-        if (!personalDto.firstName.isNullOrEmpty() || !personalDto.lastName.isNullOrEmpty()) {
+//        if (!personalDto.firstName.isNullOrEmpty() || !personalDto.lastName.isNullOrEmpty()) {
             _recyclerItems.value?.also {
                 _recyclerItems.value = RecyclerData(it.pagingFlow.map {
                     it.map { rvItem ->
@@ -64,7 +64,7 @@ class ProfileViewModel
                     }
                 })
             }
-        }
+//        }
     }
 
     fun uploadAvatar(username: String, file: MultipartBody.Part) {

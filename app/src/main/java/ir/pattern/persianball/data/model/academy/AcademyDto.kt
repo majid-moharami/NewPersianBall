@@ -42,7 +42,8 @@ data class SectionsDto(
 data class SectionDto(
     @SerializedName("title") val title: String,
     @SerializedName("is_locked") val isLocked: Boolean,
-    @SerializedName("video_url") val videoUrl: String?
+    @SerializedName("video_url") val videoUrl: String?,
+    @SerializedName("video_thumbnail") val videoThumbnail: String?
 ): Serializable
 
 data class TimeAndLocationsDto(

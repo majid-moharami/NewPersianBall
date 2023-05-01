@@ -75,11 +75,29 @@ class ProductDetailViewModel
         return id
     }
 
-    fun getSelectedVariant(product: Product, currentSizeIndex: Int, currentColorIndex: Int): VariantsDto? {
+    fun getSelectedVariantImage(product: Product, currentSizeIndex: Int, currentColorIndex: Int): String? {
+        val size = getSizeList(product).toList()[currentSizeIndex]
+        val color = getColorOFSize(size, product).keys.toList()[currentColorIndex]
+        var img : String? = null
+        product.variants?.map {
+            it?.also {
+                if (it.size == size && it.color == color) {
+                    img = it.image
+                }
+            }
+        }
+        return img
+    }
+
+    fun getSelectedVariant(
+        product: Product,
+        currentSizeIndex: Int,
+        currentColorIndex: Int
+    ): VariantsDto? {
         var variantsDto: VariantsDto? = null
         product.variants?.map {
-            it?.also { v->
-                if (v.id == getSelectedVariantId(product, currentSizeIndex, currentColorIndex)){
+            it?.also { v ->
+                if (v.id == getSelectedVariantId(product, currentSizeIndex, currentColorIndex)) {
                     variantsDto = v
                 }
             }
@@ -87,14 +105,19 @@ class ProductDetailViewModel
         return variantsDto
     }
 
-    fun getImageList(product: Product) : List<RecyclerItem>{
+    fun getImageList(product: Product): List<RecyclerItem> {
         val list = mutableListOf<RecyclerItem>()
         product.also {
-            if (it.video != null){
+            if (it.video != null) {
                 list.add(RecyclerItem(ImageData(it.videoThumbnail ?: "", true, it.video)))
             }
             product.images?.map { img ->
                 list.add(RecyclerItem(ImageData(img)))
+            }
+            product.variants?.map {varient ->
+                varient?.image?.also { img ->
+                    list.add(RecyclerItem(ImageData(img)))
+                }
             }
         }
         return list
