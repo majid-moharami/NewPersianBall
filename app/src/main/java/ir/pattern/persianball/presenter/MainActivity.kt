@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupMenu
@@ -20,13 +23,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import ir.pattern.persianball.BuildConfig
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.DeviceDto
 import ir.pattern.persianball.databinding.ActivityMainBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
@@ -35,7 +39,6 @@ import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -83,8 +86,9 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this.applicationContext)
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (it.isSuccessful) {
-                val s = it.result
-                Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    viewModel.sendDevice(getDeviceDto(it.result))
+                }
                 return@addOnCompleteListener
             }
         }
@@ -166,13 +170,16 @@ class MainActivity : AppCompatActivity() {
                         _changeAvatar.emit(true)
                     }
                 }
+
                 R.id.storeFragment -> {
                     binding.toolbar.visibility = View.GONE
                     binding.bottomBar.visibility = View.VISIBLE
                 }
+
                 R.id.profileFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
+
                 else -> {
                     binding.toolbar.visibility = View.GONE
                     binding.bottomBar.visibility = View.GONE
@@ -217,7 +224,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.notificationIcon.setOnClickListener {
-            Toast.makeText(this, sharedPreferenceUtils.getNotificationCounter().count.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                sharedPreferenceUtils.getNotificationCounter().count.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -268,6 +279,15 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == LOGIN_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 showToolbar(accountManager.isLogin)
+                FirebaseApp.initializeApp(this.applicationContext)
+                FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        lifecycleScope.launch {
+                            viewModel.sendDevice(getDeviceDto(it.result))
+                        }
+                        return@addOnCompleteListener
+                    }
+                }
             }
         }
     }
@@ -288,5 +308,25 @@ class MainActivity : AppCompatActivity() {
                 currentFragment.onImageResult(filePart)
             }
         }
+    }
+
+    @SuppressLint("HardwareIds")
+    private fun getDeviceDto(fcmToken: String): DeviceDto {
+        val displayMetrics =  DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+        return DeviceDto(
+            Build.VERSION.SDK_INT,
+            Build.VERSION.RELEASE,
+            "$width * $height",
+            Build.MANUFACTURER,
+            Build.MODEL,
+            BuildConfig.VERSION_NAME,
+            BuildConfig.VERSION_CODE.toString(),
+            Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID),
+            fcmToken,
+            "mobile"
+        )
     }
 }

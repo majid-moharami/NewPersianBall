@@ -28,4 +28,7 @@ interface LoginService {
 
     @POST("login/refresh/")
     suspend fun refreshToken(@Body refreshTokenDto: RefreshTokenDto): Response<TokenDto>
+
+    @POST("devices/")
+    suspend fun userDevice(@Body userDevice: DeviceDto): Response<Any>
 }

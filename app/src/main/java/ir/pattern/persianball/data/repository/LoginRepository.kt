@@ -68,6 +68,13 @@ constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    fun userDevice(device: DeviceDto) :  Flow<Resource<Any?>>{
+        return flow {
+            val result= loginRemoteDataSource.userDevice(device)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
     fun logout(){
         sharedPreferenceUtils.clearCredentials()
     }

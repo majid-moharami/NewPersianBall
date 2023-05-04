@@ -5,6 +5,7 @@ import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.repository.remote.api.LoginService
 import ir.pattern.persianball.data.repository.remote.api.Request
 import ir.pattern.persianball.error.ErrorTranslator
+import retrofit2.Response
 import javax.inject.Inject
 
 class LoginRemoteDataSource
@@ -38,5 +39,9 @@ class LoginRemoteDataSource
 
     suspend fun refreshToken(refreshTokenDto: RefreshTokenDto): Resource<TokenDto?>{
         return Request.getResponse(request = {loginService.refreshToken(refreshTokenDto)}, errorTranslator)
+    }
+
+    suspend fun userDevice(device: DeviceDto) : Resource<Any?> {
+        return Request.getResponse(request = {loginService.userDevice(device)}, errorTranslator)
     }
 }

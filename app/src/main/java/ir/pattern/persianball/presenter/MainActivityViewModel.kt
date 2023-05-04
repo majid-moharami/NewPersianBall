@@ -3,6 +3,7 @@ package ir.pattern.persianball.presenter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.pattern.persianball.data.model.DeviceDto
 import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.TokenDto
@@ -89,5 +90,9 @@ class MainActivityViewModel
                 }
             }
         }
+    }
+
+    suspend fun sendDevice(device: DeviceDto) {
+        loginRemoteDataSource.userDevice(device)
     }
 }

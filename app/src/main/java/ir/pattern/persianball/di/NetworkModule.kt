@@ -131,9 +131,10 @@ object NetworkModule {
     @Provides
     fun provideLoginApi(
         loginRetrofitBuilder: LoginRetrofitBuilder,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        okHttpClient: OkHttpClient
     ): LoginService {
-        val okHttpClient = provideOkHttp(context)
+        //val okHttpClient = provideOkHttp(context)
         return loginRetrofitBuilder.retrofitBuilder
             .client(okHttpClient)
             .build()
