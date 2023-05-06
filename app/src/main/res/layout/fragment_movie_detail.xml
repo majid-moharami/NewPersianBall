@@ -195,6 +195,7 @@
             android:layout_marginBottom="8dp"
             android:visibility="gone"
             app:cardCornerRadius="15dp"
+            app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/cardView7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -226,6 +227,7 @@
             android:visibility="gone"
             app:cardCornerRadius="15dp"
             app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -265,6 +267,7 @@
                                 android:layout_width="45dp"
                                 android:layout_height="45dp"
                                 app:cardCornerRadius="25dp"
+                                app:cardBackgroundColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
@@ -286,6 +289,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="16dp"
+                                android:textColor="@color/black"
                                 android:text="انتخاب محصول"
                                 app:layout_constraintBottom_toBottomOf="@+id/product_image_layout"
                                 app:layout_constraintEnd_toStartOf="@+id/product_image_layout"
@@ -313,6 +317,7 @@
                                 android:layout_width="45dp"
                                 android:layout_height="45dp"
                                 app:cardCornerRadius="25dp"
+                                app:cardBackgroundColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
@@ -337,6 +342,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:maxLines="2"
                                 android:text="انتخاب پشتیبان"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/support_image_layout"
                                 app:layout_constraintEnd_toStartOf="@+id/support_image_layout"
                                 app:layout_constraintHorizontal_bias="1.0"

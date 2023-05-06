@@ -36,7 +36,7 @@ class ProfileViewModel
     private val _name = MutableStateFlow<String?>(null)
     val name: StateFlow<String?> = _name.asStateFlow()
 
-    fun setUpData(){
+    fun setUpData() {
         val list = mutableListOf<RecyclerItem>()
         list.add(RecyclerItem(ProfileImageData(avatar)))
         list.add(RecyclerItem(ProfileNameData(name = name)))
@@ -46,24 +46,30 @@ class ProfileViewModel
 
     fun updateUserInfo(personalDto: PersonalDto) {
 //        if (!personalDto.firstName.isNullOrEmpty() || !personalDto.lastName.isNullOrEmpty()) {
-            _recyclerItems.value?.also {
-                _recyclerItems.value = RecyclerData(it.pagingFlow.map {
-                    it.map { rvItem ->
-                        if (rvItem.data is ProfileNameData) {
+        _recyclerItems.value?.also {
+            _recyclerItems.value = RecyclerData(it.pagingFlow.map {
+                it.map { rvItem ->
+                    if (rvItem.data is ProfileNameData) {
+                        if (personalDto.firstName != "null") {
                             (rvItem.data as ProfileNameData).firstName = personalDto.firstName
-                            (rvItem.data as ProfileNameData).lastName = personalDto.lastName
-                            _name.emit(personalDto.firstName+ " " + personalDto.lastName)
-                            rvItem
-                        } else if (rvItem.data is ProfileImageData) {
-                            _avatar.emit(personalDto.avatar)
-                            sharedPreferenceUtils.updateProfileImage(personalDto.avatar)
-                            rvItem
-                        } else {
-                            rvItem
                         }
+                        if (personalDto.lastName != "null") {
+                            (rvItem.data as ProfileNameData).lastName = personalDto.lastName
+                        }
+                        val name = if (personalDto.firstName == null) "" else personalDto.firstName
+                        val family = if (personalDto.lastName == null) "" else personalDto.lastName
+                        _name.emit("$name $family")
+                        rvItem
+                    } else if (rvItem.data is ProfileImageData) {
+                        _avatar.emit(personalDto.avatar)
+                        sharedPreferenceUtils.updateProfileImage(personalDto.avatar)
+                        rvItem
+                    } else {
+                        rvItem
                     }
-                })
-            }
+                }
+            })
+        }
 //        }
     }
 

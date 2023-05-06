@@ -48,6 +48,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         app:cardCornerRadius="8dp"
+                        app:cardBackgroundColor="@color/white"
                         app:cardElevation="2dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,6 +93,7 @@
                         android:layout_margin="4dp"
                         android:layout_weight="1"
                         app:cardCornerRadius="8dp"
+                        app:cardBackgroundColor="@color/white"
                         app:cardElevation="2dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     app:cardCornerRadius="8dp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardElevation="2dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,10 +161,9 @@
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/address_content"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:layout_marginEnd="16dp"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
@@ -178,6 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp">
 
@@ -223,6 +226,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="4dp"
                     app:cardCornerRadius="8dp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardElevation="2dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout

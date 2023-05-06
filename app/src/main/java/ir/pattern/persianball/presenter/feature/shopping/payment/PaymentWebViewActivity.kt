@@ -11,9 +11,10 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.databinding.ActivityPaymentWebViewBinding
 
-
+@AndroidEntryPoint
 class PaymentWebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentWebViewBinding
     override fun onResume() {
@@ -73,21 +74,23 @@ class PaymentWebViewActivity : AppCompatActivity() {
         }
     }
 
+    private fun setResults(isSuccessFul: String){
+        val resultIntent = Intent()
+        resultIntent.putExtra("isPaymentSuccess", isSuccessFul)
+        setResult(AppCompatActivity.RESULT_OK, resultIntent)
+        finish()
+    }
+
     @JavascriptInterface
     fun paymentResult(isSuccessFul: String) {
-        val resultIntent = Intent()
+        setResults(isSuccessFul)
 //        when (isSuccessFul) {
 //            "true" -> {
-//
-//        Toast.makeText(this, isSuccessFul.toString(), Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, isSuccessFul.toString(), Toast.LENGTH_LONG).show()
 //            }
 //            "false" -> {
 //                Toast.makeText(this, isSuccessFul.toString(), Toast.LENGTH_LONG).show()
-//
 //            }
 //        }
-        resultIntent.putExtra("isPaymentSuccess", isSuccessFul)
-        setResult(RESULT_OK, resultIntent)
-        finish()
     }
 }

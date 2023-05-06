@@ -89,4 +89,11 @@ constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getPayments() : Flow<Resource<PaymentCompleteListDto?>> {
+        return flow {
+            val result = shoppingCartDataSource.getPayments()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 }

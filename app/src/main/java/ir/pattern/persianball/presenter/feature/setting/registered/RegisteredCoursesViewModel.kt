@@ -31,9 +31,9 @@ class RegisteredCoursesViewModel
     val isEmpty = _isEmpty.asSharedFlow()
 
     init {
-//        viewModelScope.launch {
-//            getDashboard()
-//        }
+        viewModelScope.launch {
+            getDashboard()
+        }
     }
 
     suspend fun getDashboard() {

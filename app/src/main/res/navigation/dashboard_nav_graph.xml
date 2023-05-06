@@ -6,5 +6,35 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="ir.pattern.persianball.presenter.feature.setting.DashboardFragment"
-        android:label="DashboardFragment" />
+        android:label="DashboardFragment" >
+        <action
+            android:id="@+id/action_registeredCoursesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registeredCoursesFragment"
+        android:name="ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesFragment"
+        android:label="RegisteredCoursesFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.MovieDetailFragment"
+        android:label="MovieDetailFragment">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_sectionListFragment"
+            app:destination="@id/sectionListFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sectionListFragment"
+        android:name="ir.pattern.persianball.presenter.feature.movie.SectionListFragment"
+        android:label="SectionListFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"/>
+    </fragment>
 </navigation>

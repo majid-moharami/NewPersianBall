@@ -42,8 +42,8 @@ class ProfilePasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.changePassState.collect{
-                when(it){
+            viewModel.changePassState.collect {
+                when (it) {
                     is Resource.Loading -> {
                         Toast.makeText(
                             requireActivity(),
@@ -59,7 +59,22 @@ class ProfilePasswordFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    else -> {}
+
+                    is Resource.Failure -> {
+                        if (it.error.code == "wrong_password") {
+                            Toast.makeText(
+                                requireActivity(),
+                                "رمز عبور پیشین اشتباه هست.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }else {
+                            Toast.makeText(
+                                requireActivity(),
+                                "مشکلی در عملیات به وجود امده است.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
             }
         }

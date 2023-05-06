@@ -25,3 +25,15 @@ enum class DeliveryType(val type: String) {
     PEYK("peyk"),
     FREE("free ")
 }
+
+data class PaymentCompleteListDto(
+    @SerializedName("results") val results : List<PaymentCompleteDto>
+)
+
+data class PaymentCompleteDto(
+    @SerializedName("id") val id : Int,
+    @SerializedName("user") val user : Int,
+    @SerializedName("tracking_code") val trackingCode : Long,
+    @SerializedName("status") val status : String,
+    @SerializedName("price") val price : Long
+)

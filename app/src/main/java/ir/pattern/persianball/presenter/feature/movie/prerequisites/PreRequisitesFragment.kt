@@ -1,6 +1,7 @@
 package ir.pattern.persianball.presenter.feature.movie.prerequisites
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,7 @@ class PreRequisitesFragment : Fragment() {
             false
         )
         binding.txt.text = arguments?.getString("REQUISITES")
+        binding.txt.movementMethod = ScrollingMovementMethod()
         return binding.root
     }
 

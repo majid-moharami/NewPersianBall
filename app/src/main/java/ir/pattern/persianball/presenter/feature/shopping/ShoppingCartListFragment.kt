@@ -35,13 +35,24 @@ class ShoppingCartListFragment : BaseFragment() {
     lateinit var binding: FragmentShoppingCartListBinding
     private val viewModel: ShoppingCartViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
+    var isFirstTime: Boolean = true
     private val decimalForm =
         DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
             groupingSeparator = ','
         })
+
     override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentShoppingCartListBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isFirstTime) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.getShoppingCart()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,11 +63,24 @@ class ShoppingCartListFragment : BaseFragment() {
             viewModel.shopCart.collectLatest {
                 it.price.also { price ->
                     binding.totalPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.totalPrice.toInt()))
+                        resources.getString(
+                            R.string.product_price,
+                            decimalForm.format(price.totalPrice.toInt())
+                        )
                     binding.discountPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.discount.toInt()))
+                        resources.getString(
+                            R.string.product_price,
+                            decimalForm.format(price.discount.toInt())
+                        )
                     binding.natPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.nat.toInt()))
+                        resources.getString(
+                            R.string.product_price,
+                            decimalForm.format(price.nat.toInt())
+                        )
+                    binding.postPrice.text = resources.getString(
+                        R.string.product_price,
+                        decimalForm.format(price.shippingPrice.toInt())
+                    )
                 }
             }
         }
@@ -102,6 +126,7 @@ class ShoppingCartListFragment : BaseFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.cartList.collectLatest {
+                    isFirstTime = false
                 when (it) {
                     is Resource.Success -> {
                         if (it.data.result[0].items.isEmpty() || it.data.result.isEmpty()) {
@@ -134,7 +159,6 @@ class ShoppingCartListFragment : BaseFragment() {
                         baseBinding.empty.isVisible = false
                         showLoading(false)
                         binding.recyclerView.isVisible = true
-                        binding.bottomBar.isVisible = true
                         binding.continueBtn.isEnabled = true
                     }
                     is Resource.Failure -> {
@@ -142,7 +166,6 @@ class ShoppingCartListFragment : BaseFragment() {
                         showLoading(false)
                         showTryAgainView(true)
                         binding.recyclerView.isVisible = false
-                        binding.bottomBar.isVisible = false
                     }
                     else -> {
                         baseBinding.empty.isVisible = true

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
@@ -18,9 +19,12 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.databinding.FragmentRegisteredCoursesBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
+import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.BaseFragment
+import ir.pattern.persianball.presenter.feature.home.HomeFragmentDirections
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.password.ProfilePasswordFragment
+import ir.pattern.persianball.presenter.feature.setting.DashboardFragmentDirections
 import ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
@@ -44,6 +48,7 @@ class RegisteredCoursesFragment : BaseFragment() {
             isLogin.emit(accountManager.isLogin)
         }
     }
+
     override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentRegisteredCoursesBinding.inflate(inflater)
         return binding.root
@@ -56,9 +61,9 @@ class RegisteredCoursesFragment : BaseFragment() {
                 when (it) {
                     true -> {
                         binding.notLoginLayout.visibility = View.GONE
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.getDashboard()
-                        }
+//                        viewLifecycleOwner.lifecycleScope.launch {
+//                            viewModel.getDashboard()
+//                        }
                         binding.recyclerView.visibility = View.VISIBLE
                     }
                     false -> {
@@ -78,10 +83,15 @@ class RegisteredCoursesFragment : BaseFragment() {
 
         pagingAdapter = RegisteredCoursesAdapter().also {
             binding.recyclerView.adapter = it
+            it.onItemClickListener =
+                BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
+                    val direction = DashboardFragmentDirections.actionRegisteredCoursesFragmentToMovieDetailFragment(recyclerData.dashboardDto.courseId)
+                    findNavController().navigate(direction)
+                }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isEmpty.collect{
+            viewModel.isEmpty.collect {
                 showEmptyLayout(it)
             }
         }
@@ -94,9 +104,11 @@ class RegisteredCoursesFragment : BaseFragment() {
                         binding.recyclerView.isVisible = true
                     }
                     is Resource.Failure -> {
-                        showLoading(false)
-                        showTryAgainView(true)
-                        binding.recyclerView.isVisible = false
+                        if (accountManager.isLogin) {
+                            showLoading(false)
+                            showTryAgainView(true)
+                            binding.recyclerView.isVisible = false
+                        }
                     }
                     else -> {
                         showLoading(true)
@@ -106,9 +118,11 @@ class RegisteredCoursesFragment : BaseFragment() {
         }
 
         baseBinding.tryAgainBtn.setOnClickListener {
-            showTryAgainView(false)
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.getDashboard()
+            if (accountManager.isLogin) {
+                showTryAgainView(false)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.getDashboard()
+                }
             }
         }
 

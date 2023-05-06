@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class VerifyUser(
     @SerializedName("email") var email: String? = null,
     @SerializedName("mobile_number") var phoneNumber: String? = null,
-    @SerializedName("code") var code: Int
+    @SerializedName("code") var code: String
 )

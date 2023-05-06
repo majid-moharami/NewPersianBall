@@ -13,5 +13,7 @@ data class DashboardDto(
     @SerializedName("section_count") val sectionCount: Int,
     @SerializedName("completion_percent") val completionPercent: Int,
     @SerializedName("coach") val coach: String,
+    @SerializedName("course_variant_id") val course_variant_id: Int,
+    @SerializedName("course_id") val courseId: Int,
     @SerializedName("week_count") val weekCount: Int,
 )

@@ -28,7 +28,7 @@ class OtpForgetPasswordFragment : Fragment() {
     lateinit var binding: FragmentOtpForgetPasswordBinding
     private val viewModel: RegisterViewModel by viewModels()
     private val args: OtpForgetPasswordFragmentArgs by navArgs()
-    var code = 0
+    var code = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +41,7 @@ class OtpForgetPasswordFragment : Fragment() {
         )
 
         binding.otpView.setOnFinishListener {
-            code = it.toInt()
+            code = it
         }
 
         binding.submitBtn.setOnClickListener {

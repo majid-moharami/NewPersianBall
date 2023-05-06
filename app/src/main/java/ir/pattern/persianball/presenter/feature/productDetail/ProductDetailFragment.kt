@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -162,6 +163,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .into(poster)
                 headerTitle.text = it.nameFarsi
                 description.text = it.description
+                description.movementMethod = ScrollingMovementMethod()
                 realPrice.text =
                     resources.getString(R.string.product_price, decimalForm.format(it.price))
                 it.price?.also { price ->

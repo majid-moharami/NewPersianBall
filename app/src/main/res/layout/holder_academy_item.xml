@@ -14,6 +14,7 @@
         app:cardElevation="2dp"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="@color/white"
         android:foreground="?attr/selectableItemBackgroundBorderless">
 
         <androidx.constraintlayout.widget.ConstraintLayout

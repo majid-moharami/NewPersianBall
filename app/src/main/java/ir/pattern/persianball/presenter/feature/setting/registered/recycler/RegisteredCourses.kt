@@ -11,6 +11,8 @@ import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.data.model.dashboard.DashboardDto
 import ir.pattern.persianball.databinding.HolderRegisteredCourseBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseData
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseViewHolder
 import java.util.*
 
 class RegisteredCoursesData(val dashboardDto: DashboardDto) : PersianBallRecyclerData, Equatable {
@@ -31,7 +33,8 @@ class RegisteredCoursesData(val dashboardDto: DashboardDto) : PersianBallRecycle
 }
 
 class RegisteredCoursesViewHolder(
-    itemView: View
+    itemView: View,
+    private val onItemClickListener: OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>
 ) : BaseViewHolder<RegisteredCoursesData>(itemView){
 
     private lateinit var binding: HolderRegisteredCourseBinding
@@ -55,6 +58,7 @@ class RegisteredCoursesViewHolder(
            binding.progressView.labelText = "%${it.completionPercent}"
            binding.rateText.text = "امتیاز: 33/100"
        }
+        setOnClickListener(binding.selectableLayout, onItemClickListener, this, data)
     }
 
 }

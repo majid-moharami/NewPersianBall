@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val CAPTURE_IMAGE_REQUEST_CODE = 1000
         const val GALLERY_SELECT_IMAGE_REQUEST_CODE = 2000
+        const val GALLERY_SELECT_BACK_IMAGE_REQUEST_CODE = 3000
         const val LOGIN_REQUEST_CODE = 3
     }
 
@@ -188,6 +189,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ResourceType")
     private fun showToolbar(isLogin: Boolean) {
         binding.toolbar.isVisible = true
         if (isLogin) {
@@ -229,6 +231,10 @@ class MainActivity : AppCompatActivity() {
                 sharedPreferenceUtils.getNotificationCounter().count.toString(),
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+        binding.profileImage.setOnClickListener {
+
         }
     }
 

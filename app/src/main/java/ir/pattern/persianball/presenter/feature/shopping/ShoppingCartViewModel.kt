@@ -31,7 +31,7 @@ class ShoppingCartViewModel
     val payment = _payment.asSharedFlow()
     private val _discount = MutableSharedFlow<Resource<DiscountDto?>>()
     val discount = _discount.asSharedFlow()
-    var discountPercent: Int? = null
+    var discountPercent: String? = null
 
     private val _listRequest = MutableSharedFlow<Resource<ShoppingCart>>()
     val listRequest = _listRequest.asSharedFlow()
@@ -136,13 +136,13 @@ class ShoppingCartViewModel
         }
     }
 
-    suspend fun getDiscount(discount: Discount) {
+    suspend fun getDiscount(discount: Discount, code: String) {
         shoppingCartRepository.getDiscount(discount).collect {
             when (it) {
                 is Resource.Success -> {
                     it.data?.also { percent ->
                         _discount.emit(it)
-                        discountPercent = percent.discountPercent
+                        discountPercent = code
                     }
                 }
                 is Resource.Failure -> {

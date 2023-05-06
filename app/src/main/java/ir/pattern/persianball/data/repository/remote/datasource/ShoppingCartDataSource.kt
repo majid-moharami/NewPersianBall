@@ -70,4 +70,10 @@ class ShoppingCartDataSource
             request = { shoppingCartService.getDiscount(discount) }, errorTranslator
         )
     }
+
+    suspend fun getPayments(): Resource<PaymentCompleteListDto?> {
+        return Request.getResponse(
+            request = { shoppingCartService.getPayments() }, errorTranslator
+        )
+    }
 }

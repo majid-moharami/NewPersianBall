@@ -3,7 +3,7 @@ package ir.pattern.persianball.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
@@ -57,6 +57,34 @@ class HomeRepository
     suspend fun getAcademy(): Flow<Resource<Academy>> {
         return flow {
             val result = homeRemoteDataSource.getAcademy()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun verifyUser(verifyUser: VerifyUser): Flow<Resource<TokenDto?>> {
+        return flow{
+            val result = homeRemoteDataSource.verifyUser(verifyUser)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun registerUser(signUpRequest: SignUp): Flow<Resource<Any?>> {
+        return flow {
+            val result = homeRemoteDataSource.registerUser(signUpRequest)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun forgetPassword(forgetPassword: ForgetPassword):  Flow<Resource<Any?>>{
+        return flow {
+            val result = homeRemoteDataSource.forgetPassword(forgetPassword)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun changePassword(changePassword: ChangePassword): Flow<Resource<Any?>>{
+        return flow {
+            val result = homeRemoteDataSource.changePassword(changePassword)
             emit(result)
         }.flowOn(Dispatchers.IO)
     }

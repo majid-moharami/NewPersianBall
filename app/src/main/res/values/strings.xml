@@ -56,7 +56,7 @@
     <string name="specifications">مشخصات</string>
     <string name="time_of_holding">زمان/مکان برگزاری</string>
     <string name="course_week">‏%d هفته ‏%d جلسه</string>
-    <string name="difficulty">سختی: %s</string>
+    <string name="difficulty">سطح دوره: %s</string>
     <string name="course_duration">مدت دوره: ‏%s ساعت</string>
     <string name="video_count">‏%d ویدیو</string>
     <string name="products">محصولات</string>

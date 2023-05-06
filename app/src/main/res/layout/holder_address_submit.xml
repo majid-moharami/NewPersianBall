@@ -14,19 +14,18 @@
         >
 
         <com.google.android.material.card.MaterialCardView
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            app:cardBackgroundColor="#00FFB703"
-            app:cardCornerRadius="15dp">
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/backgraound_address_other"
-                >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -106,7 +105,7 @@
 
                 <TextView
                     android:id="@+id/address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
@@ -116,7 +115,6 @@
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/number" />
             </androidx.constraintlayout.widget.ConstraintLayout>

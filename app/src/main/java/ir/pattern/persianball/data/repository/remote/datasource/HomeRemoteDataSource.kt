@@ -1,6 +1,6 @@
 package ir.pattern.persianball.data.repository.remote.datasource
 
-import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.repository.remote.api.HomeService
@@ -29,6 +29,22 @@ class HomeRemoteDataSource
 
     suspend fun getGalley(): Resource<SliderList> {
         return Request.getResponse(request = {homeService.getGallery()}, errorTranslator)
+    }
+
+    suspend fun verifyUser(verifyUser: VerifyUser): Resource<TokenDto?>{
+        return Request.getResponse(request = {homeService.verifyUser(verifyUser)}, errorTranslator)
+    }
+
+    suspend fun registerUser(signUpRequest: SignUp): Resource<Any?>{
+        return Request.getResponse(request = {homeService.register(signUpRequest)}, errorTranslator)
+    }
+
+    suspend fun forgetPassword(forgetPassword: ForgetPassword): Resource<Any?>{
+        return Request.getResponse(request = {homeService.forgetPassword(forgetPassword)}, errorTranslator)
+    }
+
+    suspend fun changePassword(changePassword: ChangePassword): Resource<Any?>{
+        return Request.getResponse(request = {homeService.changePassword(changePassword)}, errorTranslator)
     }
 
 }

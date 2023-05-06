@@ -35,4 +35,7 @@ interface ShoppingCartService {
 
     @POST("payment/voucher/verify/")
     suspend fun getDiscount(@Body discount: Discount) : Response<DiscountDto>
+
+    @GET("payment/payments/?limit=200&offset=10")
+    suspend fun getPayments() : Response<PaymentCompleteListDto?>
 }

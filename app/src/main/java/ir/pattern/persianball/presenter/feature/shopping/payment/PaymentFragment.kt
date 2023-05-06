@@ -18,8 +18,7 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.shoppingCart.Discount
 import ir.pattern.persianball.data.model.shoppingCart.Order
 import ir.pattern.persianball.databinding.FragmentPaymentBinding
-import ir.pattern.persianball.presenter.feature.login.ChangePasswordFragmentArgs
-import ir.pattern.persianball.presenter.feature.login.LoginActivity
+import ir.pattern.persianball.presenter.feature.shopping.OrderRecordActivity
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,6 +36,7 @@ class PaymentFragment : Fragment() {
         DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
             groupingSeparator = ','
         })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -62,7 +62,7 @@ class PaymentFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.discountPercent?.also {
                     viewModel.doOrder(
-                        Order(args.deliveryMethod, args.addressId, it.toString())
+                        Order(args.deliveryMethod, args.addressId, it)
                     )
                 } ?: kotlin.run {
                     viewModel.doOrder(
@@ -75,8 +75,8 @@ class PaymentFragment : Fragment() {
         binding.discount.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 val discountCode = binding.discountTxt.text.toString()
-                if (!discountCode.isNullOrEmpty()) {
-                    viewModel.getDiscount(Discount(discountCode))
+                if (discountCode.isNotEmpty()) {
+                    viewModel.getDiscount(Discount(discountCode), discountCode)
                 }
             }
         }
@@ -92,7 +92,10 @@ class PaymentFragment : Fragment() {
                     is Resource.Success -> {
                         val browserIntent = Intent(activity, PaymentWebViewActivity::class.java)
                         browserIntent.putExtra("url", it.data?.url)
-                        startActivityForResult(browserIntent, 7)
+                        activity?.startActivityForResult(
+                            browserIntent,
+                            OrderRecordActivity.PAYMENT_REQUEST_CODE
+                        )
                     }
                     is Resource.Failure -> {
                         it.error.code
@@ -125,12 +128,29 @@ class PaymentFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.shopCart.collectLatest {
                 it.price.also { price ->
-                    binding.totalPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.totalPrice.toInt()))
-                    binding.discountPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.discount.toInt()))
-                    binding.natPrice.text =
-                        resources.getString(R.string.product_price, decimalForm.format(price.nat.toInt()))
+                    if (price.totalPrice.toInt() == 0 && !OrderRecordActivity.isSuccess) {
+                        activity?.finish()
+                    } else {
+                        binding.totalPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(price.totalPrice.toInt())
+                            )
+                        binding.discountPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(price.discount.toInt())
+                            )
+                        binding.natPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(price.nat.toInt())
+                            )
+                        binding.postPrice.text = resources.getString(
+                            R.string.product_price,
+                            decimalForm.format(price.shippingPrice.toInt())
+                        )
+                    }
                 }
             }
         }

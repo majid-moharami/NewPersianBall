@@ -34,7 +34,7 @@ class VerifyUserFragment : Fragment() {
     lateinit var binding: FragmentOtpRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
     private val args: VerifyUserFragmentArgs by navArgs()
-    var code = 0
+    var code = ""
 
     @Inject
     lateinit var sharedPreferenceUtils: SharedPreferenceUtils
@@ -57,7 +57,7 @@ class VerifyUserFragment : Fragment() {
         }
 
         binding.otpView.setOnFinishListener {
-            code = it.toInt()
+            code = it
         }
 
         binding.retryCode.setOnClickListener {
