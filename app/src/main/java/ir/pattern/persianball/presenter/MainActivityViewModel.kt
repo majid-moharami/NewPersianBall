@@ -3,11 +3,7 @@ package ir.pattern.persianball.presenter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.pattern.persianball.data.model.DeviceDto
-import ir.pattern.persianball.data.model.RefreshTokenDto
-import ir.pattern.persianball.data.model.Resource
-import ir.pattern.persianball.data.model.TokenDto
-import ir.pattern.persianball.data.model.UserDeviceDto
+import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.repository.remote.datasource.LoginRemoteDataSource
 import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.data.repository.ProfileRepository
@@ -33,6 +29,9 @@ class MainActivityViewModel
     val isLogin = _isLogin.asSharedFlow()
     private val _shopBadge = MutableSharedFlow<Int>()
     val shopBadge = _shopBadge.asSharedFlow()
+    private val _notificationBadge = MutableSharedFlow<List<Int>>()
+    val notificationBadge = _notificationBadge.asSharedFlow()
+    val messageIdList = mutableListOf<Int>()
     private val _avatar = MutableSharedFlow<String?>()
     val avatar = _avatar.asSharedFlow()
     suspend fun refreshToken() {
@@ -89,6 +88,24 @@ class MainActivityViewModel
                 else -> {
                     _shopBadge.emit(0)
                 }
+            }
+        }
+    }
+
+    suspend fun getMessage(){
+        profileRepository.getUserMessage().collect{
+            when (it) {
+                is Resource.Success -> {
+                    it.data?.results?.map { messageDto ->
+                        messageIdList.add(messageDto.id)
+                    }
+                    _notificationBadge.emit(messageIdList)
+                }
+
+                is Resource.Failure -> {
+                }
+
+                else -> {}
             }
         }
     }

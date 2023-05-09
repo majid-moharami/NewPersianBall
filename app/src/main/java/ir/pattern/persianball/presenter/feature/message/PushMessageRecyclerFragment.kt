@@ -22,6 +22,7 @@ import ir.pattern.persianball.presenter.feature.movie.SectionDataAdapter
 import ir.pattern.persianball.presenter.feature.movie.SectionListViewModel
 import ir.pattern.persianball.presenter.feature.movie.recycler.PosterData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
+import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class PushMessageRecyclerFragment : Fragment() {
     lateinit var binding: FragmentPushMessageRecyclerBinding
     private val viewModel: PushMessageViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
-
+    lateinit var sharedPreferenceUtils: SharedPreferenceUtils
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +51,10 @@ class PushMessageRecyclerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        sharedPreferenceUtils = SharedPreferenceUtils(requireActivity().application)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getMessages(sharedPreferenceUtils.getMessagesId())
+        }
         binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
@@ -63,6 +67,7 @@ class PushMessageRecyclerFragment : Fragment() {
                 it?.let { recyclerData ->
                     showLoading(false)
                     pagingAdapter?.submitData(recyclerData)
+                    sharedPreferenceUtils.saveMessagesId(viewModel.ids)
                 }
             }
         }

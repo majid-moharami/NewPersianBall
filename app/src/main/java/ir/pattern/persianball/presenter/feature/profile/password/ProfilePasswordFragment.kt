@@ -67,7 +67,7 @@ class ProfilePasswordFragment : Fragment() {
                                 "رمز عبور پیشین اشتباه هست.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }else {
+                        } else {
                             Toast.makeText(
                                 requireActivity(),
                                 "مشکلی در عملیات به وجود امده است.",
@@ -80,12 +80,20 @@ class ProfilePasswordFragment : Fragment() {
         }
         binding.submitBtn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.changePassword(
-                    ChangePasswordDto(
-                        binding.lastPasswordEditText.text.toString(),
-                        binding.newPasswordEditText.text.toString()
+                if (binding.newPasswordEditText.text.toString() == binding.repeatPasswordEditText.text.toString()) {
+                    viewModel.changePassword(
+                        ChangePasswordDto(
+                            binding.lastPasswordEditText.text.toString(),
+                            binding.newPasswordEditText.text.toString()
+                        )
                     )
-                )
+                } else {
+                    Toast.makeText(
+                        requireActivity(),
+                        "رمزعبور جدید و تکرار آن را یکسان وارد کنید.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }

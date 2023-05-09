@@ -157,6 +157,7 @@
                     android:elevation="15dp"
                     android:padding="15dp"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/ic_upload"
                     app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
             </LinearLayout>
 

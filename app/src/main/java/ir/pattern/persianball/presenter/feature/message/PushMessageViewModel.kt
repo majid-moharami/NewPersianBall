@@ -24,19 +24,20 @@ class PushMessageViewModel
     private val profileRepository: ProfileRepository
 ) : BaseViewModel() {
 
-    init {
-        viewModelScope.launch {
-            getMessages()
-        }
-    }
+    val ids = mutableListOf<Int>()
 
-    suspend fun getMessages() {
+    suspend fun getMessages(listId: List<Int>) {
         profileRepository.getUserMessage().collect {
             when (it) {
                 is Resource.Success -> {
                     val list = mutableListOf<RecyclerItem>()
                     it.data?.results?.map { messageDto ->
-                        list.add(RecyclerItem(MessageData(messageDto, true)))
+                        ids.add(messageDto.id)
+                        var isNew = true
+                        for (i in listId){
+                            if (i == messageDto.id) isNew = false
+                        }
+                        list.add(RecyclerItem(MessageData(messageDto, isNew)))
                     }
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(list)))
                 }

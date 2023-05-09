@@ -9,13 +9,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.telephony.TelephonyManager
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -29,10 +27,8 @@ import com.google.android.material.badge.BadgeDrawable
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import ir.pattern.persianball.BuildConfig
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.DeviceDto
-import ir.pattern.persianball.data.model.UserDeviceDto
 import ir.pattern.persianball.databinding.ActivityMainBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
@@ -98,6 +94,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
+            viewModel.notificationBadge.collect {
+                var diffrence = 0
+                val list = sharedPreferenceUtils.getMessagesId()
+                if (list.isEmpty()) {
+                    diffrence = it.size
+                } else {
+                    it.map { id ->
+                        var isDiffrent = true
+                        for (i in list) {
+                            if (id == i) {
+                                isDiffrent = false
+                            }
+                        }
+                        if (isDiffrent) {
+                            diffrence += 1
+                        }
+                    }
+                }
+                setNotificationBadge(diffrence)
+            }
+        }
+
+        lifecycleScope.launch {
             viewModel.avatar.collect {
                 if (!it.isNullOrEmpty()) {
                     Glide.with(this@MainActivity)
@@ -123,10 +142,14 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             changeAvatar.collect {
                 if (sharedPreferenceUtils.getUserCredentials().profileImageUrl.isNotEmpty()) {
-                    Glide.with(this@MainActivity)
-                        .load(viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl)
-                        .centerCrop()
-                        .into(binding.profileImage)
+                    if ("https://api.persianball.ir/media/" == viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl) {
+                        binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                    } else {
+                        Glide.with(this@MainActivity)
+                            .load(viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl)
+                            .centerCrop()
+                            .into(binding.profileImage)
+                    }
                 } else {
                     binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
                 }
@@ -157,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment, R.id.academyFragment, R.id.dashboardFragment -> {
                     lifecycleScope.launch {
                         viewModel.getShoppingCart()
+                        viewModel.getMessage()
                     }
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomBar.visibility = View.VISIBLE
@@ -229,9 +253,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    private fun setBadge() {
+    private fun setNotificationBadge(count: Int) {
         val badgeDrawable = BadgeDrawable.create(this@MainActivity)
-        badgeDrawable.number = 1
+        badgeDrawable.number = count
         badgeDrawable.backgroundColor = resources.getColor(R.color.white)
         badgeDrawable.badgeTextColor = resources.getColor(R.color.notification_icon_color)
         badgeDrawable.badgeGravity = BadgeDrawable.TOP_START
