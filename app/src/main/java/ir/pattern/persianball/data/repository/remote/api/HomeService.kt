@@ -25,8 +25,8 @@ interface HomeService {
     @POST("user/register/")
     suspend fun register(@Body request: SignUp): Response<Any>
 
-    @POST("code/verify/")
-    suspend fun verifyUser(@Body verifyUser: VerifyUser) : Response<TokenDto>
+    @POST("user/code/verify/")
+    suspend fun verifyUser(@Body verifyUser: VerifyUser) : Response<TokenResultDto>
 
     @POST("user/forget/")
     suspend fun forgetPassword(@Body forgetPassword: ForgetPassword): Response<Any>

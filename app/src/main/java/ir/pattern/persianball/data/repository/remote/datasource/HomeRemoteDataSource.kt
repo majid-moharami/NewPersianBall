@@ -31,7 +31,7 @@ class HomeRemoteDataSource
         return Request.getResponse(request = {homeService.getGallery()}, errorTranslator)
     }
 
-    suspend fun verifyUser(verifyUser: VerifyUser): Resource<TokenDto?>{
+    suspend fun verifyUser(verifyUser: VerifyUser): Resource<TokenResultDto?>{
         return Request.getResponse(request = {homeService.verifyUser(verifyUser)}, errorTranslator)
     }
 

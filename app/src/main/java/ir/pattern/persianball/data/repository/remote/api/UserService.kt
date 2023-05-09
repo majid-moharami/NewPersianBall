@@ -2,6 +2,7 @@ package ir.pattern.persianball.data.repository.remote.api
 
 import ir.pattern.persianball.data.model.Login
 import ir.pattern.persianball.data.model.TokenDto
+import ir.pattern.persianball.data.model.UserMessagesDto
 import ir.pattern.persianball.data.model.profile.*
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -35,4 +36,7 @@ interface UserService {
 
     @POST("user/change-password/")
     suspend fun changePassword(@Body changePasswordDto: ChangePasswordDto): Response<*>
+
+    @GET("user/messages/")
+    suspend fun getMessages(): Response<UserMessagesDto?>
 }

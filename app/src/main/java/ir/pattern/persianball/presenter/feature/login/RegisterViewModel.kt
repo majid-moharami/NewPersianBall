@@ -18,7 +18,7 @@ class RegisterViewModel @Inject constructor(
 
     val loginState = MutableSharedFlow<Resource<TokenDto?>>()
     val signUpState = MutableSharedFlow<Resource<Any?>>()
-    val verifyState = MutableSharedFlow<Resource<TokenDto?>>()
+    val verifyState = MutableSharedFlow<Resource<TokenResultDto?>>()
     val forgetPasswordState = MutableSharedFlow<Resource<Any?>>()
     val changePasswordState = MutableSharedFlow<Resource<Any?>>()
     val retryCodeState = MutableSharedFlow<Resource<Any?>>()

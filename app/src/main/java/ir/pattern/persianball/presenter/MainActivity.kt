@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.telephony.TelephonyManager
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
@@ -31,9 +32,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.BuildConfig
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.DeviceDto
+import ir.pattern.persianball.data.model.UserDeviceDto
 import ir.pattern.persianball.databinding.ActivityMainBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
+import ir.pattern.persianball.presenter.feature.message.PushMessageActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
@@ -83,16 +86,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.refreshToken()
         }
         setContentView(binding.root)
-
-        FirebaseApp.initializeApp(this.applicationContext)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if (it.isSuccessful) {
-                lifecycleScope.launch {
-                    viewModel.sendDevice(getDeviceDto(it.result))
-                }
-                return@addOnCompleteListener
-            }
-        }
         sharedPreferenceUtils = SharedPreferenceUtils(application)
         navController = findNavController(R.id.my_nav_host_fragment)
         setupNavigation()
@@ -226,11 +219,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.notificationIcon.setOnClickListener {
-            Toast.makeText(
-                this,
-                sharedPreferenceUtils.getNotificationCounter().count.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, PushMessageActivity::class.java)
+            startActivity(intent)
         }
 
         binding.profileImage.setOnClickListener {
@@ -286,10 +276,20 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 showToolbar(accountManager.isLogin)
                 FirebaseApp.initializeApp(this.applicationContext)
-                FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { it ->
                     if (it.isSuccessful) {
                         lifecycleScope.launch {
-                            viewModel.sendDevice(getDeviceDto(it.result))
+                            if (accountManager.isLogin) {
+                                FirebaseApp.initializeApp(this@MainActivity.applicationContext)
+                                FirebaseMessaging.getInstance().token.addOnCompleteListener { itt ->
+                                    if (itt.isSuccessful) {
+                                        lifecycleScope.launch {
+                                            viewModel.sendDevice(getDeviceDto(itt.result))
+                                        }
+                                    }
+                                }
+
+                            }
                         }
                         return@addOnCompleteListener
                     }
@@ -316,9 +316,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("HardwareIds")
     private fun getDeviceDto(fcmToken: String): DeviceDto {
-        val displayMetrics =  DisplayMetrics()
+        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        val versionName = packageInfo.versionName
+        val versionCode =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                packageInfo.versionCode.toLong()
+            }
+        val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
         val width = displayMetrics.widthPixels
@@ -328,8 +335,8 @@ class MainActivity : AppCompatActivity() {
             "$width * $height",
             Build.MANUFACTURER,
             Build.MODEL,
-            BuildConfig.VERSION_NAME,
-            BuildConfig.VERSION_CODE.toString(),
+            versionName,
+            versionCode.toString(),
             Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID),
             fcmToken,
             "mobile"

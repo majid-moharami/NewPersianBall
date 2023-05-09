@@ -3,6 +3,7 @@ package ir.pattern.persianball.data.repository.remote.datasource
 import ir.pattern.persianball.data.model.Login
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.TokenDto
+import ir.pattern.persianball.data.model.UserMessagesDto
 import ir.pattern.persianball.data.model.profile.*
 import ir.pattern.persianball.data.repository.remote.api.Request
 import ir.pattern.persianball.data.repository.remote.api.UserService
@@ -63,5 +64,9 @@ class UserRemoteDataSource
         return Request.getResponse(
             request = {userService.updateUserAddress(id, address)}, errorTranslator
         )
+    }
+
+    suspend fun getUserMessages(): Resource<UserMessagesDto?>{
+        return Request.getResponse(request = {userService.getMessages()}, errorTranslator)
     }
 }

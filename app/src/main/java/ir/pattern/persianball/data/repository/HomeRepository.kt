@@ -61,7 +61,7 @@ class HomeRepository
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun verifyUser(verifyUser: VerifyUser): Flow<Resource<TokenDto?>> {
+    suspend fun verifyUser(verifyUser: VerifyUser): Flow<Resource<TokenResultDto?>> {
         return flow{
             val result = homeRemoteDataSource.verifyUser(verifyUser)
             emit(result)

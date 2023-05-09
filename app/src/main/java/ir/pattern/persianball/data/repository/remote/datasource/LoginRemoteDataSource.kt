@@ -44,4 +44,8 @@ class LoginRemoteDataSource
     suspend fun userDevice(device: DeviceDto) : Resource<Any?> {
         return Request.getResponse(request = {loginService.userDevice(device)}, errorTranslator)
     }
+
+    suspend fun sendUserDevice(device: UserDeviceDto) : Resource<Any?> {
+        return Request.getResponse(request = {loginService.sendUserDevice(device)}, errorTranslator)
+    }
 }

@@ -75,8 +75,8 @@ class VerifyUserFragment : Fragment() {
                                 User(
                                     args.username,
                                     args.password,
-                                    tokenDto.access,
-                                    tokenDto.refresh
+                                    it.data.tokenDto.access,
+                                    it.data.tokenDto.refresh
                                 ,"")
                             )
                             Log.d("LOGIN", "${sharedPreferenceUtils.getUserCredentials().username}, ${sharedPreferenceUtils.getUserCredentials().password}, ${sharedPreferenceUtils.getUserCredentials().token}, ${sharedPreferenceUtils.getUserCredentials().refreshToken}")

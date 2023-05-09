@@ -4,6 +4,7 @@ import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.*
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface LoginService {
@@ -31,4 +32,7 @@ interface LoginService {
 
     @POST("devices/")
     suspend fun userDevice(@Body userDevice: DeviceDto): Response<Any>
+
+    @POST("user/user-devices/")
+    suspend fun sendUserDevice(@Body userDevice: UserDeviceDto): Response<Any>
 }

@@ -7,6 +7,7 @@ import ir.pattern.persianball.data.model.DeviceDto
 import ir.pattern.persianball.data.model.RefreshTokenDto
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.TokenDto
+import ir.pattern.persianball.data.model.UserDeviceDto
 import ir.pattern.persianball.data.repository.remote.datasource.LoginRemoteDataSource
 import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.data.repository.ProfileRepository
@@ -94,5 +95,9 @@ class MainActivityViewModel
 
     suspend fun sendDevice(device: DeviceDto) {
         loginRemoteDataSource.userDevice(device)
+    }
+
+    suspend fun sendUserDevice(userDevice: UserDeviceDto){
+        loginRemoteDataSource.sendUserDevice(userDevice)
     }
 }

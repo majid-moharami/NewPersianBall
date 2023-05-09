@@ -5,6 +5,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.UserMessagesDto
+import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
 import ir.pattern.persianball.data.model.profile.*
 import ir.pattern.persianball.data.repository.remote.datasource.UserRemoteDataSource
@@ -40,4 +42,11 @@ constructor(
 
     suspend fun updateAddress(address: Address): Resource<Address?> =
         userRemoteDataSource.updateAddress(address)
+
+    suspend fun getUserMessage(): Flow<Resource<UserMessagesDto?>> {
+        return flow {
+            val result = userRemoteDataSource.getUserMessages()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 }
