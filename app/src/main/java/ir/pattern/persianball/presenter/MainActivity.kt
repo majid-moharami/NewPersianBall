@@ -213,7 +213,7 @@ class MainActivity : AppCompatActivity() {
             binding.loginLayout.visibility = View.GONE
             binding.welcomeLayout.visibility = View.VISIBLE
             lifecycleScope.launch {
-                if (viewModel.getProfileImage().isEmpty()) {
+                 if (viewModel.getProfileImage().isEmpty() || viewModel.getProfileImage() == "https://api.persianball.ir/media/") {
                     viewModel.getUser()
                 } else {
                     Glide.with(this@MainActivity)

@@ -10,13 +10,13 @@
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:padding="4dp"
             app:cardBackgroundColor="#DEF1F5"
             app:cardCornerRadius="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.tabs.TabLayout
@@ -25,6 +25,7 @@
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
+                android:layoutDirection="ltr"
                 android:backgroundTint="@android:color/transparent"
                 app:tabBackground="@drawable/profile_toggle_selector"
                 app:tabGravity="fill"
@@ -62,16 +63,16 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginBottom="16dp"
             android:paddingBottom="8dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="3dp"
             app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintRight_toRightOf="@+id/materialCardView"
+            app:layout_constraintLeft_toLeftOf="@+id/materialCardView"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             app:layout_constraintVertical_bias="0">
 
@@ -79,6 +80,7 @@
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layoutDirection="ltr"
                 android:paddingBottom="16dp" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

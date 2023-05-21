@@ -62,11 +62,13 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
 
     override fun onBindView(data: ProfileImageData?) {
         data?.avatar?.value?.also {
-            Glide.with(activity)
-                .load("https://api.persianball.ir/media/$it")
-                .centerCrop()
-                .into(binding.profileImage)
-            binding.uploadIcon.visibility = View.GONE
+            if (it.isNotEmpty() && it != "https://api.persianball.ir/media/") {
+                Glide.with(activity)
+                    .load("https://api.persianball.ir/media/$it")
+                    .centerCrop()
+                    .into(binding.profileImage)
+                binding.uploadIcon.visibility = View.GONE
+            }
         } ?: kotlin.run {
             binding.uploadIcon.visibility = View.VISIBLE
         }
@@ -79,9 +81,9 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         CoroutineScope(Dispatchers.Main.immediate + job!!).launch {
             data?.avatar?.collectLatest {
 //                if (it.isNullOrEmpty()) {
-                    binding.profileImage.setOnClickListener {
-                        uploadImager.invoke()
-                    }
+                binding.profileImage.setOnClickListener {
+                    uploadImager.invoke()
+                }
 //                } else {
 //                    binding.profileImage.setOnClickListener(null)
 //                }

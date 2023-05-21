@@ -1,6 +1,7 @@
 package ir.pattern.persianball.presenter.feature.movie
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +33,8 @@ import ir.pattern.persianball.presenter.feature.movie.dialog.recycler.GiftProduc
 import ir.pattern.persianball.presenter.feature.movie.dialog.recycler.LocationItemData
 import ir.pattern.persianball.presenter.feature.movie.locationOrsupports.LocationOrSupportFragment
 import ir.pattern.persianball.presenter.feature.movie.prerequisites.PreRequisitesFragment
+import ir.pattern.persianball.presenter.feature.player.PlayerActivity
+import ir.pattern.persianball.presenter.feature.player.PlayerRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,6 +59,8 @@ class MovieDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var accountManager: AccountManager
+    @Inject
+    lateinit var playerRepository: PlayerRepository
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -185,6 +190,23 @@ class MovieDetailFragment : BaseFragment() {
             val directions =
                 MovieDetailFragmentDirections.actionMovieDetailFragmentToSectionListFragment(movieId)
             findNavController().navigate(directions)
+        }
+
+        binding.watch.setOnClickListener {
+            if (!movie.video.isNullOrEmpty()){
+                playerRepository.videoUrl = null
+                playerRepository.videoUrl = movie.video
+                val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                intent.putExtra("HAVE_URL", false)
+                intent.putExtra("URL", "")
+                startActivity(intent)
+            }else{
+                Toast.makeText(
+                    requireActivity(),
+                    "پیش نمایش وجود ندارد.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
 
         baseBinding.tryAgainBtn.setOnClickListener {

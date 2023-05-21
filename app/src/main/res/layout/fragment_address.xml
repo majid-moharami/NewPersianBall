@@ -11,11 +11,11 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -29,8 +29,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:drawableEnd="@drawable/ic_profile_track_title"
+                    android:layout_marginRight="8dp"
+                    android:drawableRight="@drawable/ic_profile_track_title"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/iran_sans_bold"
                     android:text="اطلاعات تماس وآدرس"
@@ -60,28 +60,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_call_home"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_call_home"
                                 android:drawablePadding="5dp"
                                 android:text="شماره تلفن همراه"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/phone_number_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/phone_number_title"
+                                app:layout_constraintRight_toRightOf="@+id/phone_number_title"
                                 app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/phone_number_title" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,28 +105,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_call_mobile"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_call_mobile"
                                 android:drawablePadding="5dp"
                                 android:text="شماره تلفن ثابت"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/home_number_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/home_number_title"
+                                app:layout_constraintRight_toRightOf="@+id/home_number_title"
                                 app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/home_number_title" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -150,27 +150,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_profile_address"
+                            android:layout_marginRight="8dp"
+                            android:drawableRight="@drawable/ic_profile_address"
                             android:drawablePadding="5dp"
                             android:text="آدرس"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/address_content"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
+                            android:layout_marginLeft="24dp"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/address_title"
+                            app:layout_constraintRight_toRightOf="@+id/address_title"
                             app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/address_title" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -193,28 +193,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_profile_email"
+                            android:layout_marginRight="8dp"
+                            android:drawableRight="@drawable/ic_profile_email"
                             android:drawablePadding="5dp"
                             android:text="ایمیل"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/email_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginRight="16dp"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/email_title"
+                            app:layout_constraintRight_toRightOf="@+id/email_title"
                             app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/email_title" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,30 +237,30 @@
                             android:id="@+id/postal_code_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableEnd="@drawable/ic_profile_address"
+                            android:layout_marginRight="8dp"
+                            android:drawableRight="@drawable/ic_profile_address"
                             android:drawablePadding="5dp"
                             android:text="کد پستی"
                             android:textColor="#6F71AB"
                             android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ir.pattern.persianball.views.PersianBallTextView
                             android:id="@+id/postal_code_content"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/postal_code_title" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -276,8 +276,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="@drawable/ripple"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_view">
 
                     <ir.pattern.persianball.views.PersianBallTextView
@@ -293,8 +293,8 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_size_large"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
                 </FrameLayout>
             </LinearLayout>

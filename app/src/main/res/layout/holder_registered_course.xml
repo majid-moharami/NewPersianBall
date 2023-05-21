@@ -24,9 +24,9 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/roundedCornersRegisteredCourseImageView" />
 
@@ -34,12 +34,12 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:fontFamily="@font/iran_sans_bold"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/cardView"
-                app:layout_constraintEnd_toStartOf="@+id/shapeableImageView"
+                app:layout_constraintRight_toLeftOf="@+id/shapeableImageView"
                 app:layout_constraintTop_toTopOf="@+id/shapeableImageView"
                 tools:text="@string/the_progress" />
 
@@ -54,7 +54,7 @@
                 app:cardBackgroundColor="#FCDC94"
                 app:cardCornerRadius="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/teacher_text"
-                app:layout_constraintEnd_toEndOf="@+id/title"
+                app:layout_constraintRight_toRightOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title">
 
                 <TextView
@@ -76,19 +76,19 @@
                 android:textColor="#7A000000"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintRight_toRightOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 tools:text="@string/the_progress" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:padding="2dp"
                 app:cardBackgroundColor="#B0BBDA"
                 app:cardCornerRadius="8dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -106,11 +106,11 @@
                 android:id="@+id/progressView"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/teacher_text"
                 app:progressView_autoAnimate="true"
                 app:progressView_colorBackground="#EAF2FF"
@@ -132,8 +132,8 @@
                 app:cardBackgroundColor="#FFB703"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progressView">
 
                 <TextView

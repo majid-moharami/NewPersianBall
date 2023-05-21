@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -31,16 +31,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:drawableEnd="@drawable/ic_frame"
+                    android:layout_marginRight="8dp"
+                    android:drawableRight="@drawable/ic_frame"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/iran_sans_bold"
                     android:text="نمایش اطلاعات شخصی "
                     android:textColor="#6F71AB"
                     android:textSize="13sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
@@ -65,32 +65,32 @@
                                 android:id="@+id/latin_name_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_name"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_name"
                                 android:drawablePadding="5dp"
                                 android:text="نام لاتین"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/latin_name_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/latin_name_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/latin_name_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/latin_name_title"
+                                app:layout_constraintRight_toRightOf="@+id/latin_name_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/latin_name_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/latin_name_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/latin_name_title" />
 
                             <ImageView
@@ -100,7 +100,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -122,32 +122,32 @@
                                 android:id="@+id/name_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_name"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_name"
                                 android:drawablePadding="5dp"
                                 android:text="نام"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/name_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/name_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/name_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/name_title"
+                                app:layout_constraintRight_toRightOf="@+id/name_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/name_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/name_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/name_title" />
 
                             <ImageView
@@ -157,7 +157,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -185,32 +185,32 @@
                                 android:id="@+id/latin_family_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_name"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_name"
                                 android:drawablePadding="5dp"
                                 android:text="نام خانوادگی لاتین"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/latin_family_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/latin_family_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/latin_family_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/latin_family_title"
+                                app:layout_constraintRight_toRightOf="@+id/latin_family_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/latin_family_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/latin_family_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/latin_family_title" />
 
                             <ImageView
@@ -220,7 +220,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -242,32 +242,32 @@
                                 android:id="@+id/family_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_name"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_name"
                                 android:drawablePadding="5dp"
                                 android:text="نام خانوادگی"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/family_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/family_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/family_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/family_title"
+                                app:layout_constraintRight_toRightOf="@+id/family_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/family_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/family_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/family_title" />
 
                             <ImageView
@@ -277,7 +277,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -305,32 +305,32 @@
                                 android:id="@+id/nation_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_nationality"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_nationality"
                                 android:drawablePadding="5dp"
                                 android:text="ملیت"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/nation_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/nation_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/nation_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/nation_title"
+                                app:layout_constraintRight_toRightOf="@+id/nation_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/nation_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/nation_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/nation_title" />
 
                             <ImageView
@@ -340,7 +340,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -362,32 +362,32 @@
                                 android:id="@+id/birthdate_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_profile_birthday"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_profile_birthday"
                                 android:drawablePadding="5dp"
                                 android:text="تاریخ تولد"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/bithdate_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/bithdate_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/bithdate_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/birthdate_title"
+                                app:layout_constraintRight_toRightOf="@+id/birthdate_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/bithdate_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/bithdate_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/birthdate_title" />
 
                             <ImageView
@@ -397,7 +397,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -425,32 +425,32 @@
                                 android:id="@+id/gender_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_frame"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_frame"
                                 android:drawablePadding="5dp"
                                 android:text="جنسیت"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/gender_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/gender_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/gender_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/gender_title"
+                                app:layout_constraintRight_toRightOf="@+id/gender_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/gender_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/gender_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/gender_title" />
 
                             <ImageView
@@ -460,7 +460,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -482,32 +482,32 @@
                                 android:id="@+id/national_code_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginLeft="24dp"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_proflile_national_code"
+                                android:layout_marginRight="8dp"
+                                android:drawableRight="@drawable/ic_proflile_national_code"
                                 android:drawablePadding="5dp"
                                 android:text="کد ملی"
                                 android:textColor="#6F71AB"
                                 android:textSize="10sp"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/national_code_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/national_code_persianBallImageButton"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ir.pattern.persianball.views.PersianBallTextView
                                 android:id="@+id/national_code_content"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="16dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/national_code_title"
+                                app:layout_constraintRight_toRightOf="@+id/national_code_title"
                                 app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintStart_toEndOf="@+id/national_code_persianBallImageButton"
+                                app:layout_constraintLeft_toRightOf="@+id/national_code_persianBallImageButton"
                                 app:layout_constraintTop_toBottomOf="@+id/national_code_title" />
 
                             <ImageView
@@ -517,7 +517,7 @@
                                 android:layout_margin="8dp"
                                 android:src="@drawable/ic_edit_name"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -532,8 +532,8 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_view">
 
                     <ir.pattern.persianball.views.PersianBallTextView
@@ -549,8 +549,8 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
                 </FrameLayout>
             </LinearLayout>

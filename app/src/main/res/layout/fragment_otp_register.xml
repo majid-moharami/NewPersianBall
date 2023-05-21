@@ -13,8 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -32,8 +32,8 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:fontFamily="@font/iran_sans_bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ir.pattern.persianball.views.PersianBallTextView
@@ -45,8 +45,8 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/persianBallTextView2"
-                    app:layout_constraintStart_toStartOf="@+id/persianBallTextView2"
+                    app:layout_constraintRight_toRightOf="@+id/persianBallTextView2"
+                    app:layout_constraintLeft_toLeftOf="@+id/persianBallTextView2"
                     app:layout_constraintTop_toBottomOf="@+id/persianBallTextView2" />
 
                 <com.kevinschildhorn.otpview.OTPView
@@ -55,8 +55,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textSize="32sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/enter_code"
                     app:otp_cursorColor="@color/red"
                     app:otp_itemCount="5"
@@ -72,8 +72,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/not_get_code"
                     android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/otp_view"
-                    app:layout_constraintStart_toStartOf="@+id/otp_view"
+                    app:layout_constraintRight_toRightOf="@+id/otp_view"
+                    app:layout_constraintLeft_toLeftOf="@+id/otp_view"
                     app:layout_constraintTop_toBottomOf="@+id/otp_view" />
 
                 <ir.pattern.persianball.views.PersianBallTextView
@@ -86,8 +86,8 @@
                     android:textStyle="bold"
                     android:clickable="true"
                     android:focusable="true"
-                    app:layout_constraintEnd_toEndOf="@+id/persianBallTextView3"
-                    app:layout_constraintStart_toStartOf="@+id/persianBallTextView3"
+                    app:layout_constraintRight_toRightOf="@+id/persianBallTextView3"
+                    app:layout_constraintLeft_toLeftOf="@+id/persianBallTextView3"
                     app:layout_constraintTop_toBottomOf="@+id/persianBallTextView3" />
 
                 <ir.pattern.persianball.views.PersianBallTextView
@@ -101,8 +101,8 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:fontFamily="@font/iran_sans_bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/persianBallTextView4" />
 
                 <LinearLayout
@@ -111,19 +111,19 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@+id/login"
-                    app:layout_constraintStart_toStartOf="@+id/login"
+                    app:layout_constraintRight_toRightOf="@+id/login"
+                    app:layout_constraintLeft_toLeftOf="@+id/login"
                     app:layout_constraintTop_toBottomOf="@+id/login">
 
                     <ir.pattern.persianball.views.PersianBallImageButton
                         android:id="@+id/whatsapp"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:layout_marginEnd="24dp"
+                        android:layout_marginRight="24dp"
                         android:background="@drawable/product_page_text_background"
                         android:src="@drawable/ic_whatsapp"
                         app:layout_constraintBottom_toBottomOf="@+id/facebook"
-                        app:layout_constraintEnd_toStartOf="@+id/facebook"
+                        app:layout_constraintRight_toLeftOf="@+id/facebook"
                         app:layout_constraintTop_toTopOf="@+id/facebook" />
 
                     <ir.pattern.persianball.views.PersianBallImageButton
@@ -133,19 +133,19 @@
                         android:background="@drawable/product_page_text_background"
                         android:src="@drawable/ic_facebook"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/submit_btn" />
 
                     <ir.pattern.persianball.views.PersianBallImageButton
                         android:id="@+id/youtube"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginLeft="24dp"
                         android:background="@drawable/product_page_text_background"
                         android:src="@drawable/ic_youtube"
                         app:layout_constraintBottom_toBottomOf="@+id/facebook"
-                        app:layout_constraintStart_toEndOf="@+id/facebook"
+                        app:layout_constraintLeft_toRightOf="@+id/facebook"
                         app:layout_constraintTop_toTopOf="@+id/facebook" />
                 </LinearLayout>
             </LinearLayout>

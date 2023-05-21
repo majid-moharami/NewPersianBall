@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="228dp"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/fotbal" />
 
@@ -32,12 +32,12 @@
                 android:id="@+id/videos"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="64dp"
+                android:layout_marginRight="64dp"
                 android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="@color/yellow"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintRight_toRightOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,11 +79,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
                 android:fontFamily="@font/iran_sans_bold"
                 android:textColor="@color/white"
                 android:textSize="21sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="دوره دریبل وی" />
 
@@ -91,14 +91,14 @@
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="32dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:cardBackgroundColor="#7C8EC2"
                 app:cardCornerRadius="15dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -112,7 +112,7 @@
                 android:id="@+id/video_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
                 android:layout_marginBottom="32dp"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/iran_sans_bold"
@@ -120,7 +120,7 @@
                 android:textSize="19sp"
                 app:drawableRightCompat="@drawable/ic_play_circle"
                 app:layout_constraintBottom_toTopOf="@+id/videos"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 tools:text="8 ویدیو" />
 
             <TextView
@@ -144,13 +144,13 @@
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:visibility="gone"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <com.google.android.material.tabs.TabLayout
@@ -161,6 +161,7 @@
                 android:backgroundTint="@android:color/transparent"
                 app:tabBackground="@drawable/profile_toggle_selector"
                 app:tabGravity="fill"
+                android:layoutDirection="ltr"
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabIndicatorHeight="0dp"
                 app:tabMode="fixed"
@@ -189,17 +190,17 @@
             android:id="@+id/cardView_viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
             app:cardCornerRadius="15dp"
             app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/cardView7"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
             <androidx.viewpager2.widget.ViewPager2
@@ -208,10 +209,11 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:visibility="visible"
+                android:layoutDirection="ltr"
                 app:layout_constraintBottom_toTopOf="@+id/cardView7"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.cardview.widget.CardView>
@@ -221,16 +223,16 @@
             android:id="@+id/cardView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
             app:cardCornerRadius="15dp"
             app:cardElevation="8dp"
             app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -239,14 +241,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="horizontal"
+                    android:layoutDirection="ltr"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
@@ -269,7 +272,7 @@
                                 app:cardCornerRadius="25dp"
                                 app:cardBackgroundColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
@@ -279,7 +282,7 @@
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/ic_down"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
                             </androidx.cardview.widget.CardView>
 
@@ -287,14 +290,14 @@
                                 android:id="@+id/product_choose_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
                                 android:textColor="@color/black"
                                 android:text="انتخاب محصول"
                                 app:layout_constraintBottom_toBottomOf="@+id/product_image_layout"
-                                app:layout_constraintEnd_toStartOf="@+id/product_image_layout"
+                                app:layout_constraintRight_toLeftOf="@+id/product_image_layout"
                                 app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/product_image_layout" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -319,18 +322,18 @@
                                 app:cardCornerRadius="25dp"
                                 app:cardBackgroundColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
                                     android:id="@+id/support_image"
                                     android:layout_width="45dp"
                                     android:layout_height="45dp"
-                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="8dp"
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/ic_down"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
                             </androidx.cardview.widget.CardView>
 
@@ -338,15 +341,15 @@
                                 android:id="@+id/support_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
                                 android:maxLines="2"
                                 android:text="انتخاب پشتیبان"
                                 android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/support_image_layout"
-                                app:layout_constraintEnd_toStartOf="@+id/support_image_layout"
+                                app:layout_constraintRight_toLeftOf="@+id/support_image_layout"
                                 app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/support_image_layout" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -357,13 +360,13 @@
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/strike_rounded_background"
                     app:layout_constraintBottom_toTopOf="@+id/addBtn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView2"
@@ -373,7 +376,7 @@
                         app:cardBackgroundColor="#EAEDF5"
                         app:cardCornerRadius="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -387,13 +390,13 @@
                         android:id="@+id/discounted_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:fontFamily="@font/iran_sans_bold"
                         android:gravity="center"
                         android:textColor="#6F71AB"
                         android:textSize="@dimen/font_size_super_huge"
                         app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                        app:layout_constraintEnd_toStartOf="@+id/cardView2"
+                        app:layout_constraintRight_toLeftOf="@+id/cardView2"
                         app:layout_constraintTop_toTopOf="@+id/cardView2"
                         tools:text="30000 تومان" />
 
@@ -401,14 +404,14 @@
                         android:id="@+id/real_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/strike"
                         android:textColor="#6F71AB"
                         android:textSize="@dimen/font_size_huge"
                         app:layout_constraintBottom_toBottomOf="@+id/discounted_price"
-                        app:layout_constraintEnd_toStartOf="@+id/discounted_price"
+                        app:layout_constraintRight_toLeftOf="@+id/discounted_price"
                         app:layout_constraintHorizontal_bias="0.977"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         tools:text="40000 تومان" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -425,8 +428,8 @@
                     app:cardBackgroundColor="#FCB503"
                     app:cardCornerRadius="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -438,7 +441,7 @@
                         android:text="@string/add_product_shopping_cart"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_size_medium"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -450,8 +453,8 @@
             android:layout_height="wrap_content"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator

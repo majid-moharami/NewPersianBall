@@ -12,14 +12,14 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             app:cardBackgroundColor="#7C8EC2"
             app:cardCornerRadius="15dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -34,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_ball" />
 
@@ -45,8 +45,8 @@
             android:layout_height="0dp"
             app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/poster">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -57,19 +57,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/header_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
                     android:fontFamily="@font/iran_sans_bold"
                     android:textColor="#4F6F79"
                     android:textSize="@dimen/font_size_super_huge"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView"
                     tools:text="جاتوپی پرشین بال" />
 
@@ -77,9 +77,9 @@
                     android:id="@+id/description"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/iran_sans"
@@ -87,8 +87,8 @@
                     android:scrollbars="vertical"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/header_title"
                     tools:text="و سبک در عین حال شیک با بهترین جنس!جاتوپی فریستایلی دارای 8 و 6 بند مقاوم ، نرم و سبک در عین حال شیک با بهترین جنس!و سبک در عین حال شیک با بهترین جنس!جاتوپی فریستایلی دارای 8 و 6 بند مقاوم ، نرم و سبک در عین حال شیک با بهترین جنس!
 
@@ -99,14 +99,14 @@
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/strike_rounded_background"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintLeft_toLeftOf="parent">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView2"
@@ -116,7 +116,7 @@
                         app:cardBackgroundColor="#EAEDF5"
                         app:cardCornerRadius="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -130,13 +130,13 @@
                         android:id="@+id/discounted_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:fontFamily="@font/iran_sans_bold"
                         android:gravity="center"
                         android:textColor="#6F71AB"
                         android:textSize="@dimen/font_size_super_huge"
                         app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                        app:layout_constraintEnd_toStartOf="@+id/cardView2"
+                        app:layout_constraintRight_toLeftOf="@+id/cardView2"
                         app:layout_constraintTop_toTopOf="@+id/cardView2"
                         tools:text="30000 تومان" />
 
@@ -144,14 +144,14 @@
                         android:id="@+id/real_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/strike"
                         android:textColor="#6F71AB"
                         android:textSize="@dimen/font_size_huge"
                         app:layout_constraintBottom_toBottomOf="@+id/discounted_price"
-                        app:layout_constraintEnd_toStartOf="@+id/discounted_price"
+                        app:layout_constraintRight_toLeftOf="@+id/discounted_price"
                         app:layout_constraintHorizontal_bias="0.977"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         tools:text="40000 تومان" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,13 +159,14 @@
                     android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal"
+                    android:layoutDirection="ltr"
                     app:layout_constraintBottom_toTopOf="@+id/add_product"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -182,8 +183,8 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_size_medium"
                             app:layout_constraintBottom_toTopOf="@id/color_box"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/color_box"
@@ -191,29 +192,30 @@
                             android:layout_height="30dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent">
 
                             <Spinner
                                 android:id="@+id/color_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
                                 android:spinnerMode="dropdown"
                                 android:padding="0dp"
+                                android:layoutDirection="ltr"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/color_selected"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintLeft_toRightOf="@+id/color_selected"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/color_selected"
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
                                 app:cardCornerRadius="8dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -234,8 +236,8 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_size_medium"
                             app:layout_constraintBottom_toTopOf="@id/count_box"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/count_box"
@@ -243,17 +245,17 @@
                             android:layout_height="30dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent">
 
                             <ImageView
                                 android:id="@+id/plus"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
                                 android:src="@drawable/plus"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
@@ -264,18 +266,18 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/font_size_large"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/minus"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
                                 android:src="@drawable/minus"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -295,8 +297,8 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_size_medium"
                             app:layout_constraintBottom_toTopOf="@id/size_box"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/size_box"
@@ -304,19 +306,20 @@
                             android:layout_height="30dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent">
 
                             <Spinner
                                 android:id="@+id/size_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="right"
                                 android:padding="0dp"
+                                android:spinnerMode="dropdown"
+                                android:layoutDirection="ltr"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -335,8 +338,8 @@
                     app:cardCornerRadius="15dp"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -348,7 +351,7 @@
                         android:text="@string/add_product_shopping_cart"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_size_large"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>

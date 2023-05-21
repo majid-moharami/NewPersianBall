@@ -12,8 +12,8 @@
         android:visibility="visible"
         app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,8 +28,8 @@
                 android:text="انتخاب آدرس پستی جهت تحویل"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_size_huge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -41,8 +41,8 @@
                 android:scrollbars="vertical"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/send_method"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 tools:listitem="@layout/holder_address_submit" />
 
@@ -53,8 +53,8 @@
                 android:layout_marginTop="32dp"
                 android:src="@drawable/address_empty"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
@@ -68,8 +68,8 @@
                 android:textSize="@dimen/font_size_medium"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/send_method"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/empty" />
 
             <androidx.cardview.widget.CardView
@@ -84,8 +84,8 @@
                 app:cardBackgroundColor="#6F71AB"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -111,8 +111,8 @@
                 app:cardBackgroundColor="#F5F5F5"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toTopOf="@+id/address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,8 +139,8 @@
                 app:cardBackgroundColor="#FFB40A"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintBottom_toTopOf="@+id/add_new_address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"

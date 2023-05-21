@@ -14,6 +14,7 @@ import ir.pattern.persianball.presenter.feature.home.recycler.HomeSliderData
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class MovieDetailViewModel
@@ -77,6 +78,20 @@ class MovieDetailViewModel
                     if (coach.fullName == variant?.coach?.fullName) {
                         if (variant.giftProduct != null) {
                             productList.add(variant.giftProduct)
+                        } else {
+                            productList.add(
+                                GiftProductDto(
+                                    "",
+                                    0,
+                                    0,
+                                    "",
+                                    "",
+                                    "",
+                                    0,
+                                    "بدون محصول",
+                                    "non-id"
+                                )
+                            )
                         }
                     }
                 }
@@ -111,6 +126,20 @@ class MovieDetailViewModel
                     if (location.location == it?.location && location.time == it?.time && location.id == it?.id) {
                         if (it.giftProduct != null) {
                             productList.add(it.giftProduct)
+                        } else {
+                            productList.add(
+                                GiftProductDto(
+                                    "",
+                                    0,
+                                    0,
+                                    "",
+                                    "",
+                                    "",
+                                    0,
+                                    "بدون محصول",
+                                    "non-id"
+                                )
+                            )
                         }
                     }
                     locationMap.put(location, productList)
@@ -124,7 +153,13 @@ class MovieDetailViewModel
             if (it?.coach == null && it?.giftProduct?.id == selectedGifts?.id) {
                 return it
             } else {
-                if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+                if (selectedGifts?.id == "non-id") {
+                    if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct == null) {
+                        return it
+                    }
+                } else {
+                    if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+                }
             }
         }
         return null
@@ -132,7 +167,13 @@ class MovieDetailViewModel
 
     fun getSelectedLocation(movie: AcademyDto): TimeAndLocationsDto? {
         movie.detail.timeAndLocation.map {
-            if (it?.id == selectedLocation.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+            if (selectedGifts?.id == "non-id") {
+                if (it?.id == selectedLocation.value?.id && it?.giftProduct == null) {
+                    return it
+                }
+            } else {
+                if (it?.id == selectedLocation.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+            }
         }
         return null
     }

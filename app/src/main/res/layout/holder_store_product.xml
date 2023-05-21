@@ -13,8 +13,8 @@
         app:cardCornerRadius="8dp"
         android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,14 +26,14 @@
                 android:id="@+id/picture"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_ball"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/priceCardView"
                 app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
@@ -46,8 +46,8 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -59,12 +59,12 @@
                         android:id="@+id/percent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:visibility="gone"
                         app:cardCornerRadius="4dp"
                         app:cardBackgroundColor="@color/red"
                         app:layout_constraintBottom_toBottomOf="@+id/real_price"
-                        app:layout_constraintStart_toEndOf="@+id/discounted_price"
+                        app:layout_constraintLeft_toRightOf="@+id/discounted_price"
                         app:layout_constraintTop_toTopOf="@+id/discounted_price">
 
                         <TextView
@@ -89,8 +89,8 @@
                         android:textSize="@dimen/font_size_medium"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="توپ" />
 
@@ -104,8 +104,8 @@
                         android:textColor="#000000"
                         android:textSize="@dimen/font_size_normal"
                         app:layout_constraintBottom_toTopOf="@+id/real_price"
-                        app:layout_constraintEnd_toEndOf="@+id/name"
-                        app:layout_constraintStart_toStartOf="@+id/name"
+                        app:layout_constraintRight_toRightOf="@+id/name"
+                        app:layout_constraintLeft_toLeftOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/name"
                         tools:text="30000 تومان" />
 
@@ -117,8 +117,8 @@
                         android:textColor="#717171"
                         android:textSize="@dimen/font_size_small"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/discounted_price"
-                        app:layout_constraintStart_toStartOf="@+id/discounted_price"
+                        app:layout_constraintRight_toRightOf="@+id/discounted_price"
+                        app:layout_constraintLeft_toLeftOf="@+id/discounted_price"
                         app:layout_constraintTop_toBottomOf="@+id/discounted_price"
                         tools:text="40000 تومان" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

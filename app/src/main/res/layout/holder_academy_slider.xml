@@ -13,9 +13,10 @@
             app:autoPlaying="true"
             app:centerScale="2"
             app:itemSpace="1"
+            android:layoutDirection="ltr"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:moveSpeed="0.5"
             app:showIndicator="false" />

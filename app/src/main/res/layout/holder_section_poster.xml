@@ -14,8 +14,8 @@
             android:layout_height="130dp"
             android:scaleType="centerCrop"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -24,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:fontFamily="@font/iran_sans_bold"
             android:textColor="@color/white"
             android:textSize="21sp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -53,7 +53,7 @@
             tools:text="8 ویدیو"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:layout_marginBottom="8dp"
             android:drawablePadding="8dp"
             android:fontFamily="@font/iran_sans_bold"
@@ -62,7 +62,7 @@
             android:visibility="visible"
             app:drawableRightCompat="@drawable/ic_play_circle"
             app:layout_constraintBottom_toBottomOf="@+id/poster"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
