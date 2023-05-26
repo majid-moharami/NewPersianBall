@@ -280,14 +280,18 @@ class PersonalInformationFragment : Fragment() {
 
                     bundle.getString(InfoType.NATIONAL_CODE.type, null)
                         ?.also {
-                            binding.nationalCodeContent.text = it
-                            binding.nationalCodeContent.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.black
+                            if (it.length == 10) {
+                                binding.nationalCodeContent.text = it
+                                binding.nationalCodeContent.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.black
+                                    )
                                 )
-                            )
-                            viewModel.personalData.nationCode = it.toLong()
+                                viewModel.personalData.nationCode = it.toLong()
+                            }else{
+                                Toast.makeText(requireContext(), "کد ملی ده رقمی را به درستی وارد کنید.", Toast.LENGTH_LONG).show()
+                            }
                         }
 
                     bundle.getString(InfoType.GENDER.type, null)

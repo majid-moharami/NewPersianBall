@@ -93,6 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/phone_number"
+                android:nextFocusDown="@id/user_name_edit_text"
+                android:singleLine="true"
                 android:fontFamily="@font/iran_sans_bold"
                 android:inputType="phone"
                 android:textSize="13sp" />
@@ -111,6 +113,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
+                    android:nextFocusDown="@id/user_name_edit_text"
+                    android:singleLine="true"
                     android:inputType="textEmailAddress"
                     android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,6 +135,8 @@
                     android:layout_height="wrap_content"
                     app:boxStrokeErrorColor="@color/red"
                     android:fontFamily="@font/iran_sans_bold"
+                    android:nextFocusDown="@id/password_edit_text"
+                    android:singleLine="true"
                     android:hint="@string/user_name"
                     android:textSize="13sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -151,6 +157,7 @@
                     app:boxStrokeErrorColor="@color/red"
                     app:counterOverflowTextColor="@color/red"
                     app:errorTextColor="@color/red"
+                    android:singleLine="true"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:fontFamily="@font/iran_sans_bold"

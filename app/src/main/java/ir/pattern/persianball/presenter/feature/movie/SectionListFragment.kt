@@ -88,7 +88,11 @@ class SectionListFragment : Fragment() {
             it.onMovieClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     if (recyclerData.section.isLocked) {
-                        Toast.makeText(activity, "برای مشاهده کامل دوره آن را خریداری کنید.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            activity,
+                            "برای مشاهده کامل دوره آن را خریداری کنید.",
+                            Toast.LENGTH_LONG
+                        ).show()
                     } else {
                         playerRepository.videoUrl = null
                         playerRepository.videoUrl = recyclerData.section.videoUrl
@@ -111,7 +115,29 @@ class SectionListFragment : Fragment() {
                     is Resource.Success -> {
                         showLoading(false)
                         movie = it.data
-                        viewModel.allList.add(RecyclerItem(PosterData(movie.image, movie.section_count, movie.courseDuration)))
+                        if (movie.category?.nameFarsi == "کلاس ها") {
+                            viewModel.allList.add(
+                                RecyclerItem(
+                                    PosterData(
+                                        movie.image,
+                                        movie.section_count,
+                                        movie.courseDuration,
+                                        movie.category?.nameFarsi
+                                    )
+                                )
+                            )
+                        }else{
+                            viewModel.allList.add(
+                                RecyclerItem(
+                                    PosterData(
+                                        movie.image,
+                                        movie.section_count,
+                                        movie.weekCount,
+                                        movie.category?.nameFarsi
+                                    )
+                                )
+                            )
+                        }
                         viewModel.allList.addAll(viewModel.detail.sections.map {
                             RecyclerItem(
                                 SectionHeaderData(false, it)

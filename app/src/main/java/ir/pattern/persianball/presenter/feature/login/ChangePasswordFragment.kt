@@ -72,7 +72,7 @@ class ChangePasswordFragment : Fragment() {
                                 resources.getString(R.string.wrong_password)
                             }
                             else -> {
-                                it.error.toString()
+                                resources.getString(R.string.wrong_password_new)
                             }
                         }
 

@@ -167,6 +167,7 @@
                             android:fontFamily="@font/iran_sans_bold"
                             android:textColor="@color/black"
                             android:textSize="12sp"
+                            android:gravity="center"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="@+id/address_title"
                             app:layout_constraintHorizontal_bias="1.0"

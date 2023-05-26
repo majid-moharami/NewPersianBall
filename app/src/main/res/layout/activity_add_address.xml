@@ -134,7 +134,7 @@
                             android:gravity="right"
                             android:drawableLeft="@drawable/call_mobile"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="09148792347"
+                            android:hint="09121234567"
                             android:padding="5dp"
                             android:textSize="@dimen/font_size_medium" />
                     </androidx.cardview.widget.CardView>
@@ -169,7 +169,7 @@
                             android:layout_height="44dp"
                             android:background="@color/white"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="استان خود را انتخاب کنید."
+                            android:hint="هرمزگان"
                             android:padding="5dp"
                             android:gravity="right"
                             android:textSize="@dimen/font_size_medium" />
@@ -244,8 +244,8 @@
                             android:drawablePadding="8dp"
                             android:gravity="right"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="استان هرمزگان، شهرستان میناب، بلوار امام خمینی(ره)، روبروی فرهنگسرای
-شهید بهشتی"
+                            android:hint=" بلوار امام خمینی(ره)، روبروی فرهنگسرای،
+کوچه شهید بهشتی پلاک1"
                             android:padding="5dp"
                             android:textSize="@dimen/font_size_medium" />
                     </androidx.cardview.widget.CardView>
@@ -281,7 +281,7 @@
                             android:layout_height="44dp"
                             android:background="@color/white"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="(10رقمی)12345678"
+                            android:hint="(10رقمی)1234567899"
                             android:gravity="right"
                             android:padding="5dp"
                             android:minLines="10"
@@ -321,7 +321,7 @@
                             android:background="@color/white"
                             android:drawableLeft="@drawable/call_home"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="02122222"
+                            android:hint="021-12345678 (همراه با پیش شماره)"
                             android:gravity="right"
                             android:padding="5dp"
                             android:inputType="number"

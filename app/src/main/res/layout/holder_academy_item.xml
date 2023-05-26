@@ -94,6 +94,7 @@
                 android:fontFamily="@font/iran_sans_bold"
                 android:textColor="@color/grey_font"
                 android:textSize="11sp"
+                android:gravity="right"
                 app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
                 app:layout_constraintRight_toLeftOf="@+id/shapeableImageView"
                 app:layout_constraintHorizontal_bias="0.5"

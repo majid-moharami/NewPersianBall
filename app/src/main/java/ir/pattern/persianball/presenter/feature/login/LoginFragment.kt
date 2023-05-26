@@ -69,15 +69,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         }
                     }
                     is Resource.Failure -> {
-                        val massage : String = when(it.error.code){
-                            ErrorDTO.USER_NOT_FOUND -> {
-                                resources.getString(R.string.user_not_found)
-                            }
-                            else -> {
-                                it.error.toString()
-                            }
-                        }
-
+                        val massage : String = resources.getString(R.string.user_not_found)
                         Toast.makeText(activity, massage, Toast.LENGTH_LONG).show()
                     }
                     else -> {

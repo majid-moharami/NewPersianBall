@@ -11,9 +11,10 @@ import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderSectionPosterBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.utils.UiUtils
 import java.util.*
 
-class PosterData(val image: String?, val count: Int?, val time: Int?) : PersianBallRecyclerData, Equatable {
+class PosterData(val image: String?, val count: Int?, val time: Int?, val categoty: String?) : PersianBallRecyclerData, Equatable {
 
     companion object {
         const val VIEW_TYPE = R.layout.holder_section_poster
@@ -51,12 +52,33 @@ class PosterDataViewHolder(
     override fun onBindView(data: PosterData?) {
         Glide.with(itemView.context).load("https://api.persianball.ir/${data?.image}").into(binding.poster)
         if (data?.time!! > 0) {
-            binding.videoTime.text =
-                itemView.resources.getString(R.string.course_duration, data.time.toString())
+            binding.videoTime.text =convertTimeToString(data.time)
         } else {
             binding.videoTime.isVisible = false
         }
-        binding.videoCount.text = itemView.resources.getString(R.string.video_count, data.count)
+        if (data.categoty == "کلاس ها") {
+            binding.videoCount.text = itemView.resources.getString(R.string.section_count,  data.count.toString())
+        }else{
+            binding.videoCount.text = itemView.resources.getString(R.string.week_count,  data.count.toString())
+        }
+    }
+
+    private fun convertTimeToString(timeMs: Int): String {
+        val seconds = timeMs % 60
+        val minutes = (timeMs / 60) % 60
+        val hours = timeMs / 3600
+        val stringBuilder = StringBuilder()
+        val formatter = Formatter(stringBuilder, Locale.getDefault())
+        stringBuilder.setLength(0)
+        return if (hours > 0) {
+            UiUtils.convertToPersianNumber(
+                formatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+            )
+        } else {
+            UiUtils.convertToPersianNumber(
+                formatter.format("%02d:%02d", minutes, seconds).toString()
+            )
+        }
     }
 
 }

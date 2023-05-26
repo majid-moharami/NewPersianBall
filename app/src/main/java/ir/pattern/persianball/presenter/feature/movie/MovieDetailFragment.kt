@@ -35,12 +35,12 @@ import ir.pattern.persianball.presenter.feature.movie.locationOrsupports.Locatio
 import ir.pattern.persianball.presenter.feature.movie.prerequisites.PreRequisitesFragment
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
+import ir.pattern.persianball.utils.UiUtils.convertToPersianNumber
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,6 +59,7 @@ class MovieDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var accountManager: AccountManager
+
     @Inject
     lateinit var playerRepository: PlayerRepository
 
@@ -193,14 +194,14 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.watch.setOnClickListener {
-            if (!movie.video.isNullOrEmpty()){
+            if (!movie.video.isNullOrEmpty()) {
                 playerRepository.videoUrl = null
                 playerRepository.videoUrl = movie.video
                 val intent = Intent(requireActivity(), PlayerActivity::class.java)
                 intent.putExtra("HAVE_URL", false)
                 intent.putExtra("URL", "")
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(
                     requireActivity(),
                     "پیش نمایش وجود ندارد.",
@@ -333,14 +334,17 @@ class MovieDetailFragment : BaseFragment() {
         Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}")
             .into(binding.poster)
         if (movie.courseDuration > 0) {
-            binding.videoTime.text =
-                resources.getString(R.string.course_duration, movie.courseDuration.toString())
+            binding.videoTime.text = convertTimeToString(movie.courseDuration)
         } else {
             binding.videoTime.isVisible = false
         }
         binding.videos.visibility =
             if (movie.category?.nameFarsi != "کلاس ها") View.VISIBLE else View.INVISIBLE
-        binding.videoCount.text = resources.getString(R.string.video_count, movie.section_count)
+        if (movie.category?.nameFarsi == "کلاس ها") {
+            binding.videoCount.text = resources.getString(R.string.section_count, movie.section_count.toString())
+        }else{
+            binding.videoCount.text = resources.getString(R.string.week_count, movie.weekCount.toString())
+        }
         movie.coursePrice?.also {
             binding.realPrice.text =
                 resources.getString(R.string.product_price, decimalForm.format(it))
@@ -423,4 +427,19 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
+    private fun convertTimeToString(timeMs: Int): String {
+        val seconds = timeMs % 60
+        val minutes = (timeMs / 60) % 60
+        val hours = timeMs / 3600
+        val stringBuilder = StringBuilder()
+        val formatter = Formatter(stringBuilder, Locale.getDefault())
+        stringBuilder.setLength(0)
+        return if (hours > 0) {
+            convertToPersianNumber(
+                formatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+            )
+        } else {
+            convertToPersianNumber(formatter.format("%02d:%02d", minutes, seconds).toString())
+        }
+    }
 }
