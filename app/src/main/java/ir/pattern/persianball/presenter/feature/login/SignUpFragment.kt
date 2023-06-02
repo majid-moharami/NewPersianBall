@@ -1,15 +1,18 @@
 package ir.pattern.persianball.presenter.feature.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
@@ -37,14 +40,32 @@ class SignUpFragment : Fragment() {
         )
 
         binding.signupBtn.setOnClickListener {
-            val signUp = SignUp(
-                userName = binding.userNameEditText.text.toString(),
-                password = binding.passwordEditText.text.toString()
-            ).apply {
-                phoneNumber = binding.phoneNumberEditText.text.toString()
-            }
-            lifecycleScope.launch {
-                viewModel.signUpUser(signUp)
+            if (binding.emailLayout.isVisible && (binding.emailEditText.text.isNullOrBlank() || binding.userNameEditText.text.isNullOrBlank() || binding.passwordEditText.text.isNullOrBlank())){
+                Toast.makeText(requireActivity(), "لطفا همه موارد را وارد کنید.", Toast.LENGTH_SHORT).show()
+            }else if (binding.phoneNumberLayout.isVisible && (binding.emailEditText.text.isNullOrBlank() || binding.userNameEditText.text.isNullOrBlank() || binding.passwordEditText.text.isNullOrBlank())){
+                Toast.makeText(requireActivity(), "لطفا همه موارد را وارد کنید.", Toast.LENGTH_SHORT).show()
+            }else{
+                if (binding.emailLayout.isVisible){
+                    val signUp = SignUp(
+                        userName = binding.userNameEditText.text.toString(),
+                        password = binding.passwordEditText.text.toString()
+                    ).apply {
+                        email = binding.emailEditText.text.toString()
+                    }
+                    lifecycleScope.launch {
+                        viewModel.signUpUser(signUp)
+                    }
+                }else{
+                    val signUp = SignUp(
+                        userName = binding.userNameEditText.text.toString(),
+                        password = binding.passwordEditText.text.toString()
+                    ).apply {
+                        phoneNumber = binding.phoneNumberEditText.text.toString()
+                    }
+                    lifecycleScope.launch {
+                        viewModel.signUpUser(signUp)
+                    }
+                }
             }
         }
 
@@ -55,7 +76,7 @@ class SignUpFragment : Fragment() {
                         val action =
                             SignUpFragmentDirections.actionSignUpFragmentToVerityUserFragment(
                                 binding.phoneNumberEditText.text.toString(),
-                                null,
+                                binding.emailEditText.text.toString(),
                                 binding.userNameEditText.text.toString(),
                                 binding.passwordEditText.text.toString())
                         findNavController().navigate(action)
@@ -68,8 +89,14 @@ class SignUpFragment : Fragment() {
                             ErrorDTO.MOBILE_EXIST -> {
                                 resources.getString(R.string.mobile_exist)
                             }
+                            ErrorDTO.EMAIL_EXIST -> {
+                                resources.getString(R.string.email_exist)
+                            }
+                            ErrorDTO.INVALID_EMAIL -> {
+                                resources.getString(R.string.invalid_email)
+                            }
                             else -> {
-                                it.error.toString()
+                                resources.getString(R.string.error)
                             }
                         }
 
@@ -83,6 +110,33 @@ class SignUpFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tabLayout.addOnTabSelectedListener( object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.position){
+                    0 -> {
+                        binding.phoneNumberLayout.isVisible = true
+                        binding.emailLayout.isVisible = false
+                    }
+                    1 -> {
+                        binding.phoneNumberLayout.isVisible = false
+                        binding.emailLayout.isVisible = true
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 
     private fun validatePhoneNumber(showError : Boolean){

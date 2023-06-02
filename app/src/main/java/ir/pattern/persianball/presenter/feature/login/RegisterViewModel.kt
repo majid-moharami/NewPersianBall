@@ -41,7 +41,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     suspend fun retryCode(retryCode: RetryCode){
-        loginRepository.retryCode(retryCode).collect{
+        homeRepository.retryCode(retryCode).collect{
             retryCodeState.emit(it)
         }
     }

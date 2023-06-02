@@ -62,6 +62,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             container,
             false
         )
+        showLoading(true)
         viewLifecycleOwner.lifecycleScope.launch {
             isLogin.collectLatest {
                 when (it) {
@@ -71,6 +72,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         binding.recyclerView.visibility = View.VISIBLE
                     }
                     false -> {
+                        showLoading(false)
                         binding.notLoginLayout.visibility = View.VISIBLE
                         binding.recyclerView.visibility = View.GONE
                     }
@@ -90,6 +92,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                     binding.recyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    showLoading(false)
                     pagingAdapter?.submitData(recyclerData)
                 }
             }
@@ -99,6 +102,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 personalInfoViewModel.userPersonalData.collectLatest {
                     it?.also { dto ->
                         viewModel.updateUserInfo(dto)
+                        showLoading(false)
                     }
                 }
             }
@@ -155,6 +159,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     fun onImageResult(file: MultipartBody.Part) {
         if (personalInfoViewModel.personalData.username.isNotEmpty()) {
             viewModel.uploadAvatar(personalInfoViewModel.personalData.username, file)
+        }
+    }
+
+    fun showLoading(show: Boolean){
+        if (show){
+            binding.frameLayout.visibility = View.VISIBLE
+            binding.loading.isIndeterminate = true
+            binding.loading.visibility = View.VISIBLE
+        }else{
+            binding.frameLayout.visibility = View.GONE
+            binding.loading.isIndeterminate = false
+            binding.loading.visibility = View.GONE
         }
     }
 }

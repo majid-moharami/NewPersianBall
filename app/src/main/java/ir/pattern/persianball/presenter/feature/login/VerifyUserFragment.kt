@@ -52,7 +52,21 @@ class VerifyUserFragment : Fragment() {
 
         binding.submitBtn.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.verifyUser(verifyUser = VerifyUser(phoneNumber = args.phone, code = code))
+                if (args.phone.isNullOrBlank() && !args.email.isNullOrBlank()) {
+                    viewModel.verifyUser(
+                        verifyUser = VerifyUser(
+                            email = args.email,
+                            code = code
+                        )
+                    )
+                } else {
+                    viewModel.verifyUser(
+                        verifyUser = VerifyUser(
+                            phoneNumber = args.phone,
+                            code = code
+                        )
+                    )
+                }
             }
         }
 
@@ -61,8 +75,14 @@ class VerifyUserFragment : Fragment() {
         }
 
         binding.retryCode.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.retryCode(RetryCode(phoneNumber = args.phone))
+            if (args.phone.isNullOrBlank() && !args.email.isNullOrBlank()) {
+                lifecycleScope.launch {
+                    viewModel.retryCode(RetryCode(email = args.email))
+                }
+            } else {
+                lifecycleScope.launch {
+                    viewModel.retryCode(RetryCode(phoneNumber = args.phone))
+                }
             }
         }
 
@@ -76,17 +96,20 @@ class VerifyUserFragment : Fragment() {
                                     args.username,
                                     args.password,
                                     it.data.tokenDto.access,
-                                    it.data.tokenDto.refresh
-                                ,"")
+                                    it.data.tokenDto.refresh, ""
+                                )
                             )
-                            Log.d("LOGIN", "${sharedPreferenceUtils.getUserCredentials().username}, ${sharedPreferenceUtils.getUserCredentials().password}, ${sharedPreferenceUtils.getUserCredentials().token}, ${sharedPreferenceUtils.getUserCredentials().refreshToken}")
+                            Log.d(
+                                "LOGIN",
+                                "${sharedPreferenceUtils.getUserCredentials().username}, ${sharedPreferenceUtils.getUserCredentials().password}, ${sharedPreferenceUtils.getUserCredentials().token}, ${sharedPreferenceUtils.getUserCredentials().refreshToken}"
+                            )
                             val resultIntent = Intent()
                             activity?.setResult(AppCompatActivity.RESULT_OK, resultIntent)
                             activity?.finish()
                         }
                     }
                     is Resource.Failure -> {
-                        val massage = when(it.error.code){
+                        val massage = when (it.error.code) {
                             ErrorDTO.INVALID_CODE -> {
                                 resources.getString(R.string.invalid_code)
                             }

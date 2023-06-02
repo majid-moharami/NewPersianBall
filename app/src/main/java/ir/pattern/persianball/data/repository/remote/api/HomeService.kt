@@ -33,4 +33,7 @@ interface HomeService {
 
     @POST("user/forget/setpassword/")
     suspend fun changePassword(@Body changePassword: ChangePassword): Response<Any>
+
+    @POST("code/retry/")
+    suspend fun retryCode(@Body retryCode: RetryCode) : Response<Any>
 }

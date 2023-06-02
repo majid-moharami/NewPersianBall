@@ -75,6 +75,13 @@ class HomeRepository
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun retryCode(retryCode: RetryCode): Flow<Resource<Any?>>{
+        return flow {
+            val result = homeRemoteDataSource.retryCode(retryCode)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun forgetPassword(forgetPassword: ForgetPassword):  Flow<Resource<Any?>>{
         return flow {
             val result = homeRemoteDataSource.forgetPassword(forgetPassword)

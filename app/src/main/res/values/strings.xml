@@ -78,7 +78,9 @@
     <string name="check_connection">لطفا اتصال دستگاه به اینترنت را چک کنید.</string>
     <string name="user_not_found">نام کاربری یا رمز عبور صحیح نیست.</string>
     <string name="invalid_phone_number">شماره موبایل صحیح نیست.</string>
+    <string name="invalid_email">ایمیل صحیح نیست.</string>
     <string name="mobile_exist">شماره قبلا ثبت شده است.</string>
+    <string name="email_exist">ایمیل قبلا ثبت شده است.</string>
     <string name="phone_number_not_found">این شماره موبایل قبلا ثبت نشده است.</string>
     <string name="invalid_code">کد وارد شده صحیح نمیباشد.</string>
     <string name="same_password">پسورد تکراری است.</string>
@@ -87,6 +89,7 @@
     <string name="week">هفته %s</string>
     <string name="week_count">‏%s هفته</string>
     <string name="section_count">‏%s جلسه</string>
+    <string name="error">مشکلی در برقراری با سرور به وجود آمده.</string>
 
     <array name="steps">
         <item>نشانی تحویل</item>

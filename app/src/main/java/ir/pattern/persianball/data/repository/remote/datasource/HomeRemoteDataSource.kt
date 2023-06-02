@@ -39,6 +39,10 @@ class HomeRemoteDataSource
         return Request.getResponse(request = {homeService.register(signUpRequest)}, errorTranslator)
     }
 
+    suspend fun retryCode(retryCode: RetryCode): Resource<Any?>{
+        return Request.getResponse(request = {homeService.retryCode(retryCode)}, errorTranslator)
+    }
+
     suspend fun forgetPassword(forgetPassword: ForgetPassword): Resource<Any?>{
         return Request.getResponse(request = {homeService.forgetPassword(forgetPassword)}, errorTranslator)
     }

@@ -54,7 +54,9 @@ class ErrorDTO : Serializable {
         const val CODE_LIVE_STREAM_NOT_FOUND = 404
         const val USER_NOT_FOUND = "user_not_found"
         const val INVALID_MOBILE = "invalid_mobile"
+        const val INVALID_EMAIL = "invalid_email"
         const val MOBILE_EXIST = "mobile_exists"
+        const val EMAIL_EXIST = "email_exists"
         const val INVALID_CODE = "invalid_verification_code"
         const val SAME_PASSWORD = "same_password"
         const val WRONG_PASSWORD = "wrong_password"

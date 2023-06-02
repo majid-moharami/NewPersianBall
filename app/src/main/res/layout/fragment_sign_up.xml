@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,12 +13,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/iran_sans_bold"
             android:text="@string/sign_up"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:fontFamily="@font/iran_sans_bold"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
@@ -29,8 +29,8 @@
             android:padding="4dp"
             app:cardBackgroundColor="#E0E0E0"
             app:cardCornerRadius="10dp"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/persianBallTextView">
 
             <com.google.android.material.tabs.TabLayout
@@ -45,9 +45,9 @@
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabIndicatorHeight="0dp"
                 app:tabMode="fixed"
-                app:tabTextAppearance="@style/tab_text"
                 app:tabRippleColor="@android:color/transparent"
                 app:tabSelectedTextColor="@android:color/white"
+                app:tabTextAppearance="@style/tab_text"
                 app:tabTextColor="@android:color/black">
 
                 <com.google.android.material.tabs.TabItem
@@ -72,32 +72,31 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:orientation="vertical"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phone_number_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:shapeAppearance="@style/Rounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:boxStrokeErrorColor="@color/red"
                 app:counterOverflowTextColor="@color/red"
                 app:errorTextColor="@color/red"
-               >
+                app:shapeAppearance="@style/Rounded">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone_number_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/phone_number"
-                android:nextFocusDown="@id/user_name_edit_text"
-                android:singleLine="true"
-                android:fontFamily="@font/iran_sans_bold"
-                android:inputType="phone"
-                android:textSize="13sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/iran_sans_bold"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:nextFocusDown="@id/user_name_edit_text"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,60 +107,63 @@
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/iran_sans_bold"
                     android:hint="@string/email"
+                    android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/user_name_edit_text"
                     android:singleLine="true"
-                    android:inputType="textEmailAddress"
                     android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:shapeAppearance="@style/Rounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:boxStrokeErrorColor="@color/red"
                 app:counterOverflowTextColor="@color/red"
-                app:errorTextColor="@color/red">
+                app:errorTextColor="@color/red"
+                app:shapeAppearance="@style/Rounded">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxStrokeErrorColor="@color/red"
                     android:fontFamily="@font/iran_sans_bold"
+                    android:hint="@string/user_name"
                     android:nextFocusDown="@id/password_edit_text"
                     android:singleLine="true"
-                    android:hint="@string/user_name"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:boxStrokeErrorColor="@color/red" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:shapeAppearance="@style/Rounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:endIconMode="password_toggle">
+                app:endIconMode="password_toggle"
+                app:shapeAppearance="@style/Rounded">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxStrokeErrorColor="@color/red"
-                    app:counterOverflowTextColor="@color/red"
-                    app:errorTextColor="@color/red"
-                    android:singleLine="true"
+                    android:fontFamily="@font/iran_sans_bold"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:fontFamily="@font/iran_sans_bold"
-                    android:textSize="13sp" />
+                    android:singleLine="true"
+                    android:textSize="13sp"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:counterOverflowTextColor="@color/red"
+                    app:errorTextColor="@color/red" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -172,14 +174,14 @@
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/login_icon_bachground"
+            android:fontFamily="@font/iran_sans_bold"
             android:gravity="center"
             android:text="@string/signup"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:fontFamily="@font/iran_sans_bold"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
 
         <ir.pattern.persianball.views.PersianBallImageButton
@@ -191,8 +193,8 @@
             android:background="@drawable/product_page_text_background"
             android:src="@drawable/ic_facebook"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signup_btn" />
 
         <ir.pattern.persianball.views.PersianBallImageButton
