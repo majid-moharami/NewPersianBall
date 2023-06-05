@@ -56,7 +56,7 @@ class SendingMethodDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (dialogViewModel.getTotalPrice() >= 300000){
+        if (dialogViewModel.getTotalPrice() >= 700000){
             binding.free.isChecked = true
         }else{
             binding.free.isEnabled = false

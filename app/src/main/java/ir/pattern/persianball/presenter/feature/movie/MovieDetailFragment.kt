@@ -22,7 +22,9 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.VariantDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
+import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.FragmentMovieDetailBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.BaseFragment
@@ -62,6 +64,9 @@ class MovieDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var playerRepository: PlayerRepository
+
+    @Inject
+    lateinit var dashboardRepository: DashboardRepository
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -333,10 +338,24 @@ class MovieDetailFragment : BaseFragment() {
         binding.constraintLayout.isVisible = show
         binding.materialCardView.isVisible = show
         binding.viewpager.isVisible = show
-        binding.cardView7.isVisible = show
+//        binding.cardView7.isVisible = show
     }
 
     private fun initView() {
+        var show = true
+        playerRepository.soldVariant = null
+        movie.variants.map {v->
+            dashboardRepository.userCourse?.results?.map {
+                if (v?.id == it.course_variant_id && movie.id == it.courseId){
+                    playerRepository.soldVariant = v
+                    show = false
+                    binding.cardView7.isVisible = false
+                }
+            }
+        }
+        if (show){
+            binding.cardView7.isVisible = true
+        }
         binding.headerTitle.text = movie.courseTitle
         Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}")
             .into(binding.poster)
@@ -412,7 +431,7 @@ class MovieDetailFragment : BaseFragment() {
             binding.constraintLayout.isVisible = true
             binding.materialCardView.isVisible = true
             binding.cardViewViewPager.isVisible = true
-            binding.cardView7.isVisible = true
+//            binding.cardView7.isVisible = true
         }
     }
 

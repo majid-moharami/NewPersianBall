@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderAddressViewModel
 @Inject constructor(
-    private val shoppingCartRepository: ShoppingCartRepository
+    val shoppingCartRepository: ShoppingCartRepository
 ) : BaseViewModel() {
 
     private var recyclerList = mutableListOf<RecyclerItem>()

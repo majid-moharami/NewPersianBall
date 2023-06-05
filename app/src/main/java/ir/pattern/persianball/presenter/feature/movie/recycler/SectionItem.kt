@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.academy.SectionDto
+import ir.pattern.persianball.data.model.academy.VariantDto
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderCourseSectionItemBinding
@@ -15,7 +16,7 @@ import ir.pattern.persianball.databinding.HolderCourseWeekItemBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import java.util.*
 
-class SectionItemData(val headerId: String, var section: SectionDto) : PersianBallRecyclerData, Equatable {
+class SectionItemData(val headerId: String, var section: SectionDto, val variant: VariantDto?) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.holder_course_section_item
     }
@@ -54,6 +55,12 @@ class SectionItemViewHolder(
         Glide.with(itemView.context).load(data.section.videoThumbnail).into(binding.sectionPoster)
         binding.lock.isVisible = data.section.isLocked
         binding.title.text = data.section.title
+        data.variant?.coach?.also {
+            binding.send.isVisible = !it.fullName.isNullOrBlank() && !data.section.isLocked
+        } ?: run {
+            binding.send.isVisible = false
+        }
         setOnClickListener(binding.posterLayout, onMovieClickListener, this, data)
+        setOnClickListener(binding.send, onSendClickListener, this, data)
     }
 }

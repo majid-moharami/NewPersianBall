@@ -37,22 +37,29 @@ class RegisteredCoursesViewModel
     }
 
     suspend fun getDashboard() {
-        _cartList.emit(Resource.Loading())
-        dashboardRepository.getDashboard().collect {
-            when (it) {
-                is Resource.Success -> {
-                    _cartList.emit(it)
-                    _isEmpty.emit(it.data.results.isEmpty())
-                    it.data.results.map { dashboardDto ->
-                        recyclerList.add(RecyclerItem(RegisteredCoursesData(dashboardDto)))
+        if (dashboardRepository.userCourse != null) {
+            _isEmpty.emit(dashboardRepository.userCourse!!.results.isEmpty())
+            dashboardRepository.userCourse!!.results.map { dashboardDto ->
+                recyclerList.add(RecyclerItem(RegisteredCoursesData(dashboardDto)))
+            }
+            _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
+        } else {
+            dashboardRepository.getDashboard().collect {
+                when (it) {
+                    is Resource.Success -> {
+                        _cartList.emit(it)
+                        _isEmpty.emit(it.data.results.isEmpty())
+                        it.data.results.map { dashboardDto ->
+                            recyclerList.add(RecyclerItem(RegisteredCoursesData(dashboardDto)))
+                        }
+                        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                     }
-                    _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
-                }
-                is Resource.Failure -> {
-                    _cartList.emit(Resource.Failure(it.error))
-                }
-                else -> {
-                    _cartList.emit(Resource.Loading())
+                    is Resource.Failure -> {
+                        _cartList.emit(Resource.Failure(it.error))
+                    }
+                    else -> {
+                        _cartList.emit(Resource.Loading())
+                    }
                 }
             }
         }

@@ -41,6 +41,7 @@ class ProfileAddressViewModel
         when (val result = profileRepository.getAddress()) {
             is Resource.Success -> {
                 if (result.data.result.isNotEmpty()) {
+                    profileRepository.userAddress = result.data
                     _address.value = result.data.result.first()
                 }
             }

@@ -64,6 +64,14 @@ class AddressSubmitFragment : Fragment() {
             container,
             false
         )
+        if (!viewModel.shoppingCartRepository.isShipping){
+            val direction =
+                AddressSubmitFragmentDirections.actionAddressSubmitFragmentToPaymentFragment(
+                    null,
+                    -1
+                )
+            findNavController().navigate(direction)
+        }
         binding.addNewAddress.setOnClickListener {
             startActivity(Intent(activity, AddAddressActivity::class.java))
         }

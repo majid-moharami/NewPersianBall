@@ -8,6 +8,7 @@ import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.repository.DashboardRepository
+import ir.pattern.persianball.data.repository.ProfileRepository
 import ir.pattern.persianball.presenter.feature.setting.progress.recycler.ProgressData
 import ir.pattern.persianball.presenter.feature.setting.registered.recycler.RegisteredCoursesData
 import kotlinx.coroutines.flow.*
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProgressViewModel
 @Inject constructor(
-    private val dashboardRepository: DashboardRepository
+    private val dashboardRepository: DashboardRepository,
+    private val profileRepository: ProfileRepository
 ) : ViewModel(){
     protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
     val recyclerItems: StateFlow<RecyclerData?> = _recyclerItems.asStateFlow()
@@ -42,7 +44,7 @@ class ProgressViewModel
                     _cartList.emit(it)
                     _isEmpty.emit(it.data.results.isEmpty())
                     it.data.results.map { orderDto ->
-                        recyclerList.add(RecyclerItem(ProgressData(orderDto)))
+                        recyclerList.add(RecyclerItem(ProgressData(orderDto, profileRepository.userAddress?.result)))
                     }
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                 }

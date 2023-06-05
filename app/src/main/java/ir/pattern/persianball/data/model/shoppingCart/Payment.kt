@@ -3,8 +3,8 @@ package ir.pattern.persianball.data.model.shoppingCart
 import com.google.gson.annotations.SerializedName
 
 data class Order(
-    @SerializedName("delivery_method") val deliveryMethod : String,
-    @SerializedName("address") val addressId : Int,
+    @SerializedName("delivery_method") val deliveryMethod : String?,
+    @SerializedName("address") val addressId : Int?,
     @SerializedName("discount_code") val discountCode : String? = null
 )
 

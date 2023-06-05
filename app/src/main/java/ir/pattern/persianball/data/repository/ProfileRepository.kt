@@ -25,6 +25,8 @@ constructor(
 
     var user : PersonalDto? = null
     var username: String? = null
+
+    var userAddress : AddressDto? = null
     suspend fun getAddress(): Resource<AddressDto> = userRemoteDataSource.getUserAddress()
 
     suspend fun getUserPersonalData(): Resource<PersonalDto> =

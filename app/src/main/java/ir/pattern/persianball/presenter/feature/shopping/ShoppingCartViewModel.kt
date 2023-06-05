@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ShoppingCartViewModel
 @Inject constructor(
-    private val shoppingCartRepository: ShoppingCartRepository
+    val shoppingCartRepository: ShoppingCartRepository
 ) : BaseViewModel() {
     private var recyclerList = mutableListOf<RecyclerItem>()
     val shopCart = MutableSharedFlow<ShoppingCartDto>()
@@ -57,6 +57,17 @@ class ShoppingCartViewModel
                         shopCart.emit(it.data.result[0])
                         shoppingCartRepository.totalPrice = it.data.result[0].price.totalPrice
                         it.data.result[0].items.map { shoppingCartItemDto ->
+                            if (shoppingCartItemDto.product != null) {
+                                shoppingCartRepository.isShipping = true
+                            } else {
+                                if (!shoppingCartRepository.isShipping) {
+                                    shoppingCartItemDto.course?.also { s ->
+                                        if (s.shipmentRequired) {
+                                            shoppingCartRepository.isShipping = s.shipmentRequired
+                                        }
+                                    }
+                                }
+                            }
                             recyclerList.add(
                                 RecyclerItem(ShoppingCartData(shoppingCartItemDto))
                             )

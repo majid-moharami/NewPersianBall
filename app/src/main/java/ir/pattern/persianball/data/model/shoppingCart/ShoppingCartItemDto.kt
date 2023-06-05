@@ -46,7 +46,8 @@ data class ShopCartCourse(
     @SerializedName("location") var location: String,
     @SerializedName("time") var time: String,
     @SerializedName("coach") var coach: Coach,
-    @SerializedName("course_name") var courseName: String
+    @SerializedName("course_name") var courseName: String,
+    @SerializedName("shipment_required") var shipmentRequired: Boolean
 )
 
 data class Coach(

@@ -110,6 +110,19 @@ class MovieDetailViewModel
                     if (it?.coach == null && it?.giftProduct != null) {
                         noCoachProductList.add(it.giftProduct)
                     }
+                    if (it?.coach == null && it?.giftProduct == null) {
+                        noCoachProductList.add(GiftProductDto(
+                            "",
+                            0,
+                            0,
+                            "",
+                            "",
+                            "",
+                            0,
+                            "بدون هدیه",
+                            "non-id"
+                        ))
+                    }
                 }
                 supportMap[noCoachDto!!] = noCoachProductList
             }
@@ -151,6 +164,8 @@ class MovieDetailViewModel
     fun getSelectedVariant(movie: AcademyDto): VariantDto? {
         movie.variants.map {
             if (it?.coach == null && it?.giftProduct?.id == selectedGifts?.id) {
+                return it
+            }else if (it?.coach == null && it?.giftProduct == null){
                 return it
             } else {
                 if (selectedGifts?.id == "non-id") {

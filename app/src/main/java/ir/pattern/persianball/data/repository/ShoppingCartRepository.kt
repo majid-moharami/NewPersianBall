@@ -22,7 +22,7 @@ constructor(
     private var _addressAdded = MutableSharedFlow<Boolean>()
     val addressAdded = _addressAdded.asSharedFlow()
     var totalPrice: Float = 0F
-
+    var isShipping = false
     suspend fun setAddressAdded(boolean: Boolean){
         _addressAdded.emit(boolean)
     }

@@ -81,7 +81,7 @@
                     android:gravity="center|right"
                     android:layoutDirection="rtl"
                     android:padding="8dp"
-                    android:text="رایگان (مخصوص سفارش‌های بالای 300 هزار تومان)"
+                    android:text="رایگان (مخصوص سفارش‌های بالای 700 هزار تومان)"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_medium" />
 

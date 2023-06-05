@@ -27,6 +27,9 @@ import ir.pattern.persianball.databinding.FragmentMovieListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
+import ir.pattern.persianball.presenter.feature.movie.dialog.DetailChooseDialogFragment
+import ir.pattern.persianball.presenter.feature.movie.dialog.SendToSupportDialog
+import ir.pattern.persianball.presenter.feature.movie.dialog.recycler.LocationItemData
 import ir.pattern.persianball.presenter.feature.movie.recycler.PosterData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
@@ -87,10 +90,16 @@ class SectionListFragment : Fragment() {
 
             it.onMovieClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    if (recyclerData.section.isLocked) {
+                    if (recyclerData.section.isLocked && playerRepository.soldVariant?.coach==null) {
                         Toast.makeText(
                             activity,
                             "برای مشاهده کامل دوره آن را خریداری کنید.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }else if(recyclerData.section.isLocked && playerRepository.soldVariant?.coach!=null){
+                        Toast.makeText(
+                            activity,
+                            "تمرین های ارسالی شما درحال بررسی است. این فرایند ممکن است زمان بر باشد.",
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
@@ -105,7 +114,8 @@ class SectionListFragment : Fragment() {
 
             it.onSendClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-
+                    SendToSupportDialog.newInstance()
+                        .show(childFragmentManager, "send_dialog")
                 }
         }
 

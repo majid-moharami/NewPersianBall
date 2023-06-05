@@ -13,6 +13,7 @@ import ir.pattern.persianball.presenter.adapter.BaseViewModel
 import ir.pattern.persianball.presenter.feature.movie.recycler.PosterData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionHeaderData
 import ir.pattern.persianball.presenter.feature.movie.recycler.SectionItemData
+import ir.pattern.persianball.presenter.feature.player.PlayerRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flowOf
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class SectionListViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
+    private val playerRepository: PlayerRepository
 ) : BaseViewModel() {
     var allList = mutableListOf<RecyclerItem>()
 
@@ -49,7 +51,8 @@ class SectionListViewModel
                                 RecyclerItem(
                                     SectionItemData(
                                         selectedHeaderId,
-                                        sectionDto
+                                        sectionDto,
+                                        playerRepository.soldVariant
                                     )
                                 )
                             )

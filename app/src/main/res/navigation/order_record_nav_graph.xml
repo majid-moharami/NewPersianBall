@@ -21,7 +21,8 @@
             app:destination="@id/orderCompleteFragment" />
         <argument
             android:name="deliveryMethod"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"/>
         <argument
             android:name="addressId"
             app:argType="integer" />

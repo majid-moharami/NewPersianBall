@@ -29,6 +29,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.DeviceDto
+import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.ActivityMainBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
@@ -64,6 +65,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var accountManager: AccountManager
+
+    @Inject
+    lateinit var dashboardRepository: DashboardRepository
     lateinit var sharedPreferenceUtils: SharedPreferenceUtils
 
     override fun onResume() {
@@ -173,6 +177,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
+        lifecycleScope.launch {
+            dashboardRepository.getDashboard().collect{}
+        }
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
@@ -213,7 +220,9 @@ class MainActivity : AppCompatActivity() {
             binding.loginLayout.visibility = View.GONE
             binding.welcomeLayout.visibility = View.VISIBLE
             lifecycleScope.launch {
-                 if (viewModel.getProfileImage().isEmpty() || viewModel.getProfileImage() == "https://api.persianball.ir/media/") {
+                if (viewModel.getProfileImage()
+                        .isEmpty() || viewModel.getProfileImage() == "https://api.persianball.ir/media/"
+                ) {
                     viewModel.getUser()
                 } else {
                     Glide.with(this@MainActivity)

@@ -37,6 +37,8 @@ class PaymentFragment : Fragment() {
             groupingSeparator = ','
         })
 
+    var totalPrice = 0F
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -61,13 +63,25 @@ class PaymentFragment : Fragment() {
         binding.paymentBtn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.discountPercent?.also {
-                    viewModel.doOrder(
-                        Order(args.deliveryMethod, args.addressId, it)
-                    )
+                    if (args.addressId == -1) {
+                        viewModel.doOrder(
+                            Order(args.deliveryMethod, null, it)
+                        )
+                    } else {
+                        viewModel.doOrder(
+                            Order(args.deliveryMethod, args.addressId, it)
+                        )
+                    }
                 } ?: kotlin.run {
-                    viewModel.doOrder(
-                        Order(args.deliveryMethod, args.addressId)
-                    )
+                    if (args.addressId == -1) {
+                        viewModel.doOrder(
+                            Order(args.deliveryMethod, null)
+                        )
+                    } else {
+                        viewModel.doOrder(
+                            Order(args.deliveryMethod, args.addressId)
+                        )
+                    }
                 }
             }
         }
@@ -115,6 +129,12 @@ class PaymentFragment : Fragment() {
                                 " %$percent تخفیف برای شما اعمال شد.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            binding.totalPrice.text = resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(
+                                    totalPrice.toInt().minus(totalPrice * percent!! / 100)
+                                )
+                            )
                         }
                     }
                     is Resource.Failure -> {
@@ -131,6 +151,7 @@ class PaymentFragment : Fragment() {
                     if (price.totalPrice.toInt() == 0 && !OrderRecordActivity.isSuccess) {
                         activity?.finish()
                     } else {
+                        totalPrice = price.totalPrice
                         binding.totalPrice.text =
                             resources.getString(
                                 R.string.product_price,
@@ -156,5 +177,11 @@ class PaymentFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        if (!viewModel.shoppingCartRepository.isShipping){
+            requireActivity().finish()
+        }
+        super.onDestroy()
+    }
 
 }
