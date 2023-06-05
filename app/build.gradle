@@ -6,6 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'io.sentry.android.gradle'
 }
 
 android {
@@ -148,10 +149,17 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics-ktx:21.2.2"
     implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
     implementation "com.google.firebase:firebase-messaging:23.1.2"
+    implementation('io.sentry:sentry-android-core:6.3.0') {
+        exclude module: 'core'
+    }
 
     implementation "com.github.MoeidHeidari:banner:1.04"
 }
 
 kapt {
     correctErrorTypes true
+}
+
+sentry {
+    autoUpload = true
 }

@@ -87,6 +87,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://f917f48a038c46a7a1a5115cbeabf4bf@sentry.persianball.ir/5" />
+        <meta-data
+            android:name="io.sentry.ndk.enable"
+            android:value="false" />
+        <meta-data
+            android:name="io.sentry.attach-screenshot"
+            android:value="true" />
     </application>
 
 </manifest>

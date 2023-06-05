@@ -6,6 +6,7 @@ buildscript {
         //noinspection GradlePluginVersion
         classpath 'com.android.tools.build:gradle:7.2.2'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.5.4'
+        classpath "io.sentry:sentry-android-gradle-plugin:2.1.5"
     }
     repositories {
         google()
