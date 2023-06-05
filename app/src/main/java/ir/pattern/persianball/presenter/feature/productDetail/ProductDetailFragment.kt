@@ -151,6 +151,15 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 ).show()
             }
         }
+
+        binding.sizeBox.setOnClickListener {
+
+        }
+
+        binding.colorBox.setOnClickListener {
+
+        }
+
         return binding.root
     }
 
@@ -180,28 +189,66 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 colorSpinner.onItemSelectedListener = this@ProductDetailFragment
 
                 it.variants?.also { variants ->
-                    ArrayAdapter(
-                        requireActivity(),
-                        android.R.layout.simple_spinner_item,
-                        viewModel.getSizeList(it).toList()
-                    ).also { adapter ->
-                        // Specify the layout to use when the list of choices appears
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        // Apply the adapter to the spinner
-                        sizeSpinner.adapter = adapter
+                    if (viewModel.getSizeList(it) == null) {
+                        binding.sizeLayout.isVisible = false
+                    }
+                    if (viewModel.getColors(it) == null) {
+                        binding.colorLayout.isVisible = false
                     }
 
-                    if (viewModel.getSizeList(it).toList().isNotEmpty()) {
+                    if (!binding.sizeLayout.isVisible && !binding.colorLayout.isVisible) {
+                        viewModel.anyOne = true
+                    }
+                    if (binding.sizeLayout.isVisible && binding.colorLayout.isVisible) {
+                        viewModel.both = true
+                    }
+                    if (binding.sizeLayout.isVisible && !binding.colorLayout.isVisible) {
+                        viewModel.onlySize = true
+                    }
+                    if (!binding.sizeLayout.isVisible && binding.colorLayout.isVisible) {
+                        viewModel.onlyColor = true
+                    }
+
+
+                    if (viewModel.onlySize == true || viewModel.both == true) {
+                        ArrayAdapter(
+                            requireActivity(),
+                            android.R.layout.simple_spinner_item,
+                            viewModel.getSizeList(it)!!.toList()
+                        ).also { adapter ->
+                            // Specify the layout to use when the list of choices appears
+                            adapter.setDropDownViewResource(R.layout.sppiner_item)
+                            // Apply the adapter to the spinner
+                            sizeSpinner.adapter = adapter
+                        }
+                    }
+
+                    if (viewModel.both == true) {
                         ArrayAdapter(
                             requireActivity(),
                             android.R.layout.simple_spinner_item,
                             viewModel.getColorOFSize(
-                                viewModel.getSizeList(it).toList()[0],
+                                viewModel.getSizeList(it)!!.toList()[0],
                                 it
-                            ).keys.toList()
+                            )!!.keys.toList()
                         ).also { adapter ->
                             // Specify the layout to use when the list of choices appears
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            adapter.setDropDownViewResource(R.layout.sppiner_item)
+                            // Apply the adapter to the spinner
+                            colorSpinner.adapter = adapter
+                        }
+                    }
+
+                    if (viewModel.onlyColor == true) {
+                        ArrayAdapter(
+                            requireActivity(),
+                            android.R.layout.simple_spinner_item,
+                            viewModel.getColors(
+                                it
+                            )!!.keys.toList()
+                        ).also { adapter ->
+                            // Specify the layout to use when the list of choices appears
+                            adapter.setDropDownViewResource(R.layout.sppiner_item)
                             // Apply the adapter to the spinner
                             colorSpinner.adapter = adapter
                         }
@@ -257,18 +304,52 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         if (p0?.parent == binding.sizeBox) {
+            handleSizeClick(p2)
+        } else {
+            handleColorClick(p2)
+        }
+    }
+
+    private fun handleColorClick(p2: Int) {
+        if (viewModel.both == true || viewModel.onlyColor == true) {
+            currentColorIndex = p2
+            val color = viewModel.currentColorMap[viewModel.currentColorMap.keys.toList()[p2]]
+            binding.colorSelected.setCardBackgroundColor(Color.parseColor("#$color"))
+            product?.also {
+                val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
+                binding.realPrice.text =
+                    resources.getString(R.string.product_price, decimalForm.format(variant?.price))
+                variant?.price?.also { price ->
+                    val s = variant.discountPercentage
+                    binding.discountedPrice.text = resources.getString(
+                        R.string.product_price,
+                        (decimalForm.format(price.minus((price * s / 100))))
+                    )
+                }
+                viewModel.getSelectedVariantImage(it, currentSizeIndex, currentColorIndex)
+                    ?.also { img ->
+                        Glide.with(requireContext())
+                            .load("https://api.persianball.ir/${img}")
+                            .into(binding.poster)
+                    }
+            }
+        }
+    }
+
+    private fun handleSizeClick(p2: Int) {
+        if (viewModel.both == true) {
             currentSizeIndex = p2
             product?.also {
                 ArrayAdapter(
                     requireActivity(),
                     android.R.layout.simple_spinner_item,
                     viewModel.getColorOFSize(
-                        viewModel.getSizeList(it).toList()[p2],
+                        viewModel.getSizeList(it)!!.toList()[p2],
                         it
-                    ).keys.toList()
+                    )!!.keys.toList()
                 ).also { adapter ->
                     // Specify the layout to use when the list of choices appears
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    adapter.setDropDownViewResource(R.layout.sppiner_item)
                     // Apply the adapter to the spinner
                     binding.colorSpinner.adapter = adapter
                 }
@@ -291,16 +372,15 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 }
             }
             product?.let {
-                viewModel.getSelectedVariantImage(it,currentSizeIndex, currentColorIndex)?.also { img ->
-                    Glide.with(requireContext())
-                        .load("https://api.persianball.ir/${img}")
-                        .into(binding.poster)
-                }
+                viewModel.getSelectedVariantImage(it, currentSizeIndex, currentColorIndex)
+                    ?.also { img ->
+                        Glide.with(requireContext())
+                            .load("https://api.persianball.ir/${img}")
+                            .into(binding.poster)
+                    }
             }
-        } else {
-            currentColorIndex = p2
-            val color = viewModel.currentColorMap[viewModel.currentColorMap.keys.toList()[p2]]
-            binding.colorSelected.setCardBackgroundColor(Color.parseColor("#$color"))
+        } else if (viewModel.onlySize == true) {
+            currentSizeIndex = p2
             product?.also {
                 val variant = viewModel.getSelectedVariant(it, currentSizeIndex, currentColorIndex)
                 binding.realPrice.text =
@@ -312,13 +392,15 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         (decimalForm.format(price.minus((price * s / 100))))
                     )
                 }
-                viewModel.getSelectedVariantImage(it,currentSizeIndex, currentColorIndex)?.also { img ->
-                    Glide.with(requireContext())
-                        .load("https://api.persianball.ir/${img}")
-                        .into(binding.poster)
-                }
             }
-
+            product?.let {
+                viewModel.getSelectedVariantImage(it, currentSizeIndex, currentColorIndex)
+                    ?.also { img ->
+                        Glide.with(requireContext())
+                            .load("https://api.persianball.ir/${img}")
+                            .into(binding.poster)
+                    }
+            }
         }
     }
 

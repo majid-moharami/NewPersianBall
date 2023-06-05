@@ -24,7 +24,7 @@ import javax.inject.Inject
 class ProfileViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val profileRepository: ProfileRepository,
+    val profileRepository: ProfileRepository,
     var sharedPreferenceUtils: SharedPreferenceUtils
 ) : ViewModel() {
     protected val _recyclerItems = MutableStateFlow<RecyclerData?>(null)
@@ -36,7 +36,12 @@ class ProfileViewModel
     private val _name = MutableStateFlow<String?>(null)
     val name: StateFlow<String?> = _name.asStateFlow()
 
+    suspend fun setName(s: String) {
+        _name.emit(s)
+    }
+
     fun setUpData() {
+        _name.value = sharedPreferenceUtils.getUserCredentials().username
         val list = mutableListOf<RecyclerItem>()
         list.add(RecyclerItem(ProfileImageData(avatar)))
         list.add(RecyclerItem(ProfileNameData(name = name)))
@@ -45,6 +50,10 @@ class ProfileViewModel
     }
 
     fun updateUserInfo(personalDto: PersonalDto) {
+//        viewModelScope.launch {
+//            profileRepository.updatePersonalData(personalDto)
+//            profileRepository.getUserPersonalData()
+//        }
 //        if (!personalDto.firstName.isNullOrEmpty() || !personalDto.lastName.isNullOrEmpty()) {
         _recyclerItems.value?.also {
             _recyclerItems.value = RecyclerData(it.pagingFlow.map {
@@ -56,9 +65,6 @@ class ProfileViewModel
                         if (personalDto.lastName != "null") {
                             (rvItem.data as ProfileNameData).lastName = personalDto.lastName
                         }
-                        val name = if (personalDto.firstName == null) "" else personalDto.firstName
-                        val family = if (personalDto.lastName == null) "" else personalDto.lastName
-                        _name.emit("$name $family")
                         rvItem
                     } else if (rvItem.data is ProfileImageData) {
                         _avatar.emit(personalDto.avatar)

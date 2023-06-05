@@ -54,6 +54,6 @@ class SectionItemViewHolder(
         Glide.with(itemView.context).load(data.section.videoThumbnail).into(binding.sectionPoster)
         binding.lock.isVisible = data.section.isLocked
         binding.title.text = data.section.title
-        setOnClickListener(binding.clickableLayout, onMovieClickListener, this, data)
+        setOnClickListener(binding.posterLayout, onMovieClickListener, this, data)
     }
 }

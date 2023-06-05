@@ -6,9 +6,11 @@ import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.academy.VariantDto
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.data.model.home.Product
+import ir.pattern.persianball.data.model.home.VariantsDto
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.databinding.HomeNewProductViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder

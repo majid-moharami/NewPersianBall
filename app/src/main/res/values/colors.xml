@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFB703</color>
     <color name="red">#FF0303</color>
+    <color name="green">#00AC09</color>
     <color name="notification_icon_color">#6F71AB</color>
     <color name="ripple_color_transparent">#80CCC5C5</color>
     <color name="color_grey">#757575</color>

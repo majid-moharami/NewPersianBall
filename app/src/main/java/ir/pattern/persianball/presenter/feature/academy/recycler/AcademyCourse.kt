@@ -61,20 +61,18 @@ class AcademyCourseViewHolder(
         setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)
     }
 
-    private fun convertTimeToString(timeMs: Int): String {
-        val seconds = timeMs % 60
-        val minutes = (timeMs / 60) % 60
-        val hours = timeMs / 3600
+    private fun convertTimeToString(minute: Int): String {
+        val hours = minute / 60
         val stringBuilder = StringBuilder()
         val formatter = Formatter(stringBuilder, Locale.getDefault())
         stringBuilder.setLength(0)
         return if (hours > 0) {
             UiUtils.convertToPersianNumber(
-                formatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+                formatter.format("%d:%02d:%02d", hours, minute % 60, 0).toString()
             )
         } else {
             UiUtils.convertToPersianNumber(
-                formatter.format("%02d:%02d", minutes, seconds).toString()
+                formatter.format("%02d:%02d", minute % 60, 0).toString()
             )
         }
     }

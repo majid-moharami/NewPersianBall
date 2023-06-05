@@ -9,6 +9,8 @@ import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderProfileNameBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
+import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseViewHolder
 import kotlinx.coroutines.flow.StateFlow
 import java.util.*
 
@@ -21,12 +23,9 @@ class ProfileNameData(var firstName: String? = "", var lastName: String? = "", v
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-
         other as ProfileNameData
-
         if (firstName != other.firstName) return false
         if (lastName != other.lastName) return false
-
         return true
     }
 
@@ -39,7 +38,9 @@ class ProfileNameData(var firstName: String? = "", var lastName: String? = "", v
     }
 }
 
-class ProfileNameViewHolder(itemView: View) : BaseViewHolder<ProfileNameData>(itemView){
+class ProfileNameViewHolder(itemView: View,
+                            private val onUsernameClickListener: OnClickListener<ProfileNameViewHolder, ProfileNameData>?)
+    : BaseViewHolder<ProfileNameData>(itemView){
 
     private lateinit var binding : HolderProfileNameBinding
 
@@ -53,6 +54,7 @@ class ProfileNameViewHolder(itemView: View) : BaseViewHolder<ProfileNameData>(it
     }
     override fun onBindView(data: ProfileNameData) {
         binding.nameTxt.text = data.name.value
+        setOnClickListener(binding.nameTxt, onUsernameClickListener, this, data)
     }
 
 }

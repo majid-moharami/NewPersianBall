@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PersonalInfoViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val profileRepository: ProfileRepository
+    val profileRepository: ProfileRepository
 ) : BaseViewModel() {
 
     var personalData = PersonalDto()
@@ -24,7 +24,7 @@ class PersonalInfoViewModel
 //        getPersonalData()
 //    }
 
-    private val _userPersonalData = MutableStateFlow<PersonalDto?>(null)
+    val _userPersonalData = MutableStateFlow<PersonalDto?>(null)
     val userPersonalData: StateFlow<PersonalDto?> = _userPersonalData.asStateFlow()
 
     private val _userUpdatePersonalData = MutableSharedFlow<Resource<PersonalDto?>>()
@@ -35,6 +35,7 @@ class PersonalInfoViewModel
         viewModelScope.launch {
             when (val result = profileRepository.getUserPersonalData()) {
                 is Resource.Success -> {
+                    profileRepository.user = result.data
                     _userPersonalData.value = result.data
                 }
                 else -> Unit
@@ -46,6 +47,9 @@ class PersonalInfoViewModel
         personalData.avatar = null
         viewModelScope.launch {
             _userUpdatePersonalData.emit(Resource.Loading())
+            profileRepository.username?.also {
+                personalDto.username = it
+            }
             _userUpdatePersonalData.emit(profileRepository.updatePersonalData(personalDto))
         }
     }

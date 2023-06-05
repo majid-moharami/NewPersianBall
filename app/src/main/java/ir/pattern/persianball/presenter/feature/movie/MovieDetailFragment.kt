@@ -92,12 +92,15 @@ class MovieDetailFragment : BaseFragment() {
                     is Resource.Success -> {
                         movie = it.data
                         viewModel.setAppropriateMap(movie)
+                        binding.productChooseName.text = "انتخاب محصول هدیه"
                         if (movie.category?.nameFarsi == "دوره ها") {
                             val firstSupport = viewModel.supportMap.keys.toList()[0]
-                            viewModel.setSelectedCoach(firstSupport)
+                            binding.supportName.text = "انتخاب پشتیبان"
+                            //viewModel.setSelectedCoach(firstSupport)
                         } else {
+                            binding.supportName.text = "انتخاب زمان و مکان"
                             val firstLocation = viewModel.locationMap.keys.toList()[0]
-                            viewModel.setSelectedLocation(firstLocation)
+                            //viewModel.setSelectedLocation(firstLocation)
                         }
                         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie)
                         binding.viewpager.adapter = adapter
@@ -144,7 +147,7 @@ class MovieDetailFragment : BaseFragment() {
                         )
                     } ?: Toast.makeText(
                         requireContext(),
-                        "مشکلی در فرایند به وجود آمده",
+                        "ابتدا پشتیبان و محصول هدیه خود را انتخاب کنید.",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
@@ -157,7 +160,7 @@ class MovieDetailFragment : BaseFragment() {
                         )
                     } ?: Toast.makeText(
                         requireContext(),
-                        "مشکلی در فرایند به وجود آمده",
+                        "ابتدا زمان و مکان و محصول هدیه خود را انتخاب کنید.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -222,7 +225,7 @@ class MovieDetailFragment : BaseFragment() {
                 if (viewModel.supportMap.isNotEmpty()) {
                     val firstProduct = viewModel.supportMap[it]
                     firstProduct?.get(0)?.let { it1 ->
-                        viewModel.setSelectedGift(it1)
+                        //viewModel.setSelectedGift(it1)
                         viewModel.selectedGifts = it1
                     }
                     Glide.with(requireContext())
@@ -232,7 +235,9 @@ class MovieDetailFragment : BaseFragment() {
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                         .into(binding.productImage)
-                    binding.productChooseName.text = firstProduct?.get(0)?.productName
+                    firstProduct?.get(0)?.also { f ->
+                        binding.productChooseName.text = f.productName
+                    }
 
                     it?.also {
                         val variant = viewModel.getSelectedVariant(movie)
@@ -274,7 +279,9 @@ class MovieDetailFragment : BaseFragment() {
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                         .into(binding.productImage)
-                    binding.productChooseName.text = firstProduct?.get(0)?.productName
+                    firstProduct?.get(0)?.also {f ->
+                        binding.productChooseName.text = f.productName
+                    }
 
 
                     val s = it?.discountPercentage
@@ -341,9 +348,11 @@ class MovieDetailFragment : BaseFragment() {
         binding.videos.visibility =
             if (movie.category?.nameFarsi != "کلاس ها") View.VISIBLE else View.INVISIBLE
         if (movie.category?.nameFarsi == "کلاس ها") {
-            binding.videoCount.text = resources.getString(R.string.section_count, movie.section_count.toString())
-        }else{
-            binding.videoCount.text = resources.getString(R.string.week_count, movie.weekCount.toString())
+            binding.videoCount.text =
+                resources.getString(R.string.section_count, movie.section_count.toString())
+        } else {
+            binding.videoCount.text =
+                resources.getString(R.string.week_count, movie.weekCount.toString())
         }
         movie.coursePrice?.also {
             binding.realPrice.text =
@@ -427,19 +436,17 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
-    private fun convertTimeToString(timeMs: Int): String {
-        val seconds = timeMs % 60
-        val minutes = (timeMs / 60) % 60
-        val hours = timeMs / 3600
+    private fun convertTimeToString(minute: Int): String {
+        val hours = minute / 60
         val stringBuilder = StringBuilder()
         val formatter = Formatter(stringBuilder, Locale.getDefault())
         stringBuilder.setLength(0)
         return if (hours > 0) {
             convertToPersianNumber(
-                formatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+                formatter.format("%d:%02d:%02d", hours, minute % 60, 0).toString()
             )
         } else {
-            convertToPersianNumber(formatter.format("%02d:%02d", minutes, seconds).toString())
+            convertToPersianNumber(formatter.format("%02d:%02d", minute % 60, 0).toString())
         }
     }
 }

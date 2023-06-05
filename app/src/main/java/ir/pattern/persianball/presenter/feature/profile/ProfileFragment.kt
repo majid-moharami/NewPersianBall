@@ -14,14 +14,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.profile.InfoType
 import ir.pattern.persianball.databinding.FragmentProfileBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.MainActivity
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
+import ir.pattern.persianball.presenter.adapter.BaseViewHolder
+import ir.pattern.persianball.presenter.feature.academy.AcademyFragmentDirections
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.profile.personalInformation.PersonalInfoViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -87,6 +91,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         uploadImager = {
                             openGalleryForImage()
                         }
+                        onUsernameClickListener =
+                            BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
+                                val dialog = ChangeUserNameDialog.newInstance()
+                                dialog.show(childFragmentManager, "edit_info_dialog")
+                            }
                     }.also {
                         binding.recyclerView.adapter = it
                     }

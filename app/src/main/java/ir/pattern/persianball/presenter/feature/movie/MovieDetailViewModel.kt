@@ -88,7 +88,7 @@ class MovieDetailViewModel
                                     "",
                                     "",
                                     0,
-                                    "بدون محصول",
+                                    "بدون هدیه",
                                     "non-id"
                                 )
                             )

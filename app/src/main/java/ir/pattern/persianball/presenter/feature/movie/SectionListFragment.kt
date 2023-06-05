@@ -120,7 +120,7 @@ class SectionListFragment : Fragment() {
                                 RecyclerItem(
                                     PosterData(
                                         movie.image,
-                                        movie.section_count,
+                                        movie.weekCount,
                                         movie.courseDuration,
                                         movie.category?.nameFarsi
                                     )
@@ -131,8 +131,8 @@ class SectionListFragment : Fragment() {
                                 RecyclerItem(
                                     PosterData(
                                         movie.image,
-                                        movie.section_count,
                                         movie.weekCount,
+                                        movie.courseDuration,
                                         movie.category?.nameFarsi
                                     )
                                 )

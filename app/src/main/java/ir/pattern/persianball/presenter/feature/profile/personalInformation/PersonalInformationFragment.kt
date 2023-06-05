@@ -57,7 +57,11 @@ class PersonalInformationFragment : Fragment() {
             false
         )
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getPersonalData()
+            if (viewModel.profileRepository.user == null) {
+                viewModel.getPersonalData()
+            }else {
+                viewModel._userPersonalData.value = viewModel.profileRepository.user
+            }
         }
         binding.genderPersianBallImageButton.setOnClickListener {
             val dialog = EditGenderDialogFragment.newInstance(
@@ -289,8 +293,12 @@ class PersonalInformationFragment : Fragment() {
                                     )
                                 )
                                 viewModel.personalData.nationCode = it.toLong()
-                            }else{
-                                Toast.makeText(requireContext(), "کد ملی ده رقمی را به درستی وارد کنید.", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "کد ملی ده رقمی را به درستی وارد کنید.",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
 
@@ -310,6 +318,7 @@ class PersonalInformationFragment : Fragment() {
         }
         binding.submitBtn.setOnClickListener {
             viewModel.updatePersonalData(viewModel.personalData)
+            viewModel.getPersonalData()
         }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

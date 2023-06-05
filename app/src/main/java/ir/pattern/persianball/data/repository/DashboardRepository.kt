@@ -3,6 +3,7 @@ package ir.pattern.persianball.data.repository
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.dashboard.DashboardsDto
+import ir.pattern.persianball.data.model.dashboard.OrderResultDto
 import ir.pattern.persianball.data.repository.remote.datasource.DashboardDataSource
 import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,13 @@ class DashboardRepository
     suspend fun getDashboard(): Flow<Resource<DashboardsDto>> {
         return flow {
             val result = dashboardDataSource.getDashboard()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getOrder(): Flow<Resource<OrderResultDto>> {
+        return flow {
+            val result = dashboardDataSource.getOrder()
             emit(result)
         }.flowOn(Dispatchers.IO)
     }

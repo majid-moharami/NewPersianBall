@@ -27,6 +27,10 @@ class ProductDetailViewModel
 
     private val _addingCartFlow = MutableSharedFlow<String>()
     val addingCartFlow = _addingCartFlow.asSharedFlow()
+    var both: Boolean? = null
+    var onlyColor: Boolean? = null
+    var onlySize: Boolean? = null
+    var anyOne: Boolean? = null
 
     fun getProductById(id: Int): Product? {
         for (i in homeRepository.products.products) {
@@ -35,20 +39,43 @@ class ProductDetailViewModel
         return null
     }
 
-    fun getColorOFSize(size: String, product: Product): Map<String, String> {
+    fun getColorOFSize(size: String, product: Product): Map<String, String>? {
         val colorMap = mutableMapOf<String, String>()
         product.variants?.also {
             for (i in product.variants) {
-                if (i?.size == size) {
+                if (i?.size == size && i.colorRgb.isNotBlank()) {
                     colorMap[i.color] = i.colorRgb
                 }
             }
         }
-        currentColorMap = colorMap
-        return colorMap
+        return if (colorMap.isEmpty()) {
+            null
+        } else {
+            currentColorMap = colorMap
+            colorMap
+        }
     }
 
-    fun getSizeList(product: Product): Set<String> {
+    fun getColors(product: Product): Map<String, String>? {
+        val colorMap = mutableMapOf<String, String>()
+        product.variants?.also {
+            for (i in product.variants) {
+                i?.also {
+                    if (i.colorRgb.isNotBlank()) {
+                        colorMap[i.color] = i.colorRgb
+                    }
+                }
+            }
+        }
+        return if (colorMap.isEmpty()) {
+            null
+        } else {
+            currentColorMap = colorMap
+            colorMap
+        }
+    }
+
+    fun getSizeList(product: Product): Set<String>? {
         val sizeList = mutableSetOf<String>()
         product.variants?.also {
             for (i in product.variants) {
@@ -57,36 +84,92 @@ class ProductDetailViewModel
                 }
             }
         }
-        return sizeList
+        return if (sizeList.isEmpty()) null else sizeList
     }
 
 
     fun getSelectedVariantId(product: Product, currentSizeIndex: Int, currentColorIndex: Int): Int {
-        val size = getSizeList(product).toList()[currentSizeIndex]
-        val color = getColorOFSize(size, product).keys.toList()[currentColorIndex]
-        var id = 0
-        product.variants?.map {
-            it?.also {
-                if (it.size == size && it.color == color) {
-                    id = it.id
+        if (both == true) {
+            val size = getSizeList(product)!!.toList()[currentSizeIndex]
+            val color = getColorOFSize(size, product)!!.keys.toList()[currentColorIndex]
+            var id = 0
+            product.variants?.map {
+                it?.also {
+                    if (it.size == size && it.color == color) {
+                        id = it.id
+                    }
                 }
             }
+            return id
+        } else if (onlySize == true) {
+            val size = getSizeList(product)!!.toList()[currentSizeIndex]
+            var id = 0
+            product.variants?.map {
+                it?.also {
+                    if (it.size == size) {
+                        id = it.id
+                    }
+                }
+            }
+            return id
+        } else if (onlyColor == true) {
+            val color = getColors(product)!!.keys.toList()[currentColorIndex]
+            var id = 0
+            product.variants?.map {
+                it?.also {
+                    if (it.color == color) {
+                        id = it.id
+                    }
+                }
+            }
+            return id
+        } else {
+            return product.variants?.get(0)?.id ?: -1
         }
-        return id
     }
 
-    fun getSelectedVariantImage(product: Product, currentSizeIndex: Int, currentColorIndex: Int): String? {
-        val size = getSizeList(product).toList()[currentSizeIndex]
-        val color = getColorOFSize(size, product).keys.toList()[currentColorIndex]
-        var img : String? = null
-        product.variants?.map {
-            it?.also {
-                if (it.size == size && it.color == color) {
-                    img = it.image
+    fun getSelectedVariantImage(
+        product: Product,
+        currentSizeIndex: Int,
+        currentColorIndex: Int
+    ): String? {
+        if (both == true) {
+            val size = getSizeList(product)!!.toList()[currentSizeIndex]
+            val color = getColorOFSize(size, product)!!.keys.toList()[currentColorIndex]
+            var img: String? = null
+            product.variants?.map {
+                it?.also {
+                    if (it.size == size && it.color == color) {
+                        img = it.image
+                    }
                 }
             }
+            return img
+        }else if (onlySize == true){
+            val size = getSizeList(product)!!.toList()[currentSizeIndex]
+            var img: String? = null
+            product.variants?.map {
+                it?.also {
+                    if (it.size == size) {
+                        img = it.image
+                    }
+                }
+            }
+            return img
+        }else if (onlyColor == true){
+            val color = getColors(product)!!.keys.toList()[currentColorIndex]
+            var img: String? = null
+            product.variants?.map {
+                it?.also {
+                    if (it.color == color) {
+                        img = it.image
+                    }
+                }
+            }
+            return img
+        }else{
+            return product.variants?.get(0)?.image
         }
-        return img
     }
 
     fun getSelectedVariant(
@@ -114,7 +197,7 @@ class ProductDetailViewModel
             product.images?.map { img ->
                 list.add(RecyclerItem(ImageData(img)))
             }
-            product.variants?.map {varient ->
+            product.variants?.map { varient ->
                 varient?.image?.also { img ->
                     list.add(RecyclerItem(ImageData(img)))
                 }
