@@ -213,7 +213,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     if (viewModel.onlySize == true || viewModel.both == true) {
                         ArrayAdapter(
                             requireActivity(),
-                            android.R.layout.simple_spinner_item,
+                            R.layout.spiner_drop_down,
                             viewModel.getSizeList(it)!!.toList()
                         ).also { adapter ->
                             // Specify the layout to use when the list of choices appears
@@ -226,7 +226,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     if (viewModel.both == true) {
                         ArrayAdapter(
                             requireActivity(),
-                            android.R.layout.simple_spinner_item,
+                            R.layout.spiner_drop_down,
                             viewModel.getColorOFSize(
                                 viewModel.getSizeList(it)!!.toList()[0],
                                 it
@@ -242,7 +242,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     if (viewModel.onlyColor == true) {
                         ArrayAdapter(
                             requireActivity(),
-                            android.R.layout.simple_spinner_item,
+                            R.layout.spiner_drop_down,
                             viewModel.getColors(
                                 it
                             )!!.keys.toList()
@@ -342,7 +342,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             product?.also {
                 ArrayAdapter(
                     requireActivity(),
-                    android.R.layout.simple_spinner_item,
+                    R.layout.spiner_drop_down,
                     viewModel.getColorOFSize(
                         viewModel.getSizeList(it)!!.toList()[p2],
                         it

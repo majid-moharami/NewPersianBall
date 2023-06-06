@@ -190,24 +190,26 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/color_box"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="32dp"
+                            android:padding="2dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent">
 
+
                             <Spinner
                                 android:id="@+id/color_spinner"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:spinnerMode="dropdown"
-                                android:padding="0dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
                                 android:gravity="center"
                                 android:layoutDirection="ltr"
+                                android:spinnerMode="dropdown"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintLeft_toRightOf="@+id/color_selected"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.cardview.widget.CardView
@@ -244,7 +246,8 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/count_box"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="32dp"
+                            android:padding="2dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -306,7 +309,8 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/size_box"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="32dp"
+                            android:padding="2dp"
                             android:background="@drawable/product_strike_background"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -316,13 +320,15 @@
                                 android:id="@+id/size_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layoutDirection="ltr"
                                 android:padding="0dp"
                                 android:spinnerMode="dropdown"
-                                android:layoutDirection="ltr"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
