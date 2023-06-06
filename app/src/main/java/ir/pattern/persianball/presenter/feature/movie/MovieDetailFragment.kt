@@ -284,7 +284,7 @@ class MovieDetailFragment : BaseFragment() {
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                         .into(binding.productImage)
-                    firstProduct?.get(0)?.also {f ->
+                    firstProduct?.get(0)?.also { f ->
                         binding.productChooseName.text = f.productName
                     }
 
@@ -315,14 +315,14 @@ class MovieDetailFragment : BaseFragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.selectedGift.collect {
-                Glide.with(requireContext())
-                    .load("https://api.persianball.ir/${it?.image}")
-                    .into(binding.productImage)
-                binding.productChooseName.text = it?.productName
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewModel.selectedGift.collect {
+//                Glide.with(requireContext())
+//                    .load("https://api.persianball.ir/${it?.image}")
+//                    .into(binding.productImage)
+//                binding.productChooseName.text = it?.productName
+//            }
+//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedGift.collect {
@@ -330,6 +330,29 @@ class MovieDetailFragment : BaseFragment() {
                     .load("https://api.persianball.ir/${it?.image}")
                     .into(binding.productImage)
                 binding.productChooseName.text = it?.productName
+                if (it != null) {
+                    val variant = viewModel.getSelectedVariant(movie)
+                    val s = variant?.discountPercentage
+                    if (s != null) {
+                        binding.realPrice.isVisible = true
+                        binding.realPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(variant.price)
+                            )
+                        binding.discountedPrice.text = resources.getString(
+                            R.string.product_price,
+                            (decimalForm.format(variant.price.minus((variant.price * s / 100))))
+                        )
+                    } else {
+                        binding.discountedPrice.text =
+                            resources.getString(
+                                R.string.product_price,
+                                decimalForm.format(variant?.price)
+                            )
+                        binding.realPrice.isVisible = false
+                    }
+                }
             }
         }
     }
@@ -344,16 +367,16 @@ class MovieDetailFragment : BaseFragment() {
     private fun initView() {
         var show = true
         playerRepository.soldVariant = null
-        movie.variants.map {v->
+        movie.variants.map { v ->
             dashboardRepository.userCourse?.results?.map {
-                if (v?.id == it.course_variant_id && movie.id == it.courseId){
+                if (v?.id == it.course_variant_id && movie.id == it.courseId) {
                     playerRepository.soldVariant = v
                     show = false
                     binding.cardView7.isVisible = false
                 }
             }
         }
-        if (show){
+        if (show) {
             binding.cardView7.isVisible = true
         }
         binding.headerTitle.text = movie.courseTitle

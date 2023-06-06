@@ -64,16 +64,50 @@ class HomeProductViewHolder(
                 )
             }
 
-            if (it.discountPercentage != null) {
+            val variant = getCheepVariant(it.variants)
+            if (variant == null) {
+                if (it.discountPercentage != null) {
+                    binding.discountedPrice.text = itemView.resources.getString(
+                        R.string.product_price,
+                        decimalForm.format(it.price?.minus((it.price * it.discountPercentage / 100)))
+                    )
+                }
+            }else {
+                binding.realPrice.text = itemView.resources.getString(
+                    R.string.product_price,
+                    decimalForm.format(variant.price)
+                )
                 binding.discountedPrice.text = itemView.resources.getString(
                     R.string.product_price,
-                    decimalForm.format(it.price?.minus((it.price * it.discountPercentage / 100)))
+                    decimalForm.format(variant.price.minus((variant.price * variant.discountPercentage / 100)))
                 )
             }
             Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}")
                 .into(binding.shapeableImageView)
         }
         setOnClickListener(binding.clickableLayout, onProductClickListener, this, data)
+    }
+
+    private fun getCheepVariant(variants: List<VariantsDto?>?): VariantsDto? {
+        if (variants.isNullOrEmpty()) {
+            return null
+        }
+        val list: MutableList<Int> = mutableListOf()
+        variants.map {
+            it?.discountPercentage?.also { discountPercentage ->
+                if (discountPercentage > 0) {
+                    list.add(discountPercentage)
+                }
+            }
+        }
+        val discount = list.min()
+        var variant: VariantsDto? = null
+        variants.map {
+            if (it?.discountPercentage == discount) {
+                variant = it
+            }
+        }
+        return variant
     }
 
 }
