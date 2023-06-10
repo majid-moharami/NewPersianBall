@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface HomeService {
 
@@ -20,7 +21,7 @@ interface HomeService {
     suspend fun getProduct() : Response<Products>
 
     @GET("gallery/slider/")
-    suspend fun getGallery() : Response<SliderList>
+    suspend fun getGallery(@Query("limit") limit: Int) : Response<SliderList>
 
     @POST("user/register/")
     suspend fun register(@Body request: SignUp): Response<Any>

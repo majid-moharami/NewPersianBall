@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.model.academy.Academy
+import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
 import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
@@ -30,7 +31,8 @@ class HomeRepository
 //        }
 //    ).flow
 
-    lateinit var products : Products
+    lateinit var products: Products
+    var courses: Academy? = null
     lateinit var sliderList: List<Slider>
 
     suspend fun getCourses(): Flow<Resource<Academy>> {
@@ -62,7 +64,7 @@ class HomeRepository
     }
 
     suspend fun verifyUser(verifyUser: VerifyUser): Flow<Resource<TokenResultDto?>> {
-        return flow{
+        return flow {
             val result = homeRemoteDataSource.verifyUser(verifyUser)
             emit(result)
         }.flowOn(Dispatchers.IO)
@@ -75,24 +77,35 @@ class HomeRepository
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun retryCode(retryCode: RetryCode): Flow<Resource<Any?>>{
+    suspend fun retryCode(retryCode: RetryCode): Flow<Resource<Any?>> {
         return flow {
             val result = homeRemoteDataSource.retryCode(retryCode)
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun forgetPassword(forgetPassword: ForgetPassword):  Flow<Resource<Any?>>{
+    suspend fun forgetPassword(forgetPassword: ForgetPassword): Flow<Resource<Any?>> {
         return flow {
             val result = homeRemoteDataSource.forgetPassword(forgetPassword)
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun changePassword(changePassword: ChangePassword): Flow<Resource<Any?>>{
+    suspend fun changePassword(changePassword: ChangePassword): Flow<Resource<Any?>> {
         return flow {
             val result = homeRemoteDataSource.changePassword(changePassword)
             emit(result)
         }.flowOn(Dispatchers.IO)
+    }
+
+    fun getCourseById(id: Int): AcademyDto? {
+        if (courses != null) {
+            for (i in courses!!.result) {
+                if (i.id == id) return i
+            }
+            return null
+        }else{
+            return null
+        }
     }
 }

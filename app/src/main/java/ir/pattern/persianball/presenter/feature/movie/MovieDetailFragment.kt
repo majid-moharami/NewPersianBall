@@ -39,6 +39,7 @@ import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
 import ir.pattern.persianball.utils.UiUtils.convertToPersianNumber
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -51,7 +52,7 @@ class MovieDetailFragment : BaseFragment() {
     lateinit var binding: FragmentMovieDetailBinding
     private val viewModel: MovieDetailViewModel by viewModels()
     private val dialogViewModel: CourseChooseViewModel by viewModels()
-    lateinit var movie: AcademyDto
+    var movie: AcademyDto? = null
     private var movieId: Int = -1
     private lateinit var args: MovieDetailFragmentArgs
     private val decimalForm =
@@ -85,20 +86,46 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getAcademyById(movieId)
-        }
         binding.backBtn.setOnClickListener {
             requireActivity().onBackPressed()
         }
+        movie = viewModel.homeRepository.getCourseById(movieId)
+        if (movie != null){
+            viewModel.setAppropriateMap(movie!!)
+            binding.productChooseName.text = "انتخاب محصول هدیه"
+            if (movie!!.category?.nameFarsi == "دوره ها") {
+                val firstSupport = viewModel.supportMap.keys.toList()[0]
+                binding.supportName.text = "انتخاب پشتیبان"
+                //viewModel.setSelectedCoach(firstSupport)
+            } else {
+                binding.supportName.text = "انتخاب زمان و مکان"
+                val firstLocation = viewModel.locationMap.keys.toList()[0]
+                //viewModel.setSelectedLocation(firstLocation)
+            }
+            val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie!!)
+            binding.viewpager.adapter = adapter
+            binding.viewpager.setCurrentItem(2, false)
+            TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
+                when (position) {
+                    0 -> tab.text = resources.getString(R.string.pre_requisites)
+                    1 -> tab.text = resources.getString(R.string.description)
+                }
+            }.attach()
+            initView()
+            loading(show = false)
+        }else {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.getAcademyById(movieId)
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.academyDto.collect {
+            viewModel.academyDto.collectLatest {
                 when (it) {
                     is Resource.Success -> {
                         movie = it.data
-                        viewModel.setAppropriateMap(movie)
+                        viewModel.setAppropriateMap(movie!!)
                         binding.productChooseName.text = "انتخاب محصول هدیه"
-                        if (movie.category?.nameFarsi == "دوره ها") {
+                        if (movie!!.category?.nameFarsi == "دوره ها") {
                             val firstSupport = viewModel.supportMap.keys.toList()[0]
                             binding.supportName.text = "انتخاب پشتیبان"
                             //viewModel.setSelectedCoach(firstSupport)
@@ -107,7 +134,7 @@ class MovieDetailFragment : BaseFragment() {
                             val firstLocation = viewModel.locationMap.keys.toList()[0]
                             //viewModel.setSelectedLocation(firstLocation)
                         }
-                        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie)
+                        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie!!)
                         binding.viewpager.adapter = adapter
                         binding.viewpager.setCurrentItem(2, false)
                         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
@@ -142,8 +169,8 @@ class MovieDetailFragment : BaseFragment() {
                     ).show()
                     return@launch
                 }
-                if (movie.category?.nameFarsi == "دوره ها") {
-                    viewModel.getSelectedVariant(movie)?.also {
+                if (movie!!.category?.nameFarsi == "دوره ها") {
+                    viewModel.getSelectedVariant(movie!!)?.also {
                         viewModel.addCartItem(
                             CartItem(
                                 course = it.id,
@@ -156,7 +183,7 @@ class MovieDetailFragment : BaseFragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    viewModel.getSelectedLocation(movie)?.also {
+                    viewModel.getSelectedLocation(movie!!)?.also {
                         viewModel.addCartItem(
                             CartItem(
                                 course = it.id,
@@ -202,9 +229,9 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.watch.setOnClickListener {
-            if (!movie.video.isNullOrEmpty()) {
+            if (!movie!!.video.isNullOrEmpty()) {
                 playerRepository.videoUrl = null
-                playerRepository.videoUrl = movie.video
+                playerRepository.videoUrl = movie!!.video
                 val intent = Intent(requireActivity(), PlayerActivity::class.java)
                 intent.putExtra("HAVE_URL", false)
                 intent.putExtra("URL", "")
@@ -218,12 +245,12 @@ class MovieDetailFragment : BaseFragment() {
             }
         }
 
-        baseBinding.tryAgainBtn.setOnClickListener {
-            showTryAgainView(false)
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.getAcademyById(movieId)
-            }
-        }
+//        baseBinding.tryAgainBtn.setOnClickListener {
+//            showTryAgainView(false)
+//            viewLifecycleOwner.lifecycleScope.launch {
+//                viewModel.getAcademyById(movieId)
+//            }
+//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.selectedCoach.collect {
@@ -245,7 +272,7 @@ class MovieDetailFragment : BaseFragment() {
                     }
 
                     it?.also {
-                        val variant = viewModel.getSelectedVariant(movie)
+                        val variant = viewModel.getSelectedVariant(movie!!)
                         val s = variant?.discountPercentage
                         if (s != null) {
                             binding.realPrice.isVisible = true
@@ -331,7 +358,7 @@ class MovieDetailFragment : BaseFragment() {
                     .into(binding.productImage)
                 binding.productChooseName.text = it?.productName
                 if (it != null) {
-                    val variant = viewModel.getSelectedVariant(movie)
+                    val variant = viewModel.getSelectedVariant(movie!!)
                     val s = variant?.discountPercentage
                     if (s != null) {
                         binding.realPrice.isVisible = true
@@ -367,9 +394,9 @@ class MovieDetailFragment : BaseFragment() {
     private fun initView() {
         var show = true
         playerRepository.soldVariant = null
-        movie.variants.map { v ->
+        movie!!.variants.map { v ->
             dashboardRepository.userCourse?.results?.map {
-                if (v?.id == it.course_variant_id && movie.id == it.courseId) {
+                if (v?.id == it.course_variant_id && movie!!.id == it.courseId) {
                     playerRepository.soldVariant = v
                     show = false
                     binding.cardView7.isVisible = false
@@ -379,27 +406,27 @@ class MovieDetailFragment : BaseFragment() {
         if (show) {
             binding.cardView7.isVisible = true
         }
-        binding.headerTitle.text = movie.courseTitle
-        Glide.with(requireContext()).load("https://api.persianball.ir/${movie.image}")
+        binding.headerTitle.text = movie!!.courseTitle
+        Glide.with(requireContext()).load("https://api.persianball.ir/${movie!!.image}")
             .into(binding.poster)
-        if (movie.courseDuration > 0) {
-            binding.videoTime.text = convertTimeToString(movie.courseDuration)
+        if (movie!!.courseDuration > 0) {
+            binding.videoTime.text = convertTimeToString(movie!!.courseDuration)
         } else {
             binding.videoTime.isVisible = false
         }
         binding.videos.visibility =
-            if (movie.category?.nameFarsi != "کلاس ها") View.VISIBLE else View.INVISIBLE
-        if (movie.category?.nameFarsi == "کلاس ها") {
+            if (movie!!.category?.nameFarsi != "کلاس ها") View.VISIBLE else View.INVISIBLE
+        if (movie!!.category?.nameFarsi == "کلاس ها") {
             binding.videoCount.text =
-                resources.getString(R.string.section_count, movie.section_count.toString())
+                resources.getString(R.string.section_count, movie!!.section_count.toString())
         } else {
             binding.videoCount.text =
-                resources.getString(R.string.week_count, movie.weekCount.toString())
+                resources.getString(R.string.week_count, movie!!.weekCount.toString())
         }
-        movie.coursePrice?.also {
+        movie!!.coursePrice?.also {
             binding.realPrice.text =
                 resources.getString(R.string.product_price, decimalForm.format(it))
-            val s = movie.discountPercentage
+            val s = movie!!.discountPercentage
             if (s != null) {
                 binding.discountedPrice.text = resources.getString(
                     R.string.product_price,
@@ -409,7 +436,7 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.chooseSupportLayout.setOnClickListener {
-            if (movie.category?.nameFarsi == "دوره ها") {
+            if (movie!!.category?.nameFarsi == "دوره ها") {
                 DetailChooseDialogFragment.newInstance(
                     "انتخاب پشتیبان",
                     viewModel.supportMap.keys.toList().map { RecyclerItem(CoachItemData(it)) })
@@ -423,7 +450,7 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.chooseProductLayout.setOnClickListener {
-            val list = if (movie.category?.nameFarsi == "دوره ها") {
+            val list = if (movie!!.category?.nameFarsi == "دوره ها") {
                 viewModel.supportMap[viewModel.selectedCoach.value]?.also { list ->
                     list.map { it?.let { RecyclerItem(GiftProductItemData(it)) } }
                 }

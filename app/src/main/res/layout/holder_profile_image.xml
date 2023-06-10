@@ -33,8 +33,7 @@
                     android:id="@+id/back_profile_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/desktop" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
         </RelativeLayout>

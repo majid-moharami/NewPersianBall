@@ -72,7 +72,7 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         } ?: kotlin.run {
             binding.uploadIcon.visibility = View.VISIBLE
         }
-        binding.backProfileImage.setImageDrawable(itemView.resources.getDrawable(R.drawable.desktop))
+//        binding.backProfileImage.setImageDrawable(itemView.resources.getDrawable(R.drawable.desktop))
     }
 
     override fun onAttach(data: ProfileImageData?) {

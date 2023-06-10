@@ -21,7 +21,7 @@ class MovieDetailViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val shoppingCartRepository: ShoppingCartRepository,
-    private val homeRepository: HomeRepository
+    val homeRepository: HomeRepository
 ) : BaseViewModel() {
 
     private val _academyDto = MutableSharedFlow<Resource<AcademyDto>>()
@@ -111,17 +111,19 @@ class MovieDetailViewModel
                         noCoachProductList.add(it.giftProduct)
                     }
                     if (it?.coach == null && it?.giftProduct == null) {
-                        noCoachProductList.add(GiftProductDto(
-                            "",
-                            0,
-                            0,
-                            "",
-                            "",
-                            "",
-                            0,
-                            "بدون هدیه",
-                            "non-id"
-                        ))
+                        noCoachProductList.add(
+                            GiftProductDto(
+                                "",
+                                0,
+                                0,
+                                "",
+                                "",
+                                "",
+                                0,
+                                "بدون هدیه",
+                                "non-id"
+                            )
+                        )
                     }
                 }
                 supportMap[noCoachDto!!] = noCoachProductList
@@ -165,7 +167,7 @@ class MovieDetailViewModel
         movie.variants.map {
             if (it?.coach == null && it?.giftProduct?.id == selectedGifts?.id) {
                 return it
-            }else if (it?.coach == null && it?.giftProduct == null){
+            } else if (it?.coach == null && it?.giftProduct == null) {
                 return it
             } else {
                 if (selectedGifts?.id == "non-id") {

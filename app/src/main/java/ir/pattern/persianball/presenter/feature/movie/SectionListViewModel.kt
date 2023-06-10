@@ -23,7 +23,7 @@ import javax.inject.Inject
 class SectionListViewModel
 @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val homeRepository: HomeRepository,
+    val homeRepository: HomeRepository,
     private val playerRepository: PlayerRepository
 ) : BaseViewModel() {
     var allList = mutableListOf<RecyclerItem>()

@@ -28,7 +28,7 @@ class HomeRemoteDataSource
     }
 
     suspend fun getGalley(): Resource<SliderList> {
-        return Request.getResponse(request = {homeService.getGallery()}, errorTranslator)
+        return Request.getResponse(request = {homeService.getGallery(50)}, errorTranslator)
     }
 
     suspend fun verifyUser(verifyUser: VerifyUser): Resource<TokenResultDto?>{

@@ -48,7 +48,7 @@ class SectionListFragment : Fragment() {
     private val viewModel: SectionListViewModel by viewModels()
     var pagingAdapter: BasePagingAdapter? = null
     private lateinit var args: SectionListFragmentArgs
-    lateinit var movie: AcademyDto
+    var movie: AcademyDto? = null
 
     @Inject
     lateinit var playerRepository: PlayerRepository
@@ -74,8 +74,43 @@ class SectionListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getAcademyById(args.id)
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewModel.getAcademyById(args.id)
+//        }
+        movie = viewModel.homeRepository.getCourseById(args.id)
+        if (movie != null) {
+            showLoading(false)
+            viewModel.detail = movie!!.detail
+            if (movie!!.category?.nameFarsi == "کلاس ها") {
+                viewModel.allList.add(
+                    RecyclerItem(
+                        PosterData(
+                            movie!!.image,
+                            movie!!.weekCount,
+                            movie!!.courseDuration,
+                            movie!!.category?.nameFarsi
+                        )
+                    )
+                )
+            } else {
+                viewModel.allList.add(
+                    RecyclerItem(
+                        PosterData(
+                            movie!!.image,
+                            movie!!.weekCount,
+                            movie!!.courseDuration,
+                            movie!!.category?.nameFarsi
+                        )
+                    )
+                )
+            }
+            viewModel.allList.addAll(viewModel.detail.sections.map {
+                RecyclerItem(
+                    SectionHeaderData(false, it)
+                )
+            })
+            viewModel._recyclerItems.value =
+                RecyclerData(flowOf(PagingData.from(viewModel.allList)))
         }
         binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -90,13 +125,13 @@ class SectionListFragment : Fragment() {
 
             it.onMovieClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    if (recyclerData.section.isLocked && playerRepository.soldVariant?.coach==null) {
+                    if (recyclerData.section.isLocked && playerRepository.soldVariant?.coach == null) {
                         Toast.makeText(
                             activity,
                             "برای مشاهده کامل دوره آن را خریداری کنید.",
                             Toast.LENGTH_LONG
                         ).show()
-                    }else if(recyclerData.section.isLocked && playerRepository.soldVariant?.coach!=null){
+                    } else if (recyclerData.section.isLocked && playerRepository.soldVariant?.coach != null) {
                         Toast.makeText(
                             activity,
                             "تمرین های ارسالی شما درحال بررسی است. این فرایند ممکن است زمان بر باشد.",
@@ -125,36 +160,6 @@ class SectionListFragment : Fragment() {
                     is Resource.Success -> {
                         showLoading(false)
                         movie = it.data
-                        if (movie.category?.nameFarsi == "کلاس ها") {
-                            viewModel.allList.add(
-                                RecyclerItem(
-                                    PosterData(
-                                        movie.image,
-                                        movie.weekCount,
-                                        movie.courseDuration,
-                                        movie.category?.nameFarsi
-                                    )
-                                )
-                            )
-                        }else{
-                            viewModel.allList.add(
-                                RecyclerItem(
-                                    PosterData(
-                                        movie.image,
-                                        movie.weekCount,
-                                        movie.courseDuration,
-                                        movie.category?.nameFarsi
-                                    )
-                                )
-                            )
-                        }
-                        viewModel.allList.addAll(viewModel.detail.sections.map {
-                            RecyclerItem(
-                                SectionHeaderData(false, it)
-                            )
-                        })
-                        viewModel._recyclerItems.value =
-                            RecyclerData(flowOf(PagingData.from(viewModel.allList)))
                     }
                     is Resource.Failure -> {
                     }

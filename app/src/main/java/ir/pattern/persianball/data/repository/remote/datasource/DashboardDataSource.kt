@@ -20,6 +20,6 @@ class DashboardDataSource
     }
 
     suspend fun getOrder() : Resource<OrderResultDto> {
-        return Request.getResponse(request = {dashboardService.getOrders()}, errorTranslator)
+        return Request.getResponse(request = {dashboardService.getOrders(50)}, errorTranslator)
     }
 }

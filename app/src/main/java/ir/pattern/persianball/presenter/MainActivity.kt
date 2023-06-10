@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
+            viewModel.getShoppingCart()
+            viewModel.getMessage()
+        }
+
+        lifecycleScope.launch {
             viewModel.notificationBadge.collect {
                 var diffrence = 0
                 val list = sharedPreferenceUtils.getMessagesId()
@@ -185,10 +190,6 @@ class MainActivity : AppCompatActivity() {
 
             when (destination.id) {
                 R.id.homeFragment, R.id.academyFragment, R.id.dashboardFragment -> {
-                    lifecycleScope.launch {
-                        viewModel.getShoppingCart()
-                        viewModel.getMessage()
-                    }
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomBar.visibility = View.VISIBLE
                     lifecycleScope.launch {
