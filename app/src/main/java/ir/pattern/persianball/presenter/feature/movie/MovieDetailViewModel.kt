@@ -69,29 +69,31 @@ class MovieDetailViewModel
             val supportSet = mutableSetOf<CoachDto>()
             movie.variants.map {
                 it?.coach?.also { coach ->
-                    supportSet.add(coach)
+                    if (it.isActive) supportSet.add(coach)
                 }
             }
             supportSet.map { coach ->
                 val productList = mutableListOf<GiftProductDto>()
                 movie.variants.map { variant ->
                     if (coach.fullName == variant?.coach?.fullName) {
-                        if (variant.giftProduct != null) {
+                        if (variant.giftProduct != null && variant.isActive) {
                             productList.add(variant.giftProduct)
                         } else {
-                            productList.add(
-                                GiftProductDto(
-                                    "",
-                                    0,
-                                    0,
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    "بدون هدیه",
-                                    "non-id"
+                            if (variant.isActive) {
+                                productList.add(
+                                    GiftProductDto(
+                                        "",
+                                        0,
+                                        0,
+                                        "",
+                                        "",
+                                        "",
+                                        0,
+                                        "بدون هدیه",
+                                        "non-id"
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }
@@ -107,10 +109,10 @@ class MovieDetailViewModel
             if (noCoachDto != null) {
                 val noCoachProductList = mutableListOf<GiftProductDto>()
                 movie.variants.map {
-                    if (it?.coach == null && it?.giftProduct != null) {
+                    if (it?.coach == null && it?.giftProduct != null && it.isActive) {
                         noCoachProductList.add(it.giftProduct)
                     }
-                    if (it?.coach == null && it?.giftProduct == null) {
+                    if (it?.coach == null && it?.giftProduct == null && it?.isActive == true) {
                         noCoachProductList.add(
                             GiftProductDto(
                                 "",
@@ -139,22 +141,24 @@ class MovieDetailViewModel
                 val productList = mutableListOf<GiftProductDto>()
                 movie.detail.timeAndLocation.map {
                     if (location.location == it?.location && location.time == it?.time && location.id == it?.id) {
-                        if (it.giftProduct != null) {
+                        if (it.giftProduct != null && it.isActive) {
                             productList.add(it.giftProduct)
                         } else {
-                            productList.add(
-                                GiftProductDto(
-                                    "",
-                                    0,
-                                    0,
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    "بدون محصول",
-                                    "non-id"
+                            if (it.isActive) {
+                                productList.add(
+                                    GiftProductDto(
+                                        "",
+                                        0,
+                                        0,
+                                        "",
+                                        "",
+                                        "",
+                                        0,
+                                        "بدون محصول",
+                                        "non-id"
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                     locationMap.put(location, productList)

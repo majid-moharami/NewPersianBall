@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBallRecyclerData,
+class ProfileImageData constructor(var avatar: StateFlow<String?>, val avatarBackground: StateFlow<String?>) : PersianBallRecyclerData,
     Equatable {
 
     companion object {
@@ -35,6 +35,7 @@ class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBall
         other as ProfileImageData
 
         if (avatar != other.avatar) return false
+        if (avatarBackground != other.avatarBackground) return false
 
         return true
     }
@@ -46,10 +47,11 @@ class ProfileImageData constructor(var avatar: StateFlow<String?>) : PersianBall
     }
 }
 
-class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val activity: Context) :
+class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val uploadBackground: () -> Unit, val activity: Context) :
     BaseViewHolder<ProfileImageData>(itemView) {
     private lateinit var binding: HolderProfileImageBinding
     private var job: Job? = null
+    private var job2: Job? = null
 
     @SuppressLint("RestrictedApi")
     override fun setViewDataBinding(viewDataBinding: ViewDataBinding?) {
@@ -64,7 +66,7 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         data?.avatar?.value?.also {
             if (it.isNotEmpty() && it != "https://api.persianball.ir/media/") {
                 Glide.with(activity)
-                    .load("https://api.persianball.ir/media/$it")
+                    .load(if (it.contains("https://api.persianball.ir/media/")) it else "https://api.persianball.ir/media/$it")
                     .centerCrop()
                     .into(binding.profileImage)
                 binding.uploadIcon.visibility = View.GONE
@@ -72,7 +74,16 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         } ?: kotlin.run {
             binding.uploadIcon.visibility = View.VISIBLE
         }
-//        binding.backProfileImage.setImageDrawable(itemView.resources.getDrawable(R.drawable.desktop))
+        data?.avatarBackground?.value?.also {
+            if (it.isNotEmpty() && it != "https://api.persianball.ir/media/") {
+                Glide.with(activity)
+                    .load(if (it.contains("http://api.persianball.ir/media/")) it else "https://api.persianball.ir/media/$it")
+                    .centerCrop()
+                    .into(binding.backProfileImage)
+            }
+        } ?: kotlin.run {
+            //binding.uploadIcon.visibility = View.VISIBLE
+        }
     }
 
     override fun onAttach(data: ProfileImageData?) {
@@ -80,13 +91,30 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
         job = Job()
         CoroutineScope(Dispatchers.Main.immediate + job!!).launch {
             data?.avatar?.collectLatest {
-//                if (it.isNullOrEmpty()) {
+                if (it?.isNotEmpty() == true && it != "https://api.persianball.ir/media/") {
+                    Glide.with(activity)
+                        .load(if (it.contains("http://api.persianball.ir/media/")) it else "https://api.persianball.ir/media/$it")
+                        .centerCrop()
+                        .into(binding.profileImage)
+                    binding.uploadIcon.visibility = View.GONE
+                }
                 binding.profileImage.setOnClickListener {
                     uploadImager.invoke()
                 }
-//                } else {
-//                    binding.profileImage.setOnClickListener(null)
-//                }
+            }
+        }
+        job2 = Job()
+        CoroutineScope(Dispatchers.Main.immediate + job2!!).launch {
+            data?.avatarBackground?.collectLatest {
+                if (it?.isNotEmpty() == true && it != "https://api.persianball.ir/media/") {
+                    Glide.with(activity)
+                        .load(if (it.contains("http://api.persianball.ir/media/")) it else "https://api.persianball.ir/media/$it")
+                        .centerCrop()
+                        .into(binding.backProfileImage)
+                }
+                binding.backProfileImage.setOnClickListener {
+                    uploadBackground.invoke()
+                }
             }
         }
     }
@@ -94,5 +122,6 @@ class ProfileImageViewHolder(itemView: View, val uploadImager: () -> Unit, val a
     override fun onDetach(data: ProfileImageData?) {
         super.onDetach(data)
         job?.cancel()
+        job2?.cancel()
     }
 }

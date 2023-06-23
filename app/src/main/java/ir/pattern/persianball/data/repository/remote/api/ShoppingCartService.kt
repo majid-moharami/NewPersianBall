@@ -27,7 +27,7 @@ interface ShoppingCartService {
     @POST("order/address/")
     suspend fun addAddress(@Body orderAddress: OrderAddress): Response<Any?>
 
-    @PUT("/order/address/{id}/")
+    @PUT("order/address/{id}/")
     suspend fun updateAddress(@Path("id") addressId: Long, @Body orderAddress: OrderAddress): Response<Any?>
 
     @POST("order/order/")

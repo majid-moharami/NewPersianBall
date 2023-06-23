@@ -34,6 +34,7 @@ class MainActivityViewModel
     val messageIdList = mutableListOf<Int>()
     private val _avatar = MutableSharedFlow<String?>()
     val avatar = _avatar.asSharedFlow()
+    var userAvatar : String? = null
     suspend fun refreshToken() {
         if (accountManager.getRefreshToken().isNotBlank()) {
             when (val result =
@@ -42,6 +43,7 @@ class MainActivityViewModel
                     accountManager.updateAccessToken(result.data?.access)
                     viewModelScope.launch {
                         _isLogin.emit(true)
+                        profileRepository._isLogin.emit(true)
                     }
                 }
 
@@ -62,14 +64,16 @@ class MainActivityViewModel
             when (val result = profileRepository.getUserPersonalData()) {
                 is Resource.Success -> {
                     _avatar.emit(result.data.avatar)
+                    //profileRepository.user = result.data
+                    userAvatar = result.data.avatar
                 }
                 else -> Unit
             }
         }
     }
 
-    fun getProfileImage(): String {
-        return sharedPreferenceUtils.getUserCredentials().profileImageUrl
+    fun getProfileImage(): String? {
+        return profileRepository.user?.avatar
     }
 
     suspend fun getShoppingCart() {
@@ -117,4 +121,6 @@ class MainActivityViewModel
     suspend fun sendUserDevice(userDevice: UserDeviceDto){
         loginRemoteDataSource.sendUserDevice(userDevice)
     }
+
+    fun getIsLogin() = profileRepository.isLogin
 }

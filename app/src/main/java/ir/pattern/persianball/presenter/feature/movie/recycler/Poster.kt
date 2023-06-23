@@ -13,6 +13,7 @@ import ir.pattern.persianball.databinding.HolderSectionPosterBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.utils.UiUtils
 import java.util.*
+import kotlin.math.floor
 
 class PosterData(val image: String?, val count: Int?, val time: Int?, val categoty: String?) : PersianBallRecyclerData, Equatable {
 
@@ -63,18 +64,20 @@ class PosterDataViewHolder(
         }
     }
 
-    private fun convertTimeToString(minute: Int): String {
-        val hours = minute / 60
+    private fun convertTimeToString(seconds: Int): String {
+        val secondsLeft: Int = seconds % 3600 % 60
+        val minutes = floor((seconds % 3600 / 60).toDouble()).toInt()
+        val hours = floor((seconds / 3600).toDouble()).toInt()
         val stringBuilder = StringBuilder()
         val formatter = Formatter(stringBuilder, Locale.getDefault())
         stringBuilder.setLength(0)
         return if (hours > 0) {
             UiUtils.convertToPersianNumber(
-                formatter.format("%d:%02d:%02d", hours, minute % 60, 0).toString()
+                formatter.format("%d:%02d:%02d", hours, minutes, secondsLeft).toString()
             )
         } else {
             UiUtils.convertToPersianNumber(
-                formatter.format("%02d:%02d", minute % 60, 0).toString()
+                formatter.format("%02d:%02d", minutes, secondsLeft).toString()
             )
         }
     }

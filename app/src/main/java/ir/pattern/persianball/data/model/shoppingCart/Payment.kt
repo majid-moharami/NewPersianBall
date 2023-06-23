@@ -23,7 +23,7 @@ data class DiscountDto(
 enum class DeliveryType(val type: String) {
     POST("post"),
     PEYK("peyk"),
-    FREE("free ")
+    FREE("free")
 }
 
 data class PaymentCompleteListDto(

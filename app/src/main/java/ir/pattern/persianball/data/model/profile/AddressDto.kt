@@ -14,6 +14,8 @@ data class Address(
     @SerializedName("id") var id: Long? = null,
     @SerializedName("postal_code") var postalCode: Long? = null,
     @SerializedName("address") var address: String? = null,
+    @SerializedName("city") var city: String? = null,
+    @SerializedName("province") var province: String? = null,
     @SerializedName("receiver_home_phone") var homePhone: String? = null,
     @SerializedName("receiver_mobile_phone") var mobilePhone: String? = null,
     @SerializedName("email") var email: String? = null,

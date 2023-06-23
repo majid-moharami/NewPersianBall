@@ -13,6 +13,7 @@ data class AcademyDto(
     @SerializedName("week_count") val weekCount: Int,
     @SerializedName("course_title") val courseTitle: String,
     @SerializedName("image") val image: String?,
+    @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("course_description") val courseDescription: String,
     @SerializedName("course_difficulty") val courseDifficulty: String,
     @SerializedName("course_duration") val courseDuration: Int,

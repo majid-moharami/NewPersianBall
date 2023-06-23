@@ -39,6 +39,7 @@ import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -129,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.avatar.collect {
                 if (!it.isNullOrEmpty()) {
                     Glide.with(this@MainActivity)
-                        .load("https://api.persianball.ir/media/$it")
+                        .load("http://api.persianball.ir/media/$it")
                         .centerCrop()
                         .into(binding.profileImage)
                     sharedPreferenceUtils.updateProfileImage(it)
@@ -149,18 +150,48 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
+            viewModel.getIsLogin().collectLatest {
+                it?.also {
+//                    showToolbar(it)
+                    if (!it) {
+                        sharedPreferenceUtils.clearCredentials()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             changeAvatar.collect {
-                if (sharedPreferenceUtils.getUserCredentials().profileImageUrl.isNotEmpty()) {
-                    if ("https://api.persianball.ir/media/" == viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl) {
-                        binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
-                    } else {
+                if (!viewModel.getProfileImage().isNullOrEmpty()) {
+                    if (viewModel.getProfileImage()?.contains("//api.persianball.ir") == true) {
                         Glide.with(this@MainActivity)
-                            .load(viewModel.sharedPreferenceUtils.getUserCredentials().profileImageUrl)
+                            .load(viewModel.getProfileImage())
+                            .centerCrop()
+                            .into(binding.profileImage)
+                    } else {
+                        val s = viewModel.getProfileImage() ?: ""
+                        Glide.with(this@MainActivity)
+                            .load("http://api.persianball.ir/media/$s")
                             .centerCrop()
                             .into(binding.profileImage)
                     }
                 } else {
-                    binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                    if (viewModel.userAvatar != null) {
+                        if (viewModel.userAvatar?.contains("//api.persianball.ir") == true) {
+                            Glide.with(this@MainActivity)
+                                .load(viewModel.userAvatar)
+                                .centerCrop()
+                                .into(binding.profileImage)
+                        } else {
+                            val s = viewModel.userAvatar ?: ""
+                            Glide.with(this@MainActivity)
+                                .load("http://api.persianball.ir/media/$s")
+                                .centerCrop()
+                                .into(binding.profileImage)
+                        }
+                    } else {
+                        binding.profileImage.setImageDrawable(resources.getDrawable(R.drawable.ic_upload))
+                    }
                 }
             }
         }
@@ -183,13 +214,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         lifecycleScope.launch {
-            dashboardRepository.getDashboard().collect{}
+            dashboardRepository.getDashboard().collect {}
         }
         //setupActionBarWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             when (destination.id) {
                 R.id.homeFragment, R.id.academyFragment, R.id.dashboardFragment -> {
+                    viewModel.getIsLogin().value?.let { showToolbar(it) }
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomBar.visibility = View.VISIBLE
                     lifecycleScope.launch {
@@ -198,11 +230,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.storeFragment -> {
+                    viewModel.getIsLogin().value?.let { showToolbar(it) }
                     binding.toolbar.visibility = View.GONE
                     binding.bottomBar.visibility = View.VISIBLE
                 }
 
                 R.id.profileFragment -> {
+                    viewModel.getIsLogin().value?.let { showToolbar(it) }
                     binding.toolbar.visibility = View.GONE
                 }
 
@@ -222,7 +256,7 @@ class MainActivity : AppCompatActivity() {
             binding.welcomeLayout.visibility = View.VISIBLE
             lifecycleScope.launch {
                 if (viewModel.getProfileImage()
-                        .isEmpty() || viewModel.getProfileImage() == "https://api.persianball.ir/media/"
+                        .isNullOrEmpty() || viewModel.getProfileImage() == "https://api.persianball.ir/media/"
                 ) {
                     viewModel.getUser()
                 } else {
@@ -302,7 +336,13 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE || requestCode == GALLERY_SELECT_IMAGE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                handleImageUri(data)
+                handleImageUri(data, true)
+            }
+        }
+
+        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE || requestCode == GALLERY_SELECT_BACK_IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                handleImageUri(data, false)
             }
         }
 
@@ -332,7 +372,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleImageUri(data: Intent?) {
+    private fun handleImageUri(data: Intent?, isAvatar: Boolean) {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         val currentFragment = navHostFragment.childFragmentManager.fragments[0]
@@ -341,11 +381,11 @@ class MainActivity : AppCompatActivity() {
                 val pickedImage: Uri = it.data!!
                 val imageFile = File(pickedImage.path)
                 val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "avatar",
+                    if (isAvatar) "avatar" else "background",
                     imageFile.name,
                     imageFile.asRequestBody("image/*".toMediaTypeOrNull())
                 )
-                currentFragment.onImageResult(filePart)
+                currentFragment.onImageResult(filePart, isAvatar)
             }
         }
     }

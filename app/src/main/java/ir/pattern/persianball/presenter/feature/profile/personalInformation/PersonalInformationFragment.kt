@@ -111,6 +111,14 @@ class PersonalInformationFragment : Fragment() {
             dialog.show(childFragmentManager, "edit_info_dialog")
         }
 
+        binding.nationPersianBallImageButton.setOnClickListener {
+            val dialog = EditInfoDialogFragment.newInstance(
+                viewModel.personalData.nationality,
+                InfoType.NATIONALITY
+            )
+            dialog.show(childFragmentManager, "edit_info_dialog")
+        }
+
         binding.bithdatePersianBallImageButton.setOnClickListener {
             val picker = PersianDatePickerDialog(requireActivity())
                 .setPositiveButtonString("باشه")
@@ -270,7 +278,7 @@ class PersonalInformationFragment : Fragment() {
                             )
                             viewModel.personalData.lastNameLatin = it
                         }
-                    bundle.getString(InfoType.NATION.type, null)
+                    bundle.getString(InfoType.NATIONALITY.type, null)
                         ?.also {
                             binding.nationContent.text = it
                             binding.nationContent.setTextColor(
@@ -279,7 +287,7 @@ class PersonalInformationFragment : Fragment() {
                                     R.color.black
                                 )
                             )
-                            viewModel.personalData.nationality = it.toInt()
+                            viewModel.personalData.nationality = it
                         }
 
                     bundle.getString(InfoType.NATIONAL_CODE.type, null)

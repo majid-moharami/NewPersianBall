@@ -51,6 +51,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             isLogin.emit(accountManager.isLogin)
+            viewModel.profileRepository._isLogin.emit(accountManager.isLogin)
         }
         viewModel.setUpData()
     }
@@ -85,11 +86,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recyclerItems.collectLatest {
+            viewModel.recyclerItems.collect {
                 it?.let { recyclerData ->
                     pagingAdapter = ProfileDataAdapter(childFragmentManager, lifecycle).apply {
                         uploadImager = {
-                            openGalleryForImage()
+                            openGalleryForImage(MainActivity.GALLERY_SELECT_IMAGE_REQUEST_CODE)
+                        }
+                        uploadBackground = {
+                            openGalleryForImage(MainActivity.GALLERY_SELECT_BACK_IMAGE_REQUEST_CODE)
                         }
                         onUsernameClickListener =
                             BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
@@ -100,7 +104,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         binding.recyclerView.adapter = it
                     }
                     binding.recyclerView.layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     showLoading(false)
                     pagingAdapter?.submitData(recyclerData)
                 }
@@ -112,6 +120,25 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     it?.also { dto ->
                         viewModel.updateUserInfo(dto)
                         showLoading(false)
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isLogin.collect {
+                it?.also {
+                    when (it) {
+                        true -> {
+                            binding.notLoginLayout.visibility = View.GONE
+                            viewModel.setUpData()
+                            binding.recyclerView.visibility = View.VISIBLE
+                        }
+                        false -> {
+                            showLoading(false)
+                            binding.notLoginLayout.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -130,7 +157,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun openGalleryForImage() {
+    private fun openGalleryForImage(tag: Int) {
         ImagePicker.with(requireActivity())
             // Crop Image(User can choose Aspect Ratio)
             .crop()
@@ -146,7 +173,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
             // Image resolution will be less than 1080 x 1920
             .maxResultSize(1080, 1920)
-            .start(MainActivity.GALLERY_SELECT_IMAGE_REQUEST_CODE)
+            .start(tag)
     }
 
     private fun openCameraForImage() {
@@ -165,18 +192,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .start(MainActivity.CAPTURE_IMAGE_REQUEST_CODE)
     }
 
-    fun onImageResult(file: MultipartBody.Part) {
+    fun onImageResult(file: MultipartBody.Part, isAvatar: Boolean) {
         if (personalInfoViewModel.personalData.username.isNotEmpty()) {
-            viewModel.uploadAvatar(personalInfoViewModel.personalData.username, file)
+            viewModel.uploadAvatar(personalInfoViewModel.personalData.username, file, isAvatar)
         }
     }
 
-    fun showLoading(show: Boolean){
-        if (show){
+    fun showLoading(show: Boolean) {
+        if (show) {
             binding.frameLayout.visibility = View.VISIBLE
             binding.loading.isIndeterminate = true
             binding.loading.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.frameLayout.visibility = View.GONE
             binding.loading.isIndeterminate = false
             binding.loading.visibility = View.GONE

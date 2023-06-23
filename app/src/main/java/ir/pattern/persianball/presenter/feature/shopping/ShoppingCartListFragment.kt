@@ -72,15 +72,11 @@ class ShoppingCartListFragment : BaseFragment() {
                             R.string.product_price,
                             decimalForm.format(price.discount.toInt())
                         )
-                    binding.natPrice.text =
+                    binding.realTotalPrice.text =
                         resources.getString(
                             R.string.product_price,
-                            decimalForm.format(price.nat.toInt())
+                            decimalForm.format(price.discount.toInt() + price.totalPrice.toInt())
                         )
-                    binding.postPrice.text = resources.getString(
-                        R.string.product_price,
-                        decimalForm.format(price.shippingPrice.toInt())
-                    )
                 }
             }
         }

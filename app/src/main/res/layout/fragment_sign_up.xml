@@ -101,12 +101,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded">
+                app:boxStrokeErrorColor="@color/red"
+                app:counterOverflowTextColor="@color/red"
+                app:errorTextColor="@color/red"
+                app:shapeAppearance="@style/Rounded">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
@@ -117,7 +120,7 @@
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@id/user_name_edit_text"
                     android:singleLine="true"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

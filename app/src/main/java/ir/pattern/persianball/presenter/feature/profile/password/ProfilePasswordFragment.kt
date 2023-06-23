@@ -14,6 +14,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.ChangePasswordDto
 import ir.pattern.persianball.databinding.FragmentProfilePasswordBinding
+import ir.pattern.persianball.presenter.feature.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -21,6 +22,7 @@ class ProfilePasswordFragment : Fragment() {
 
     lateinit var binding: FragmentProfilePasswordBinding
     private val viewModel: PasswordViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +97,10 @@ class ProfilePasswordFragment : Fragment() {
                     ).show()
                 }
             }
+        }
+
+        binding.logoutBtn.setOnClickListener {
+            profileViewModel.logoutUser()
         }
     }
 

@@ -33,8 +33,14 @@ class ProfileViewModel
     private val _avatar = MutableStateFlow<String?>(null)
     val avatar: StateFlow<String?> = _avatar.asStateFlow()
 
+    private val _avatarBackground = MutableStateFlow<String?>(null)
+    val avatarBackground: StateFlow<String?> = _avatarBackground.asStateFlow()
+
     private val _name = MutableStateFlow<String?>(null)
     val name: StateFlow<String?> = _name.asStateFlow()
+
+    private val _isLogin = MutableStateFlow<Boolean?>(null)
+    val isLogin: StateFlow<Boolean?> = _isLogin.asStateFlow()
 
     suspend fun setName(s: String) {
         _name.emit(s)
@@ -43,7 +49,7 @@ class ProfileViewModel
     fun setUpData() {
         _name.value = sharedPreferenceUtils.getUserCredentials().username
         val list = mutableListOf<RecyclerItem>()
-        list.add(RecyclerItem(ProfileImageData(avatar)))
+        list.add(RecyclerItem(ProfileImageData(avatar, avatarBackground)))
         list.add(RecyclerItem(ProfileNameData(name = name)))
         list.add(RecyclerItem(ProfileInformationData()))
         _recyclerItems.value = RecyclerData(flowOf(PagingData.from(list)))
@@ -68,6 +74,7 @@ class ProfileViewModel
                         rvItem
                     } else if (rvItem.data is ProfileImageData) {
                         _avatar.emit(personalDto.avatar)
+                        _avatarBackground.emit(personalDto.background)
                         sharedPreferenceUtils.updateProfileImage(personalDto.avatar)
                         rvItem
                     } else {
@@ -79,13 +86,26 @@ class ProfileViewModel
 //        }
     }
 
-    fun uploadAvatar(username: String, file: MultipartBody.Part) {
+    fun uploadAvatar(username: String, file: MultipartBody.Part, isAvatar: Boolean) {
         viewModelScope.launch {
             val result = profileRepository.uploadAvatar(username, file)
             if (result is Resource.Success) {
-                _avatar.emit(result.data.avatar)
+                if (isAvatar) {
+                    _avatar.emit(result.data.avatar)
+                } else {
+                    _avatarBackground.emit(result.data.background)
+                }
+                profileRepository.user = result.data
                 sharedPreferenceUtils.updateProfileImage(result.data.avatar)
             }
+        }
+    }
+
+    fun logoutUser() {
+        sharedPreferenceUtils.clearCredentials()
+        viewModelScope.launch {
+            _isLogin.emit(false)
+            profileRepository._isLogin.emit(false)
         }
     }
 }

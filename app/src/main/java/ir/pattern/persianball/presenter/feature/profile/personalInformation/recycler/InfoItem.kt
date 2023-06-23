@@ -69,7 +69,7 @@ class InfoItemViewHolder(
                     0
                 )
             }
-            InfoType.NATION -> binding.titleTxt.setCompoundDrawablesWithIntrinsicBounds(
+            InfoType.NATIONALITY -> binding.titleTxt.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.ic_profile_nationality,

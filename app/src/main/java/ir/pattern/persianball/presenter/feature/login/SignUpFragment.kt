@@ -42,7 +42,7 @@ class SignUpFragment : Fragment() {
         binding.signupBtn.setOnClickListener {
             if (binding.emailLayout.isVisible && (binding.emailEditText.text.isNullOrBlank() || binding.userNameEditText.text.isNullOrBlank() || binding.passwordEditText.text.isNullOrBlank())){
                 Toast.makeText(requireActivity(), "لطفا همه موارد را وارد کنید.", Toast.LENGTH_SHORT).show()
-            }else if (binding.phoneNumberLayout.isVisible && (binding.emailEditText.text.isNullOrBlank() || binding.userNameEditText.text.isNullOrBlank() || binding.passwordEditText.text.isNullOrBlank())){
+            }else if (binding.phoneNumberLayout.isVisible && (binding.phoneNumberEditText.text.isNullOrBlank() || binding.userNameEditText.text.isNullOrBlank() || binding.passwordEditText.text.isNullOrBlank())){
                 Toast.makeText(requireActivity(), "لطفا همه موارد را وارد کنید.", Toast.LENGTH_SHORT).show()
             }else{
                 if (binding.emailLayout.isVisible){

@@ -6,7 +6,9 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.exoplayer2.ui.TimeBar
 import ir.pattern.persianball.databinding.PlayerControllerBinding
+import ir.pattern.persianball.utils.UiUtils
 import java.util.*
+import kotlin.math.floor
 import kotlin.math.max
 
 class MovieController(

@@ -3,12 +3,12 @@ package ir.pattern.persianball.presenter.feature.movie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,7 +22,6 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.AcademyDto
-import ir.pattern.persianball.data.model.academy.VariantDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.FragmentMovieDetailBinding
@@ -45,6 +44,7 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.floor
 
 @AndroidEntryPoint
 class MovieDetailFragment : BaseFragment() {
@@ -55,6 +55,7 @@ class MovieDetailFragment : BaseFragment() {
     var movie: AcademyDto? = null
     private var movieId: Int = -1
     private lateinit var args: MovieDetailFragmentArgs
+    private var haveVariant = true
     private val decimalForm =
         DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US).apply {
             groupingSeparator = ','
@@ -90,16 +91,28 @@ class MovieDetailFragment : BaseFragment() {
             requireActivity().onBackPressed()
         }
         movie = viewModel.homeRepository.getCourseById(movieId)
-        if (movie != null){
+        if (movie != null) {
             viewModel.setAppropriateMap(movie!!)
             binding.productChooseName.text = "انتخاب محصول هدیه"
             if (movie!!.category?.nameFarsi == "دوره ها") {
-                val firstSupport = viewModel.supportMap.keys.toList()[0]
-                binding.supportName.text = "انتخاب پشتیبان"
+                if (viewModel.supportMap.keys.isEmpty()) {
+                    haveVariant = false
+                    binding.cardView7.isVisible = false
+                    binding.noExist.isVisible = true
+                } else {
+                    val firstSupport = viewModel.supportMap.keys.toList()[0]
+                    binding.supportName.text = "انتخاب پشتیبان"
+                }
                 //viewModel.setSelectedCoach(firstSupport)
             } else {
-                binding.supportName.text = "انتخاب زمان و مکان"
-                val firstLocation = viewModel.locationMap.keys.toList()[0]
+                if (viewModel.locationMap.keys.isEmpty()) {
+                    haveVariant = false
+                    binding.cardView7.isVisible = false
+                    binding.noExist.isVisible = true
+                } else {
+                    binding.supportName.text = "انتخاب زمان و مکان"
+                    val firstLocation = viewModel.locationMap.keys.toList()[0]
+                }
                 //viewModel.setSelectedLocation(firstLocation)
             }
             val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie!!)
@@ -113,7 +126,7 @@ class MovieDetailFragment : BaseFragment() {
             }.attach()
             initView()
             loading(show = false)
-        }else {
+        } else {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.getAcademyById(movieId)
             }
@@ -126,12 +139,12 @@ class MovieDetailFragment : BaseFragment() {
                         viewModel.setAppropriateMap(movie!!)
                         binding.productChooseName.text = "انتخاب محصول هدیه"
                         if (movie!!.category?.nameFarsi == "دوره ها") {
-                            val firstSupport = viewModel.supportMap.keys.toList()[0]
+                            //val firstSupport = viewModel.supportMap.keys.toList()[0]
                             binding.supportName.text = "انتخاب پشتیبان"
                             //viewModel.setSelectedCoach(firstSupport)
                         } else {
                             binding.supportName.text = "انتخاب زمان و مکان"
-                            val firstLocation = viewModel.locationMap.keys.toList()[0]
+                            //val firstLocation = viewModel.locationMap.keys.toList()[0]
                             //viewModel.setSelectedLocation(firstLocation)
                         }
                         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, movie!!)
@@ -159,7 +172,6 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.addBtn.setOnClickListener {
-            binding.addBtn.isEnabled = false
             viewLifecycleOwner.lifecycleScope.launch {
                 if (!accountManager.isLogin) {
                     Toast.makeText(
@@ -171,6 +183,7 @@ class MovieDetailFragment : BaseFragment() {
                 }
                 if (movie!!.category?.nameFarsi == "دوره ها") {
                     viewModel.getSelectedVariant(movie!!)?.also {
+                        binding.addBtn.isEnabled = false
                         viewModel.addCartItem(
                             CartItem(
                                 course = it.id,
@@ -184,6 +197,7 @@ class MovieDetailFragment : BaseFragment() {
                     ).show()
                 } else {
                     viewModel.getSelectedLocation(movie!!)?.also {
+                        binding.addBtn.isEnabled = false
                         viewModel.addCartItem(
                             CartItem(
                                 course = it.id,
@@ -231,7 +245,11 @@ class MovieDetailFragment : BaseFragment() {
         binding.watch.setOnClickListener {
             if (!movie!!.video.isNullOrEmpty()) {
                 playerRepository.videoUrl = null
-                playerRepository.videoUrl = movie!!.video
+                if (movie!!.video?.contains("https") == true) {
+                    playerRepository.videoUrl = movie!!.video
+                } else {
+                    playerRepository.videoUrl = "https://api.persianball.ir${movie!!.video}"
+                }
                 val intent = Intent(requireActivity(), PlayerActivity::class.java)
                 intent.putExtra("HAVE_URL", false)
                 intent.putExtra("URL", "")
@@ -263,7 +281,9 @@ class MovieDetailFragment : BaseFragment() {
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${it?.avatar}")
                         .into(binding.supportImage)
-                    binding.supportName.text = it?.fullName
+                    it?.fullName?.also { fullName ->
+                        binding.supportName.text = fullName
+                    }
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                         .into(binding.productImage)
@@ -307,7 +327,9 @@ class MovieDetailFragment : BaseFragment() {
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${it?.image}")
                         .into(binding.supportImage)
-                    binding.supportName.text = "${it?.location} \n ${it?.time}"
+                    it?.location?.also { location ->
+                        binding.supportName.text = "${location} \n ${it?.time}"
+                    }
                     Glide.with(requireContext())
                         .load("https://api.persianball.ir/${firstProduct?.get(0)?.image}")
                         .into(binding.productImage)
@@ -356,7 +378,9 @@ class MovieDetailFragment : BaseFragment() {
                 Glide.with(requireContext())
                     .load("https://api.persianball.ir/${it?.image}")
                     .into(binding.productImage)
-                binding.productChooseName.text = it?.productName
+                it?.productName?.also { giftName ->
+                    binding.productChooseName.text = giftName
+                }
                 if (it != null) {
                     val variant = viewModel.getSelectedVariant(movie!!)
                     val s = variant?.discountPercentage
@@ -404,7 +428,7 @@ class MovieDetailFragment : BaseFragment() {
             }
         }
         if (show) {
-            binding.cardView7.isVisible = true
+            if (haveVariant) binding.cardView7.isVisible = true
         }
         binding.headerTitle.text = movie!!.courseTitle
         Glide.with(requireContext()).load("https://api.persianball.ir/${movie!!.image}")
@@ -505,17 +529,19 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
-    private fun convertTimeToString(minute: Int): String {
-        val hours = minute / 60
+    private fun convertTimeToString(seconds: Int): String {
+        val secondsLeft: Int = seconds % 3600 % 60
+        val minutes = floor((seconds % 3600 / 60).toDouble()).toInt()
+        val hours = floor((seconds / 3600).toDouble()).toInt()
         val stringBuilder = StringBuilder()
         val formatter = Formatter(stringBuilder, Locale.getDefault())
         stringBuilder.setLength(0)
         return if (hours > 0) {
             convertToPersianNumber(
-                formatter.format("%d:%02d:%02d", hours, minute % 60, 0).toString()
+                formatter.format("%d:%02d:%02d", hours, minutes, secondsLeft).toString()
             )
         } else {
-            convertToPersianNumber(formatter.format("%02d:%02d", minute % 60, 0).toString())
+            convertToPersianNumber(formatter.format("%02d:%02d", minutes, secondsLeft).toString())
         }
     }
 }

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.shoppingCart.DeliveryType
 import ir.pattern.persianball.data.model.shoppingCart.Discount
 import ir.pattern.persianball.data.model.shoppingCart.Order
 import ir.pattern.persianball.databinding.FragmentPaymentBinding
@@ -38,6 +39,8 @@ class PaymentFragment : Fragment() {
         })
 
     var totalPrice = 0F
+    var natPrice = 0F
+    var shipingPrice = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +135,7 @@ class PaymentFragment : Fragment() {
                             binding.totalPrice.text = resources.getString(
                                 R.string.product_price,
                                 decimalForm.format(
-                                    totalPrice.toInt().minus(totalPrice * percent!! / 100)
+                                    totalPrice.toInt().minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
                                 )
                             )
                         }
@@ -152,10 +155,16 @@ class PaymentFragment : Fragment() {
                         activity?.finish()
                     } else {
                         totalPrice = price.totalPrice
+                        natPrice = price.nat
+                        shipingPrice = when(args.deliveryMethod) {
+                            "post" -> price.postShippingPrice
+                            "peyk" -> price.peykShippingPrice
+                            else -> 0
+                        }
                         binding.totalPrice.text =
                             resources.getString(
                                 R.string.product_price,
-                                decimalForm.format(price.totalPrice.toInt())
+                                decimalForm.format(price.totalPrice.toInt() + price.nat.toInt() + price.shippingPrice.toInt())
                             )
                         binding.discountPrice.text =
                             resources.getString(
@@ -169,7 +178,7 @@ class PaymentFragment : Fragment() {
                             )
                         binding.postPrice.text = resources.getString(
                             R.string.product_price,
-                            decimalForm.format(price.shippingPrice.toInt())
+                            decimalForm.format(shipingPrice)
                         )
                     }
                 }

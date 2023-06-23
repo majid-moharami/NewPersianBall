@@ -165,6 +165,17 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     private fun initView() {
+        if (viewModel.getSizeList(product!!) == null && viewModel.getColors(product!!) == null){
+            binding.constraintLayout2.isVisible = false
+            binding.linearLayout2.isVisible = false
+            binding.addProduct.isVisible = false
+            binding.noExist.isVisible = true
+        }else{
+            binding.constraintLayout2.isVisible = true
+            binding.linearLayout2.isVisible = true
+            binding.addProduct.isVisible = true
+            binding.noExist.isVisible = false
+        }
         binding.productCount.text = productCount.toString()
         with(binding) {
             product?.also {
@@ -275,7 +286,11 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                                 .into(binding.poster)
                         } else {
                             playerRepository.videoUrl = null
-                            playerRepository.videoUrl = recyclerData.videoUrl
+                            if (recyclerData.videoUrl?.contains("https") == true) {
+                                playerRepository.videoUrl = recyclerData.videoUrl
+                            } else {
+                                playerRepository.videoUrl = "https://api.persianball.ir${recyclerData.videoUrl}"
+                            }
                             val intent = Intent(requireActivity(), PlayerActivity::class.java)
                             intent.putExtra("HAVE_URL", false)
                             intent.putExtra("URL", "")

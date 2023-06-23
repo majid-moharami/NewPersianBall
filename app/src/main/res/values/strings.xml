@@ -92,6 +92,7 @@
     <string name="week">هفته %s</string>
     <string name="week_count">‏%s هفته</string>
     <string name="section_count">‏%s جلسه</string>
+    <string name="address">‏%s</string>
     <string name="error">مشکلی در برقراری با سرور به وجود آمده.</string>
     <string name="send_support">لطفا فیلم تمرین خود را به همراه متن پیام برای شماره 09123456789 در پیام رسان های ایتا یا تلگرام ارسال کنید.\n
     متن پیام:\nنام پشتیبان \n(نام و نام خانوادگی) فایل تمرین (نام دوره) هفته (شماره هفته) جلسه (شماره جلسه)

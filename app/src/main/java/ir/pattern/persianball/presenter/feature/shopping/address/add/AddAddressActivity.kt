@@ -51,6 +51,8 @@ class AddAddressActivity : AppCompatActivity() {
         binding.phoneNumber.setText(address.mobilePhone)
         binding.address.setText(address.address)
         binding.email.setText(address.email)
+        binding.province.setText(address.city)
+        binding.eparchy.setText(address.province)
         address.postalCode?.let { binding.postalCode.setText(it.toString()) }
     }
 

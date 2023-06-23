@@ -43,7 +43,7 @@ class ProductDetailViewModel
         val colorMap = mutableMapOf<String, String>()
         product.variants?.also {
             for (i in product.variants) {
-                if (i?.size == size && i.colorRgb.isNotBlank()) {
+                if (i?.size == size && i.colorRgb.isNotBlank() && i.isActive) {
                     colorMap[i.color] = i.colorRgb
                 }
             }
@@ -61,7 +61,7 @@ class ProductDetailViewModel
         product.variants?.also {
             for (i in product.variants) {
                 i?.also {
-                    if (i.colorRgb.isNotBlank()) {
+                    if (i.colorRgb.isNotBlank() && i.isActive) {
                         colorMap[i.color] = i.colorRgb
                     }
                 }
@@ -79,7 +79,7 @@ class ProductDetailViewModel
         val sizeList = mutableSetOf<String>()
         product.variants?.also {
             for (i in product.variants) {
-                if (i != null) {
+                if (i != null && i.isActive) {
                     sizeList.add(i.size)
                 }
             }
@@ -145,7 +145,7 @@ class ProductDetailViewModel
                 }
             }
             return img
-        }else if (onlySize == true){
+        } else if (onlySize == true) {
             val size = getSizeList(product)!!.toList()[currentSizeIndex]
             var img: String? = null
             product.variants?.map {
@@ -156,7 +156,7 @@ class ProductDetailViewModel
                 }
             }
             return img
-        }else if (onlyColor == true){
+        } else if (onlyColor == true) {
             val color = getColors(product)!!.keys.toList()[currentColorIndex]
             var img: String? = null
             product.variants?.map {
@@ -167,7 +167,7 @@ class ProductDetailViewModel
                 }
             }
             return img
-        }else{
+        } else {
             return product.variants?.get(0)?.image
         }
     }
@@ -195,11 +195,27 @@ class ProductDetailViewModel
                 list.add(RecyclerItem(ImageData(it.videoThumbnail ?: "", true, it.video)))
             }
             product.images?.map { img ->
-                list.add(RecyclerItem(ImageData(img)))
+                var isExist = false
+                list.map { image ->
+                    if ((image.data as ImageData).imageUrl == img) {
+                        isExist = true
+                    }
+                }
+                if (!isExist) {
+                    list.add(RecyclerItem(ImageData(img)))
+                }
             }
             product.variants?.map { varient ->
                 varient?.image?.also { img ->
-                    list.add(RecyclerItem(ImageData(img)))
+                    var isExist = false
+                    list.map { image ->
+                        if ((image.data as ImageData).imageUrl == img) {
+                            isExist = true
+                        }
+                    }
+                    if (!isExist) {
+                        list.add(RecyclerItem(ImageData(img)))
+                    }
                 }
             }
         }

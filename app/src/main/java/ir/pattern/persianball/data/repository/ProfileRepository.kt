@@ -27,6 +27,9 @@ constructor(
     var username: String? = null
 
     var userAddress : AddressDto? = null
+
+    val _isLogin = MutableStateFlow<Boolean?>(null)
+    val isLogin: StateFlow<Boolean?> = _isLogin.asStateFlow()
     suspend fun getAddress(): Resource<AddressDto> = userRemoteDataSource.getUserAddress()
 
     suspend fun getUserPersonalData(): Resource<PersonalDto> =

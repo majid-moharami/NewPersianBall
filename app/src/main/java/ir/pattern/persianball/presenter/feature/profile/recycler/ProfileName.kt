@@ -54,7 +54,7 @@ class ProfileNameViewHolder(itemView: View,
     }
     override fun onBindView(data: ProfileNameData) {
         binding.nameTxt.text = data.name.value
-        setOnClickListener(binding.nameTxt, onUsernameClickListener, this, data)
+//        setOnClickListener(binding.nameTxt, onUsernameClickListener, this, data)
     }
 
 }

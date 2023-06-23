@@ -16,7 +16,10 @@ data class PriceDto(
     @SerializedName("total_price") var totalPrice: Float,
     @SerializedName("nat") var nat: Float,
     @SerializedName("discount") var discount: Float,
-    @SerializedName("shipping_price") var shippingPrice: Int
+    @SerializedName("shipping_price") var shippingPrice: Int,
+    @SerializedName("is_free_shipping_price") var isFreeShippingPrice: Boolean,
+    @SerializedName("post_shipping_price") var postShippingPrice: Int,
+    @SerializedName("peyk_shipping_price") var peykShippingPrice: Int,
 )
 
 data class ShoppingCartItemDto(

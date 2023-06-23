@@ -54,7 +54,7 @@ class AddressFragment : Fragment() {
                 }
                 it?.also { oAddress ->
                     address = oAddress
-                    binding.addressContent.text = oAddress.address
+                    binding.addressContent.text = "${resources.getString(R.string.address, oAddress.city)}, ${resources.getString(R.string.address, oAddress.province)}, ${resources.getString(R.string.address, oAddress.address)}"
                     binding.phoneNumberContent.text = oAddress.mobilePhone
                     binding.homeNumberContent.text = oAddress.homePhone
                     binding.emailContent.text = oAddress.email
@@ -64,7 +64,8 @@ class AddressFragment : Fragment() {
 
             viewModel.addressAdded.collectLatest {
                 if (it) {
-                    viewModel.getAddress()
+                    viewModel.
+                    getAddress()
                     viewModel.setAddressAdded()
                 }
             }
