@@ -6,8 +6,7 @@ import ir.pattern.persianball.data.model.address.OrderAddress
 import ir.pattern.persianball.data.model.shoppingCart.*
 import ir.pattern.persianball.data.repository.remote.api.Request
 import ir.pattern.persianball.data.repository.remote.api.ShoppingCartService
-import ir.pattern.persianball.error.ErrorTranslator
-import retrofit2.Response
+import ir.pattern.persianball.data.model.ErrorTranslator
 import javax.inject.Inject
 
 class ShoppingCartDataSource

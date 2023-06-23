@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -18,7 +17,7 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.SignUp
 import ir.pattern.persianball.databinding.FragmentSignUpBinding
-import ir.pattern.persianball.error.ErrorDTO
+import ir.pattern.persianball.data.model.ErrorDTO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

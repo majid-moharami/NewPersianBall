@@ -97,35 +97,43 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.productCount.text = productCount.toString()
         }
         binding.addProduct.setOnClickListener {
-            binding.addProduct.isEnabled = false
-            viewLifecycleOwner.lifecycleScope.launch {
-                if (!accountManager.isLogin) {
-                    Toast.makeText(
-                        requireActivity(),
-                        "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return@launch
-                }
-                product?.also {
-                    if (it.variants.isNullOrEmpty()) {
-                        viewModel.addCartItem(
-                            CartItem(
-                                product = it.id,
-                                quantity = binding.productCount.text.toString().toInt()
+            if (viewModel.isProductInBasket(product?.nameFarsi)) {
+                Toast.makeText(
+                    requireActivity(),
+                    "این محصول در سبد خرید شما موجود میباشد",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                binding.addProduct.isEnabled = false
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (!accountManager.isLogin) {
+                        Toast.makeText(
+                            requireActivity(),
+                            "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@launch
+                    }
+                    product?.also {
+                        if (it.variants.isNullOrEmpty()) {
+                            viewModel.addCartItem(
+                                CartItem(
+                                    product = it.id,
+                                    quantity = binding.productCount.text.toString().toInt()
+                                )
                             )
-                        )
-                    } else {
-                        viewModel.addCartItem(
-                            CartItem(
-                                product = viewModel.getSelectedVariantId(
-                                    it,
-                                    currentSizeIndex,
-                                    currentColorIndex
-                                ),
-                                quantity = binding.productCount.text.toString().toInt()
+                        } else {
+                            viewModel.addCartItem(
+                                CartItem(
+                                    product = viewModel.getSelectedVariantId(
+                                        it,
+                                        currentSizeIndex,
+                                        currentColorIndex
+                                    ),
+                                    quantity = binding.productCount.text.toString().toInt()
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
@@ -165,12 +173,12 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     private fun initView() {
-        if (viewModel.getSizeList(product!!) == null && viewModel.getColors(product!!) == null){
+        if (viewModel.getSizeList(product!!) == null && viewModel.getColors(product!!) == null) {
             binding.constraintLayout2.isVisible = false
             binding.linearLayout2.isVisible = false
             binding.addProduct.isVisible = false
             binding.noExist.isVisible = true
-        }else{
+        } else {
             binding.constraintLayout2.isVisible = true
             binding.linearLayout2.isVisible = true
             binding.addProduct.isVisible = true
@@ -289,7 +297,8 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             if (recyclerData.videoUrl?.contains("https") == true) {
                                 playerRepository.videoUrl = recyclerData.videoUrl
                             } else {
-                                playerRepository.videoUrl = "https://api.persianball.ir${recyclerData.videoUrl}"
+                                playerRepository.videoUrl =
+                                    "https://api.persianball.ir${recyclerData.videoUrl}"
                             }
                             val intent = Intent(requireActivity(), PlayerActivity::class.java)
                             intent.putExtra("HAVE_URL", false)

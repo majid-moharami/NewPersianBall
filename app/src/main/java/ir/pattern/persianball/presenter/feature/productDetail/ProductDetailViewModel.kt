@@ -229,6 +229,7 @@ class ProductDetailViewModel
             when (it) {
                 is Resource.Success -> {
                     _addingCartFlow.emit("محصول مورد نظر با موفقیت به سبد خرید اضافه شد.")
+                    getShoppingCart()
                 }
 
                 is Resource.Failure -> {
@@ -236,6 +237,32 @@ class ProductDetailViewModel
                 }
 
                 else -> {
+                }
+            }
+        }
+    }
+
+    fun isProductInBasket(productName: String?) : Boolean{
+        shoppingCartRepository.basketList.map {
+            if (it.product?.productName  == productName) return true
+        }
+
+        return false
+    }
+
+    suspend fun getShoppingCart() {
+        shoppingCartRepository.getShoppingCart().collect {
+            when (it) {
+                is Resource.Success -> {
+                    if (!it.data.result.isEmpty()) {
+                        shoppingCartRepository.basketList = it.data.result[0].items
+                    }
+                }
+                is Resource.Failure -> {
+
+                }
+                else -> {
+
                 }
             }
         }

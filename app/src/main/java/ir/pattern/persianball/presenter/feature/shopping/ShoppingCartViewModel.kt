@@ -55,6 +55,7 @@ class ShoppingCartViewModel
                     _listRequest.emit(it)
                     if (!it.data.result.isEmpty()) {
                         shopCart.emit(it.data.result[0])
+                        shoppingCartRepository.basketList = it.data.result[0].items
                         shoppingCartRepository.totalPrice = it.data.result[0].price.totalPrice
                         it.data.result[0].items.map { shoppingCartItemDto ->
                             if (shoppingCartItemDto.product != null) {
@@ -132,6 +133,10 @@ class ShoppingCartViewModel
                 is Resource.Success -> {
                     shopCart.emit(it.data.result[0])
                     shoppingCartRepository.totalPrice = it.data.result[0].price.totalPrice
+                    it.data.result[0].items.map { s ->
+                        shoppingCartRepository.isShipping = s.product != null
+                    }
+                    shoppingCartRepository.basketList = it.data.result[0].items
                 }
                 is Resource.Failure -> {
                     it.error.code

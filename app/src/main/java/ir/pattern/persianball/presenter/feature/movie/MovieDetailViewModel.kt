@@ -102,7 +102,7 @@ class MovieDetailViewModel
             var noCoachDto: CoachDto? = null
             movie.variants.map {
                 if (it?.coach == null) {
-                    noCoachDto = CoachDto(-1, "بدون مربی", "")
+                    noCoachDto = CoachDto(-1, "بدون پشتیبان", "")
                     return@map
                 }
             }

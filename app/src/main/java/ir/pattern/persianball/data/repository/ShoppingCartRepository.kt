@@ -23,6 +23,8 @@ constructor(
     val addressAdded = _addressAdded.asSharedFlow()
     var totalPrice: Float = 0F
     var isShipping = false
+    var basketList = listOf<ShoppingCartItemDto>()
+
     suspend fun setAddressAdded(boolean: Boolean){
         _addressAdded.emit(boolean)
     }

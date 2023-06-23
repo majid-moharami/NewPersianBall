@@ -1,7 +1,7 @@
 package ir.pattern.persianball.data.repository.remote.api
 
 import ir.pattern.persianball.data.model.Resource
-import ir.pattern.persianball.error.ErrorTranslator
+import ir.pattern.persianball.data.model.ErrorTranslator
 import retrofit2.Response
 
 class Request {

@@ -15,11 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.RetryCode
-import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.model.VerifyUser
-import ir.pattern.persianball.databinding.FragmentForgetPasswordBinding
 import ir.pattern.persianball.databinding.FragmentOtpForgetPasswordBinding
-import ir.pattern.persianball.error.ErrorDTO
+import ir.pattern.persianball.data.model.ErrorDTO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

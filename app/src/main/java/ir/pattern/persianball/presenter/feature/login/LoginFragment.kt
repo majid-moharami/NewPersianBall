@@ -1,7 +1,6 @@
 package ir.pattern.persianball.presenter.feature.login
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import ir.pattern.persianball.data.model.Login
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.databinding.FragmentLoginBinding
-import ir.pattern.persianball.error.ErrorDTO
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject

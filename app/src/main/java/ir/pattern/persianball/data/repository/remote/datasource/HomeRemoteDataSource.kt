@@ -5,8 +5,7 @@ import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.repository.remote.api.HomeService
 import ir.pattern.persianball.data.repository.remote.api.Request
-import ir.pattern.persianball.data.repository.remote.api.UserService
-import ir.pattern.persianball.error.ErrorTranslator
+import ir.pattern.persianball.data.model.ErrorTranslator
 import javax.inject.Inject
 
 class HomeRemoteDataSource

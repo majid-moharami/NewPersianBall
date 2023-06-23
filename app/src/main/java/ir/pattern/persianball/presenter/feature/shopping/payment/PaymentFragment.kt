@@ -41,6 +41,7 @@ class PaymentFragment : Fragment() {
     var totalPrice = 0F
     var natPrice = 0F
     var shipingPrice = 0
+    var discount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +139,16 @@ class PaymentFragment : Fragment() {
                                     totalPrice.toInt().minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
                                 )
                             )
+                            val s = totalPrice.toInt().minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
+                            val b = totalPrice - s
+                            binding.discountPrice.text =
+                                resources.getString(
+                                    R.string.product_price,
+                                    decimalForm.format(
+                                        b + discount
+                                    )
+                                )
+
                         }
                     }
                     is Resource.Failure -> {
@@ -156,11 +167,13 @@ class PaymentFragment : Fragment() {
                     } else {
                         totalPrice = price.totalPrice
                         natPrice = price.nat
+                        discount = price.discount.toInt()
                         shipingPrice = when(args.deliveryMethod) {
                             "post" -> price.postShippingPrice
                             "peyk" -> price.peykShippingPrice
                             else -> 0
                         }
+
                         binding.totalPrice.text =
                             resources.getString(
                                 R.string.product_price,

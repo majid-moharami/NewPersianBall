@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
@@ -20,10 +19,8 @@ import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.RetryCode
 import ir.pattern.persianball.data.model.User
 import ir.pattern.persianball.data.model.VerifyUser
-import ir.pattern.persianball.databinding.FragmentOtpForgetPasswordBinding
 import ir.pattern.persianball.databinding.FragmentOtpRegisterBinding
-import ir.pattern.persianball.error.ErrorDTO
-import ir.pattern.persianball.manager.AccountManager
+import ir.pattern.persianball.data.model.ErrorDTO
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject

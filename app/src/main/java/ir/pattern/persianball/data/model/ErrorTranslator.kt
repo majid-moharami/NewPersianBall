@@ -1,4 +1,4 @@
-package ir.pattern.persianball.error
+package ir.pattern.persianball.data.model
 
 import android.content.Context
 import com.google.gson.Gson
