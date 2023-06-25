@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.player
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,9 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Format
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -26,6 +29,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionOverrides
 import com.google.android.exoplayer2.ui.DefaultTrackNameProvider
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.ui.TrackNameProvider
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
@@ -104,9 +108,12 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
         val mediaItem =
             MediaItem.fromUri(url)
         val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
-        val mediaSource =
+        val mediaSource = if (!url.contains(".m3u8")){
+            ProgressiveMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
+        }else{
             HlsMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
-        player.addMediaSource(mediaSource)
+        }
+        player.setMediaSource(mediaSource)
         player.addListener(this)
         player.prepare()
         movieVideoController.showController(true)
@@ -123,6 +130,9 @@ class PlayerFragment : Fragment(), IMovieVideoController, VideoControllerListene
         }
     }
 
+    override fun onPlayerError(error: PlaybackException) {
+        super.onPlayerError(error)
+    }
 
     private fun setUpQualityList() {
         qualityPopUp =

@@ -2,8 +2,8 @@ package ir.pattern.persianball.presenter.feature.home.recycler
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -13,13 +13,13 @@ import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
-import ir.pattern.persianball.data.model.home.Slider
 import ir.pattern.persianball.data.model.home.SliderList
 import ir.pattern.persianball.databinding.HolderHomeSliderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.home.HomeFragmentDirections
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import java.util.*
+
 
 class HomeSliderData constructor(var slider: SliderList) : PersianBallRecyclerData, Equatable {
     companion object {
@@ -99,6 +99,14 @@ class HomeSliderViewHolder(itemView: View) : BaseViewHolder<HomeSliderData>(item
                                             )
                                         )
                                     }
+                                }
+                            }
+
+                            "url" -> {
+                                data.slider.slider[i].let {
+                                    val url = it.url
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                    itemView.context.startActivity(intent)
                                 }
                             }
                         }
