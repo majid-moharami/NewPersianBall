@@ -106,6 +106,7 @@ class ProfileViewModel
         viewModelScope.launch {
             _isLogin.emit(false)
             profileRepository._isLogin.emit(false)
+            profileRepository.user = null
         }
     }
 }

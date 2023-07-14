@@ -51,11 +51,9 @@ class MainActivityViewModel
                 }
 
                 is Resource.Failure<*> -> {
-                    if(result.error.code == "token_not_valid"){
                         viewModelScope.launch {
                             _isLogin.emit(false)
                         }
-                    }
                 }
                 else -> {}
             }
