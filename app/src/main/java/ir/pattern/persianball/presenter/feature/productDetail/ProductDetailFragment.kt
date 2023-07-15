@@ -228,7 +228,6 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         viewModel.onlyColor = true
                     }
 
-
                     if (viewModel.onlySize == true || viewModel.both == true) {
                         ArrayAdapter(
                             requireActivity(),
