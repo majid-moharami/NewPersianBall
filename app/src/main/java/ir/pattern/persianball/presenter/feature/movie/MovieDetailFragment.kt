@@ -77,7 +77,11 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieId = args.id
+        if (args.id != -2) {
+            movieId = args.id
+        } else {
+            movie = dashboardRepository.userCourseMovie
+        }
     }
 
     override fun getChildView(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -90,7 +94,9 @@ class MovieDetailFragment : BaseFragment() {
         binding.backBtn.setOnClickListener {
             requireActivity().onBackPressed()
         }
-        movie = viewModel.homeRepository.getCourseById(movieId)
+        if (args.id != -2) {
+            movie = viewModel.homeRepository.getCourseById(movieId)
+        }
         if (movie != null) {
             viewModel.setAppropriateMap(movie!!)
             binding.productChooseName.text = "انتخاب محصول هدیه"
@@ -238,7 +244,7 @@ class MovieDetailFragment : BaseFragment() {
 
         binding.videos.setOnClickListener {
             val directions =
-                MovieDetailFragmentDirections.actionMovieDetailFragmentToSectionListFragment(movieId)
+                MovieDetailFragmentDirections.actionMovieDetailFragmentToSectionListFragment(args.id)
             findNavController().navigate(directions)
         }
 

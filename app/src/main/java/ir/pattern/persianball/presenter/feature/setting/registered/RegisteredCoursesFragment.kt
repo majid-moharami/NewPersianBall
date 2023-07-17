@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.FragmentRegisteredCoursesBinding
 import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
@@ -40,6 +41,9 @@ class RegisteredCoursesFragment : BaseFragment() {
 
     @Inject
     lateinit var accountManager: AccountManager
+
+    @Inject
+    lateinit var dashboardRepository: DashboardRepository
 
     private val isLogin = MutableSharedFlow<Boolean>()
     override fun onResume() {
@@ -85,7 +89,8 @@ class RegisteredCoursesFragment : BaseFragment() {
             binding.recyclerView.adapter = it
             it.onItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
-                    val direction = DashboardFragmentDirections.actionRegisteredCoursesFragmentToMovieDetailFragment(recyclerData.dashboardDto.courseId)
+                    dashboardRepository.userCourseMovie = recyclerData.dashboardDto.courseDetail
+                    val direction = DashboardFragmentDirections.actionRegisteredCoursesFragmentToMovieDetailFragment(-2)
                     findNavController().navigate(direction)
                 }
         }

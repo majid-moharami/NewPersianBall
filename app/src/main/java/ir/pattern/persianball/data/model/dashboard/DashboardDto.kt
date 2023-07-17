@@ -1,6 +1,7 @@
 package ir.pattern.persianball.data.model.dashboard
 
 import com.google.gson.annotations.SerializedName
+import ir.pattern.persianball.data.model.academy.AcademyDto
 
 data class DashboardsDto(
     @SerializedName("results") val results: List<DashboardDto>
@@ -13,6 +14,7 @@ data class DashboardDto(
     @SerializedName("section_count") val sectionCount: Int,
     @SerializedName("completion_percent") val completionPercent: Int,
     @SerializedName("coach") val coach: String,
+    @SerializedName("course_detail") val courseDetail: AcademyDto,
     @SerializedName("course_variant_id") val course_variant_id: Int,
     @SerializedName("course_id") val courseId: Int,
     @SerializedName("week_count") val weekCount: Int,

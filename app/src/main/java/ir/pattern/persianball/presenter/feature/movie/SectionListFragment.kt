@@ -22,6 +22,7 @@ import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.base.RecyclerData
+import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.FragmentMovieDetailBinding
 import ir.pattern.persianball.databinding.FragmentMovieListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
@@ -53,6 +54,9 @@ class SectionListFragment : Fragment() {
     @Inject
     lateinit var playerRepository: PlayerRepository
 
+    @Inject
+    lateinit var dashboardRepository: DashboardRepository
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         args = SectionListFragmentArgs.fromBundle(requireArguments())
@@ -77,7 +81,11 @@ class SectionListFragment : Fragment() {
 //        viewLifecycleOwner.lifecycleScope.launch {
 //            viewModel.getAcademyById(args.id)
 //        }
-        movie = viewModel.homeRepository.getCourseById(args.id)
+        movie = if (args.id == -2) {
+            dashboardRepository.userCourseMovie
+        } else {
+            viewModel.homeRepository.getCourseById(args.id)
+        }
         if (movie != null) {
             showLoading(false)
             viewModel.detail = movie!!.detail

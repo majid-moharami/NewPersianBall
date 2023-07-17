@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.Academy
+import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.dashboard.DashboardsDto
 import ir.pattern.persianball.data.model.dashboard.OrderResultDto
@@ -23,6 +24,8 @@ class DashboardRepository
 @Inject constructor(
     private val dashboardDataSource: DashboardDataSource
 ){
+
+    var userCourseMovie : AcademyDto? = null
 
     var userCourse : DashboardsDto? = null
     suspend fun getDashboard(): Flow<Resource<DashboardsDto>> {
