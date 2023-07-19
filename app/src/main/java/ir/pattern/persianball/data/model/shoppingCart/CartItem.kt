@@ -11,3 +11,10 @@ data class CartItem(
 data class UpdateCartItemDto(
     @SerializedName("quantity") var quantity: Int?
 )
+
+data class UpdateResponse(
+    @SerializedName("course") var course: Int?,
+    @SerializedName("product") var product: Int?,
+    @SerializedName("quantity") var quantity: Int,
+    @SerializedName("id") var id: Int?
+)

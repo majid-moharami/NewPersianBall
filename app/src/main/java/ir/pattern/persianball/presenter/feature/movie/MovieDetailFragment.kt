@@ -178,43 +178,61 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.addBtn.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                if (!accountManager.isLogin) {
-                    Toast.makeText(
-                        requireActivity(),
-                        "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return@launch
-                }
-                if (movie!!.category?.nameFarsi == "دوره ها") {
-                    viewModel.getSelectedVariant(movie!!)?.also {
-                        binding.addBtn.isEnabled = false
-                        viewModel.addCartItem(
-                            CartItem(
-                                course = it.id,
-                                quantity = 1
-                            )
-                        )
-                    } ?: Toast.makeText(
-                        requireContext(),
-                        "ابتدا پشتیبان و محصول هدیه خود را انتخاب کنید.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    viewModel.getSelectedLocation(movie!!)?.also {
-                        binding.addBtn.isEnabled = false
-                        viewModel.addCartItem(
-                            CartItem(
-                                course = it.id,
-                                quantity = 1
-                            )
-                        )
-                    } ?: Toast.makeText(
-                        requireContext(),
-                        "ابتدا زمان و مکان و محصول هدیه خود را انتخاب کنید.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+            if (viewModel.isCourseInBasket(movie?.courseTitle)){
+                Toast.makeText(
+                    requireActivity(),
+                    "این دوره در سبد خرید شما موجود میباشد",
+                    Toast.LENGTH_LONG
+                ).show()
+            }else{
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (!accountManager.isLogin) {
+                        Toast.makeText(
+                            requireActivity(),
+                            "برای اضافه کردن به سبد خرید ابتدا لاگین کنید.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@launch
+                    }
+                    if (movie!!.category?.nameFarsi == "دوره ها") {
+                        if (viewModel.selectedGifts == null || viewModel.selectedCoach == null) {
+                            Toast.makeText(
+                                requireContext(),
+                                "ابتدا پشتیبان و محصول هدیه خود را انتخاب کنید.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            viewModel.getSelectedVariant(movie!!)?.also {
+                                binding.addBtn.isEnabled = false
+                                viewModel.addCartItem(
+                                    CartItem(
+                                        course = it.id,
+                                        quantity = 1
+                                    )
+                                )
+                            }
+                            viewModel.getShoppingCart()
+                        }
+                    } else {
+                        if (viewModel.selectedGifts == null || viewModel.selectedLocation == null) {
+                            Toast.makeText(
+                                requireContext(),
+                                "ابتدا زمان و مکان و محصول هدیه خود را انتخاب کنید.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            viewModel.getSelectedLocation(movie!!)?.also {
+                                binding.addBtn.isEnabled = false
+                                viewModel.addCartItem(
+                                    CartItem(
+                                        course = it.id,
+                                        quantity = 1
+                                    )
+                                )
+                            }
+                            viewModel.getShoppingCart()
+                        }
+                    }
                 }
             }
         }

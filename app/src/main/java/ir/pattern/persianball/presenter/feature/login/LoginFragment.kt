@@ -1,15 +1,17 @@
 package ir.pattern.persianball.presenter.feature.login
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,6 +24,7 @@ import ir.pattern.persianball.databinding.FragmentLoginBinding
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -84,6 +87,45 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.forgetPasswordTxt.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToForgerPasswordFragment()
             findNavController().navigate(action)
+        }
+
+        binding.instagram.setOnClickListener {
+            val uri = Uri.parse("http://Instagram.com/ahmadrezafstv")
+            val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+            likeIng.setPackage("com.instagram.android")
+
+            try {
+                startActivity(likeIng)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://Instagram.com/ahmadrezafstv")
+                    )
+                )
+            }
+        }
+
+        binding.youtube.setOnClickListener {
+            var intent: Intent
+            try {
+                intent = Intent(Intent.ACTION_VIEW)
+                intent.setPackage("com.google.android.youtube")
+                intent.data = Uri.parse("https://youtube.com/@AhmadrezaElNino")
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("https://youtube.com/@AhmadrezaElNino")
+                startActivity(intent)
+            }
+        }
+
+        binding.whatsapp.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=09367007740"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
 
         return binding.root

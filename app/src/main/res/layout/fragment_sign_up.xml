@@ -188,13 +188,13 @@
             app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
 
         <ir.pattern.persianball.views.PersianBallImageButton
-            android:id="@+id/facebook"
+            android:id="@+id/instagram"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/product_page_text_background"
-            android:src="@drawable/ic_facebook"
+            android:src="@drawable/ic_instagram"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -207,9 +207,9 @@
             android:layout_marginRight="24dp"
             android:background="@drawable/product_page_text_background"
             android:src="@drawable/ic_whatsapp"
-            app:layout_constraintBottom_toBottomOf="@+id/facebook"
-            app:layout_constraintRight_toLeftOf="@+id/facebook"
-            app:layout_constraintTop_toTopOf="@+id/facebook" />
+            app:layout_constraintBottom_toBottomOf="@+id/instagram"
+            app:layout_constraintRight_toLeftOf="@+id/instagram"
+            app:layout_constraintTop_toTopOf="@+id/instagram" />
 
         <ir.pattern.persianball.views.PersianBallImageButton
             android:id="@+id/youtube"
@@ -218,9 +218,9 @@
             android:layout_marginLeft="24dp"
             android:background="@drawable/product_page_text_background"
             android:src="@drawable/ic_youtube"
-            app:layout_constraintBottom_toBottomOf="@+id/facebook"
-            app:layout_constraintLeft_toRightOf="@+id/facebook"
-            app:layout_constraintTop_toTopOf="@+id/facebook" />
+            app:layout_constraintBottom_toBottomOf="@+id/instagram"
+            app:layout_constraintLeft_toRightOf="@+id/instagram"
+            app:layout_constraintTop_toTopOf="@+id/instagram" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

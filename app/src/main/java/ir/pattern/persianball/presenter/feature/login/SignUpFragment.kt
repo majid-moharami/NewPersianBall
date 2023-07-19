@@ -1,5 +1,8 @@
 package ir.pattern.persianball.presenter.feature.login
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -136,6 +139,45 @@ class SignUpFragment : Fragment() {
             }
 
         })
+
+        binding.instagram.setOnClickListener {
+            val uri = Uri.parse("http://Instagram.com/ahmadrezafstv")
+            val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+            likeIng.setPackage("com.instagram.android")
+
+            try {
+                startActivity(likeIng)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://Instagram.com/ahmadrezafstv")
+                    )
+                )
+            }
+        }
+
+        binding.youtube.setOnClickListener {
+            var intent: Intent
+            try {
+                intent = Intent(Intent.ACTION_VIEW)
+                intent.setPackage("com.google.android.youtube")
+                intent.data = Uri.parse("https://youtube.com/@AhmadrezaElNino")
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("https://youtube.com/@AhmadrezaElNino")
+                startActivity(intent)
+            }
+        }
+
+        binding.whatsapp.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=09367007740"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
     }
 
     private fun validatePhoneNumber(showError : Boolean){

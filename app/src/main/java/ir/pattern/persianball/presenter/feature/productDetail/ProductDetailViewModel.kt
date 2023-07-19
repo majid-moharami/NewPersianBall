@@ -242,12 +242,36 @@ class ProductDetailViewModel
         }
     }
 
-    fun isProductInBasket(productName: String?) : Boolean{
+    fun isProductInBasket(id: Int?) : Boolean{
+        if (id == -1) return false
         shoppingCartRepository.basketList.map {
-            if (it.product?.productName  == productName) return true
+            if (it.product?.id  == id) return true
         }
 
         return false
+    }
+
+    suspend fun getShoppingCarts() {
+        shoppingCartRepository.getShoppingCart().collect {
+            when (it) {
+                is Resource.Success -> {
+                    if (!it.data.result.isEmpty()) {
+                        shoppingCartRepository._shopBadge.emit(it.data.result[0].items.size)
+                        shoppingCartRepository.basketList = it.data.result[0].items
+                    } else {
+                        shoppingCartRepository._shopBadge.emit(0)
+                    }
+                }
+
+                is Resource.Failure -> {
+                    shoppingCartRepository._shopBadge.emit(0)
+                }
+
+                else -> {
+                    shoppingCartRepository._shopBadge.emit(0)
+                }
+            }
+        }
     }
 
     suspend fun getShoppingCart() {

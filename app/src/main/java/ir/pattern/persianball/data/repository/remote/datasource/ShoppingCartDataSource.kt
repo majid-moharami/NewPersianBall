@@ -40,7 +40,7 @@ class ShoppingCartDataSource
         )
     }
 
-    suspend fun updateCart(updateParam: UpdateCartItemDto, id: Int): Resource<Any?> {
+    suspend fun updateCart(updateParam: CartItem, id: Int): Resource<UpdateResponse> {
         return Request.getResponse(
             request = { shoppingCartService.updateCartItem(updateParam, id) }, errorTranslator
         )

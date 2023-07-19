@@ -19,7 +19,7 @@ interface ShoppingCartService {
     suspend fun deleteCartItem(@Path("id") itemId: Int) : Response<Any>
 
     @PATCH("order/basket-items/{id}/")
-    suspend fun updateCartItem(@Body cartItem: UpdateCartItemDto, @Path("id") itemId: Int): Response<Any>
+    suspend fun updateCartItem(@Body cartItem: CartItem, @Path("id") itemId: Int): Response<UpdateResponse>
 
     @GET("order/address/")
     suspend fun getAddress() : Response<AddressResult>

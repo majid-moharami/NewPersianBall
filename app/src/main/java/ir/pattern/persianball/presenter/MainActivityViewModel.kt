@@ -30,14 +30,14 @@ class MainActivityViewModel
 
     private val _isLogin = MutableSharedFlow<Boolean>()
     val isLogin = _isLogin.asSharedFlow()
-    private val _shopBadge = MutableSharedFlow<Int>()
-    val shopBadge = _shopBadge.asSharedFlow()
     private val _notificationBadge = MutableSharedFlow<List<Int>>()
     val notificationBadge = _notificationBadge.asSharedFlow()
     val messageIdList = mutableListOf<Int>()
     private val _avatar = MutableSharedFlow<String?>()
     val avatar = _avatar.asSharedFlow()
-    var userAvatar : String? = null
+    var userAvatar: String? = null
+
+    val shopBadge = shoppingCartRepository.shopBadge
     suspend fun refreshToken() {
         if (accountManager.getRefreshToken().isNotBlank()) {
             when (val result =
@@ -51,16 +51,17 @@ class MainActivityViewModel
                 }
 
                 is Resource.Failure<*> -> {
-                        viewModelScope.launch {
-                            _isLogin.emit(false)
-                        }
+                    viewModelScope.launch {
+                        _isLogin.emit(false)
+                    }
                 }
+
                 else -> {}
             }
         }
     }
 
-    suspend fun getUser(){
+    suspend fun getUser() {
         viewModelScope.launch {
             when (val result = profileRepository.getUserPersonalData()) {
                 is Resource.Success -> {
@@ -68,6 +69,7 @@ class MainActivityViewModel
                     //profileRepository.user = result.data
                     userAvatar = result.data.avatar
                 }
+
                 else -> Unit
             }
         }
@@ -82,24 +84,26 @@ class MainActivityViewModel
             when (it) {
                 is Resource.Success -> {
                     if (!it.data.result.isEmpty()) {
-                        _shopBadge.emit(it.data.result[0].items.size)
+                        shoppingCartRepository._shopBadge.emit(it.data.result[0].items.size)
                         shoppingCartRepository.basketList = it.data.result[0].items
-                    }else {
-                        _shopBadge.emit(0)
+                    } else {
+                        shoppingCartRepository._shopBadge.emit(0)
                     }
                 }
+
                 is Resource.Failure -> {
-                    _shopBadge.emit(0)
+                    shoppingCartRepository._shopBadge.emit(0)
                 }
+
                 else -> {
-                    _shopBadge.emit(0)
+                    shoppingCartRepository._shopBadge.emit(0)
                 }
             }
         }
     }
 
-    suspend fun getMessage(){
-        profileRepository.getUserMessage().collect{
+    suspend fun getMessage() {
+        profileRepository.getUserMessage().collect {
             when (it) {
                 is Resource.Success -> {
                     it.data?.results?.map { messageDto ->
@@ -120,7 +124,7 @@ class MainActivityViewModel
         loginRemoteDataSource.userDevice(device)
     }
 
-    suspend fun sendUserDevice(userDevice: UserDeviceDto){
+    suspend fun sendUserDevice(userDevice: UserDeviceDto) {
         loginRemoteDataSource.sendUserDevice(userDevice)
     }
 

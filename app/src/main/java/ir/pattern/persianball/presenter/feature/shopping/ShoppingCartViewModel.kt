@@ -103,16 +103,17 @@ class ShoppingCartViewModel
         }
     }
 
-    suspend fun updateItemQuantity(quantity: Int, id: Int) {
-        shoppingCartRepository.updateCartItem(UpdateCartItemDto(quantity), id).collect {
+    suspend fun updateItemQuantity(cartItem: CartItem, id: Int) {
+        shoppingCartRepository.updateCartItem(cartItem, id).collect {
             when (it) {
                 is Resource.Success -> {
+
                     execute(PagingCrudFunctions.Edit({ recyclerItems ->
                         (recyclerItems.data as? ShoppingCartData)?.shoppingCartItemDto?.id == id
                     }, { _, rvItem ->
                         RecyclerItem((rvItem.data as ShoppingCartData).let { item ->
                             ShoppingCartData(item.shoppingCartItemDto.apply {
-                                this.quantity = quantity
+                                this.quantity = it.data.quantity
                             })
                         })
                     }))

@@ -39,7 +39,8 @@ data class ShopCartProduct(
     @SerializedName("count") var count: Int,
     @SerializedName("color") var color: String,
     @SerializedName("color_rgb") var color_rgb: String,
-    @SerializedName("product_name") var productName: String
+    @SerializedName("product_name") var productName: String,
+    @SerializedName("id") var id: Int?
 )
 
 data class ShopCartCourse(

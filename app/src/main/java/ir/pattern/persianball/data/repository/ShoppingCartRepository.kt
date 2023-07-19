@@ -25,6 +25,9 @@ constructor(
     var isShipping = false
     var basketList = listOf<ShoppingCartItemDto>()
 
+    val _shopBadge = MutableSharedFlow<Int>()
+    val shopBadge = _shopBadge.asSharedFlow()
+
     suspend fun setAddressAdded(boolean: Boolean){
         _addressAdded.emit(boolean)
     }
@@ -43,7 +46,7 @@ constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun updateCartItem(updateParam: UpdateCartItemDto, itemId: Int) : Flow<Resource<Any?>> {
+    suspend fun updateCartItem(updateParam: CartItem, itemId: Int) : Flow<Resource<UpdateResponse>> {
         return flow {
             val result = shoppingCartDataSource.updateCart(updateParam, itemId)
             emit(result)

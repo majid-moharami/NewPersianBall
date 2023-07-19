@@ -127,11 +127,11 @@
                         app:layout_constraintTop_toTopOf="@+id/facebook" />
 
                     <ir.pattern.persianball.views.PersianBallImageButton
-                        android:id="@+id/facebook"
+                        android:id="@+id/instagram"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:background="@drawable/product_page_text_background"
-                        android:src="@drawable/ic_facebook"
+                        android:src="@drawable/ic_instagram"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"

@@ -97,7 +97,19 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.productCount.text = productCount.toString()
         }
         binding.addProduct.setOnClickListener {
-            if (viewModel.isProductInBasket(product?.nameFarsi)) {
+            var id : Int = -1
+            if (product?.variants.isNullOrEmpty()) {
+                        id = it.id
+            } else {
+                product?.let { it1 ->
+                    id = viewModel.getSelectedVariantId(
+                        it1,
+                        currentSizeIndex,
+                        currentColorIndex
+                    )
+                }
+            }
+            if (viewModel.isProductInBasket(id)) {
                 Toast.makeText(
                     requireActivity(),
                     "این محصول در سبد خرید شما موجود میباشد",
@@ -122,6 +134,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                                     quantity = binding.productCount.text.toString().toInt()
                                 )
                             )
+                            viewModel.getShoppingCarts()
                         } else {
                             viewModel.addCartItem(
                                 CartItem(
@@ -133,6 +146,7 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
                                     quantity = binding.productCount.text.toString().toInt()
                                 )
                             )
+                            viewModel.getShoppingCarts()
                         }
                     }
                 }

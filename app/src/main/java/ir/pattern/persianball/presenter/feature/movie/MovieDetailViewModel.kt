@@ -64,6 +64,36 @@ class MovieDetailViewModel
         }
     }
 
+    fun isCourseInBasket(name: String?) : Boolean{
+        shoppingCartRepository.basketList.map {
+            if (it.course?.courseName  == name) return true
+        }
+        return false
+    }
+
+    suspend fun getShoppingCart() {
+        shoppingCartRepository.getShoppingCart().collect {
+            when (it) {
+                is Resource.Success -> {
+                    if (!it.data.result.isEmpty()) {
+                        shoppingCartRepository._shopBadge.emit(it.data.result[0].items.size)
+                        shoppingCartRepository.basketList = it.data.result[0].items
+                    } else {
+                        shoppingCartRepository._shopBadge.emit(0)
+                    }
+                }
+
+                is Resource.Failure -> {
+                    shoppingCartRepository._shopBadge.emit(0)
+                }
+
+                else -> {
+                    shoppingCartRepository._shopBadge.emit(0)
+                }
+            }
+        }
+    }
+
     fun setAppropriateMap(movie: AcademyDto) {
         if (movie.category?.nameFarsi == "دوره ها") {
             val supportSet = mutableSetOf<CoachDto>()
@@ -171,15 +201,20 @@ class MovieDetailViewModel
         movie.variants.map {
             if (it?.coach == null && it?.giftProduct?.id == selectedGifts?.id) {
                 return it
-            } else if (it?.coach == null && it?.giftProduct == null) {
-                return it
             } else {
                 if (selectedGifts?.id == "non-id") {
                     if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct == null) {
                         return it
                     }
                 } else {
-                    if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) return it
+                    if (it?.coach?.id == selectedCoach.value?.id && it?.giftProduct?.id == selectedGifts?.id) {
+                        return it
+                    }
+                }
+            }
+            if (selectedGifts == null) {
+                if (it?.coach == null && it?.giftProduct == null) {
+                    return it
                 }
             }
         }

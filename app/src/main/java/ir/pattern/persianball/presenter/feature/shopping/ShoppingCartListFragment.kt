@@ -16,6 +16,7 @@ import com.google.android.material.shape.CornerFamily
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.databinding.FragmentShoppingCartListBinding
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
@@ -97,7 +98,7 @@ class ShoppingCartListFragment : BaseFragment() {
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     viewLifecycleOwner.lifecycleScope.launch {
                         viewModel.updateItemQuantity(
-                            recyclerData.shoppingCartItemDto.quantity + 1,
+                            CartItem(null, recyclerData.shoppingCartItemDto.product?.id, recyclerData.shoppingCartItemDto.quantity + 1),
                             recyclerData.shoppingCartItemDto.id
                         )
                     }
@@ -108,7 +109,7 @@ class ShoppingCartListFragment : BaseFragment() {
                     viewLifecycleOwner.lifecycleScope.launch {
                         if (recyclerData.shoppingCartItemDto.quantity > 1) {
                             viewModel.updateItemQuantity(
-                                recyclerData.shoppingCartItemDto.quantity - 1,
+                                CartItem(null, recyclerData.shoppingCartItemDto.product?.id, recyclerData.shoppingCartItemDto.quantity - 1),
                                 recyclerData.shoppingCartItemDto.id
                             )
                         }

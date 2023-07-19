@@ -115,9 +115,11 @@ class PaymentFragment : Fragment() {
                             OrderRecordActivity.PAYMENT_REQUEST_CODE
                         )
                     }
+
                     is Resource.Failure -> {
                         it.error.code
                     }
+
                     else -> {}
                 }
             }
@@ -136,10 +138,12 @@ class PaymentFragment : Fragment() {
                             binding.totalPrice.text = resources.getString(
                                 R.string.product_price,
                                 decimalForm.format(
-                                    totalPrice.toInt().minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
+                                    totalPrice.toInt()
+                                        .minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
                                 )
                             )
-                            val s = totalPrice.toInt().minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
+                            val s = totalPrice.toInt()
+                                .minus(totalPrice * percent!! / 100) + natPrice + shipingPrice
                             val b = totalPrice - s
                             binding.discountPrice.text =
                                 resources.getString(
@@ -151,9 +155,11 @@ class PaymentFragment : Fragment() {
 
                         }
                     }
+
                     is Resource.Failure -> {
                         it.error.code
                     }
+
                     else -> {}
                 }
             }
@@ -168,10 +174,12 @@ class PaymentFragment : Fragment() {
                         totalPrice = price.totalPrice
                         natPrice = price.nat
                         discount = price.discount.toInt()
-                        shipingPrice = when(args.deliveryMethod) {
-                            "post" -> price.postShippingPrice
-                            "peyk" -> price.peykShippingPrice
-                            else -> 0
+                        if (!price.isFreeShippingPrice) {
+                            shipingPrice = when (args.deliveryMethod) {
+                                "post" -> price.postShippingPrice
+                                "peyk" -> price.peykShippingPrice
+                                else -> 0
+                            }
                         }
 
                         binding.totalPrice.text =
@@ -200,7 +208,7 @@ class PaymentFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        if (!viewModel.shoppingCartRepository.isShipping){
+        if (!viewModel.shoppingCartRepository.isShipping) {
             requireActivity().finish()
         }
         super.onDestroy()
