@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewPersianBall</string>
+    <string name="app_name">PersianBall</string>
     <string name="share_pref_mail">share_pref_mail</string>
     <string name="share_pref_phone">share_pref_phone</string>
     <string name="share_pref_username">share_pref_username</string>

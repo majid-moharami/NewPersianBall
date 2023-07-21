@@ -1,20 +1,21 @@
 package ir.pattern.persianball.presenter.feature.academy
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademyCourseData
 import ir.pattern.persianball.presenter.feature.academy.recycler.AcademySliderData
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeRecyclerHeaderData
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

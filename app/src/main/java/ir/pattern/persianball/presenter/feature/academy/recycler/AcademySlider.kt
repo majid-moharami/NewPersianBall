@@ -3,9 +3,13 @@ package ir.pattern.persianball.presenter.feature.academy.recycler
 import android.R.attr.banner
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.moeidbannerlibrary.banner.BaseBannerAdapter
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
@@ -51,15 +55,23 @@ class AcademySliderViewHolder(itemView: View) : BaseViewHolder<AcademySliderData
         }
     }
 
-    override fun onBindView(data: AcademySliderData?) {
-        val urls = data?.slider?.map {
-            "https://api.persianball.ir/${it.image}"
+    override fun onBindView(data: AcademySliderData) {
+        val imageList = mutableListOf<SlideModel>()
+        data.slider.map {
+            if (it.category == 2) {
+                imageList.add(
+                    SlideModel(
+                        "https://api.persianball.ir/${it.image}",
+                        ScaleTypes.CENTER_CROP
+                    )
+                )
+            }
         }
-        val webBannerAdapter = BaseBannerAdapter(itemView.context, urls)
-        webBannerAdapter.setOnBannerItemClickListener {
-            data?.also { data ->
+        binding.imageSlider.setImageList(imageList)
+        binding.imageSlider.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
                 for (i in 0 until data.slider.size - 1) {
-                    if (i == it) {
+                    if (i == position) {
                         when (data.slider[i].sliderType) {
                             "video" -> {
                                 val intent = Intent(itemView.context, PlayerActivity::class.java)
@@ -68,11 +80,11 @@ class AcademySliderViewHolder(itemView: View) : BaseViewHolder<AcademySliderData
                                 itemView.context.startActivity(intent)
                             }
 
-                            "course", "class" -> {
+                            "course" -> {
                                 data.slider[i].let {
                                     it.uniqueId?.also { id ->
                                         itemView.findNavController().navigate(
-                                            AcademyFragmentDirections.actionAcademyFragmentToMovieDetailFragment(
+                                            HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(
                                                 id
                                             )
                                         )
@@ -91,11 +103,19 @@ class AcademySliderViewHolder(itemView: View) : BaseViewHolder<AcademySliderData
                                     }
                                 }
                             }
+
+                            "url" -> {
+                                data.slider[i].let {
+                                    val url = it.url
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                    itemView.context.startActivity(intent)
+                                }
+                            }
                         }
                     }
                 }
+
             }
-        }
-        binding.Banner.setAdapter(webBannerAdapter)
+        })
     }
 }

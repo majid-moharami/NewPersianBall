@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.moeidbannerlibrary.banner.BannerLayout
-            android:id="@+id/Banner"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:autoPlaying="true"
-            app:centerScale="2"
-            app:itemSpace="1"
-            android:layoutDirection="ltr"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:moveSpeed="0.5"
-            app:showIndicator="false" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:layoutDirection="ltr"
+                app:iss_auto_cycle="true"/>
+
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
