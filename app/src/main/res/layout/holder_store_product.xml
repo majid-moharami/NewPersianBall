@@ -61,19 +61,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:visibility="gone"
-                        app:cardCornerRadius="4dp"
                         app:cardBackgroundColor="@color/red"
+                        app:cardCornerRadius="4dp"
                         app:layout_constraintBottom_toBottomOf="@+id/real_price"
                         app:layout_constraintLeft_toRightOf="@+id/discounted_price"
                         app:layout_constraintTop_toTopOf="@+id/discounted_price">
 
                         <TextView
                             android:id="@+id/discount_percent"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_margin="4dp"
-                            android:gravity="center"
                             android:fontFamily="@font/iran_sans_bold"
+                            android:gravity="center"
                             android:textColor="@color/white"
                             android:textSize="@dimen/font_size_very_small"
                             tools:text="%10" />
