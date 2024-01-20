@@ -108,12 +108,17 @@ class PaymentFragment : Fragment() {
             viewModel.payment.collectLatest {
                 when (it) {
                     is Resource.Success -> {
-                        val browserIntent = Intent(activity, PaymentWebViewActivity::class.java)
-                        browserIntent.putExtra("url", it.data?.url)
-                        activity?.startActivityForResult(
-                            browserIntent,
-                            OrderRecordActivity.PAYMENT_REQUEST_CODE
-                        )
+//                        val browserIntent = Intent(activity, PaymentWebViewActivity::class.java)
+//                        browserIntent.putExtra("url", it.data?.url)
+//                        activity?.startActivityForResult(
+//                            browserIntent,
+//                            OrderRecordActivity.PAYMENT_REQUEST_CODE
+//                        )
+
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(it.data?.url)
+                        }
+                        startActivity(intent)
                     }
 
                     is Resource.Failure -> {

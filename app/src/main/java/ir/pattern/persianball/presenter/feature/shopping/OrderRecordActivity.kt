@@ -30,6 +30,10 @@ class OrderRecordActivity : AppCompatActivity() {
         setContentView(binding.root)
         navController = findNavController(R.id.order_nav_host_fragment)
         setupNavigation()
+        if (!intent.extras?.getString("TransactionNumber").isNullOrEmpty()){
+            navController.navigate(R.id.orderCompleteFragment)
+            binding.stepper.go(2,false)
+        }
     }
 
     private fun setupNavigation() {

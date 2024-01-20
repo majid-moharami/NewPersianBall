@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupMenu
@@ -35,6 +36,7 @@ import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
 import ir.pattern.persianball.presenter.feature.message.PushMessageActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
+import ir.pattern.persianball.presenter.feature.shopping.OrderRecordActivity
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -369,6 +371,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val data = intent?.data
+        val s = data?.path
+        if (s != null) {
+            startActivity(Intent(this, OrderRecordActivity::class.java).apply {
+                putExtra("TransactionNumber", s)
+            })
         }
     }
 
