@@ -57,7 +57,7 @@ class SectionHeaderViewHolder(
     }
 
     override fun onBindView(data: SectionHeaderData) {
-        binding.week.text = itemView.resources.getString(R.string.week, data.sections?.weekNumber)
+        binding.week.text = data.sections?.weekName ?: itemView.resources.getString(R.string.week, data.sections?.weekNumber)
         binding.sectionCount.text = itemView.resources.getString(
             R.string.section_count,
             data.sections?.sections?.size.toString()

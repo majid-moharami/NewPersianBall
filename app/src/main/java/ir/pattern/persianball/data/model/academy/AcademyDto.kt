@@ -36,6 +36,7 @@ data class MovieDetailDto(
 ): Serializable
 
 data class SectionsDto(
+    @SerializedName("week_name") val weekName: String,
     @SerializedName("week_number") val weekNumber: String,
     @SerializedName("sections") val sections: List<SectionDto>
 ): Serializable

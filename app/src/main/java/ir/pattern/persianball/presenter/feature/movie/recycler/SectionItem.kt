@@ -52,7 +52,6 @@ class SectionItemViewHolder(
 
 
     override fun onBindView(data: SectionItemData) {
-        Glide.with(itemView.context).load(data.section.videoThumbnail).into(binding.sectionPoster)
         binding.lock.isVisible = data.section.isLocked
         binding.title.text = data.section.title
         data.variant?.coach?.also {
