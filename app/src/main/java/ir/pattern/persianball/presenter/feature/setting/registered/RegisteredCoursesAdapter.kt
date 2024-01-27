@@ -13,9 +13,10 @@ import ir.pattern.persianball.presenter.feature.setting.registered.recycler.Regi
 
 class RegisteredCoursesAdapter: BasePagingAdapter() {
     lateinit var onItemClickListener: BaseViewHolder.OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>
+    lateinit var onExtraFileClickListener: BaseViewHolder.OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>
     override fun getViewHolder(parent: ViewGroup, viewType: Int, view: View): BaseViewHolder<*>? {
         return when (viewType) {
-            RegisteredCoursesData.VIEW_TYPE -> RegisteredCoursesViewHolder(view, onItemClickListener)
+            RegisteredCoursesData.VIEW_TYPE -> RegisteredCoursesViewHolder(view, onItemClickListener, onExtraFileClickListener)
             else -> null
         }
     }

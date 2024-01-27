@@ -158,6 +158,10 @@ class SignUpFragment : Fragment() {
             }
         }
 
+        binding.appPolicy.setOnClickListener{
+            startActivity(Intent(requireActivity(), PersianBallPrivacyActivity::class.java))
+        }
+
         binding.youtube.setOnClickListener {
             var intent: Intent
             try {

@@ -128,6 +128,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             startActivity(i)
         }
 
+        binding.appPolicy.setOnClickListener{
+            startActivity(Intent(requireActivity(), PersianBallPrivacyActivity::class.java))
+        }
+
         return binding.root
     }
 }

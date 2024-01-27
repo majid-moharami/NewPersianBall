@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.AcademyHomeDto
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.databinding.HolderAcademyItemBinding
@@ -15,7 +16,7 @@ import ir.pattern.persianball.utils.UiUtils
 import java.util.*
 import kotlin.math.floor
 
-class AcademyCourseData(val academy: AcademyDto) : PersianBallRecyclerData, Equatable {
+class AcademyCourseData(val academy: AcademyHomeDto) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.holder_academy_item
     }
@@ -50,12 +51,12 @@ class AcademyCourseViewHolder(
     @SuppressLint("StringFormatMatches")
     override fun onBindView(data: AcademyCourseData?) {
         data?.academy?.also {
-            binding.title.text = it.courseTitle
-            binding.duration.text =
-                itemView.resources.getString(R.string.course_week, it.weekCount, it.section_count)
+            binding.title.text = it.nameFarsi
+//            binding.duration.text =
+//                itemView.resources.getString(R.string.course_week, it.weekCount, it.section_count)
             binding.hardness.text =
-                itemView.resources.getString(R.string.difficulty, it.courseDifficulty)
-            binding.time.text = convertTimeToString(it.courseDuration)
+                itemView.resources.getString(R.string.difficulty, it.difficulty)
+//            binding.time.text = convertTimeToString(it.courseDuration)
             Glide.with(itemView.context).load("https://api.persianball.ir/${it.image}")
                 .into(binding.shapeableImageView)
         }

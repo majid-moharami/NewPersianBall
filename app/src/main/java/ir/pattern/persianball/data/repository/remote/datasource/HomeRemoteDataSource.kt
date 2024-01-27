@@ -6,24 +6,31 @@ import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.repository.remote.api.HomeService
 import ir.pattern.persianball.data.repository.remote.api.Request
 import ir.pattern.persianball.data.model.ErrorTranslator
+import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.repository.remote.api.HomeVersionTwoService
 import javax.inject.Inject
 
 class HomeRemoteDataSource
 @Inject constructor(
     private val homeService: HomeService,
+    private val homeVersionTwoService: HomeVersionTwoService,
     private val errorTranslator: ErrorTranslator
 ) {
 
     suspend fun getCourses() : Resource<Academy>{
-        return Request.getResponse(request = {homeService.getCourse()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getCourse()}, errorTranslator)
     }
 
     suspend fun getAcademy() : Resource<Academy>{
-        return Request.getResponse(request = {homeService.getAcademy()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getAcademy()}, errorTranslator)
+    }
+
+    suspend fun getCourseDetail(id: Int): Resource<AcademyDto>{
+        return Request.getResponse(request = {homeVersionTwoService.getCourseDetail(id)}, errorTranslator)
     }
 
     suspend fun getProducts() : Resource<Products> {
-        return Request.getResponse(request = {homeService.getProduct()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getProduct()}, errorTranslator)
     }
 
     suspend fun getGalley(): Resource<SliderList> {

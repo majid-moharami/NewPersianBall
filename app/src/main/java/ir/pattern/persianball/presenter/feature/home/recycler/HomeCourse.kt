@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
 import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.AcademyHomeDto
 import ir.pattern.persianball.data.model.base.Equatable
 import ir.pattern.persianball.data.model.base.PersianBallRecyclerData
 import ir.pattern.persianball.data.model.home.Course
@@ -17,7 +18,7 @@ import ir.pattern.persianball.databinding.HomeNewCourseViewholderBinding
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import java.util.*
 
-class HomeCourseData(var academy: AcademyDto) : PersianBallRecyclerData, Equatable {
+class HomeCourseData(var academy: AcademyHomeDto) : PersianBallRecyclerData, Equatable {
     companion object {
         const val VIEW_TYPE = R.layout.home_new_course_viewholder
     }
@@ -53,8 +54,8 @@ class HomeCourseViewHolder(
             Glide.with(itemView.context)
                 .load("https://api.persianball.ir/${it.image}")
                 .into(binding.image)
-            binding.title.text = it.courseTitle
-            binding.description.text = it.courseDescription
+            binding.title.text = it.nameFarsi
+            binding.description.text = it.description
         }
         setOnClickListener(binding.clickableLayout, onCourseClickListener, this, data)
     }

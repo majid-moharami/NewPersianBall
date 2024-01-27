@@ -1,20 +1,20 @@
 package ir.pattern.persianball.presenter.feature.setting.registered
 
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.repository.DashboardRepository
 import ir.pattern.persianball.databinding.FragmentRegisteredCoursesBinding
@@ -22,16 +22,13 @@ import ir.pattern.persianball.manager.AccountManager
 import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.BaseFragment
-import ir.pattern.persianball.presenter.feature.home.HomeFragmentDirections
 import ir.pattern.persianball.presenter.feature.login.LoginActivity
-import ir.pattern.persianball.presenter.feature.profile.password.ProfilePasswordFragment
 import ir.pattern.persianball.presenter.feature.setting.DashboardFragmentDirections
-import ir.pattern.persianball.presenter.feature.setting.registered.RegisteredCoursesViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class RegisteredCoursesFragment : BaseFragment() {
@@ -70,6 +67,7 @@ class RegisteredCoursesFragment : BaseFragment() {
 //                        }
                         binding.recyclerView.visibility = View.VISIBLE
                     }
+
                     false -> {
                         binding.notLoginLayout.visibility = View.VISIBLE
                         binding.recyclerView.visibility = View.GONE
@@ -90,8 +88,19 @@ class RegisteredCoursesFragment : BaseFragment() {
             it.onItemClickListener =
                 BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
                     dashboardRepository.userCourseMovie = recyclerData.dashboardDto.courseDetail
-                    val direction = DashboardFragmentDirections.actionRegisteredCoursesFragmentToMovieDetailFragment(-2)
+                    val direction =
+                        DashboardFragmentDirections.actionRegisteredCoursesFragmentToMovieDetailFragment(
+                            -2
+                        )
                     findNavController().navigate(direction)
+                }
+
+            it.onExtraFileClickListener =
+                BaseViewHolder.OnClickListener { view, viewHolder, recyclerData ->
+                    val url = Uri.parse("http://api.persianball.ir${recyclerData.dashboardDto.extraFile}")
+                    val downloadIntent = Intent(Intent.ACTION_VIEW)
+                    downloadIntent.setData(url)
+                    startActivity(downloadIntent)
                 }
         }
 
@@ -108,6 +117,7 @@ class RegisteredCoursesFragment : BaseFragment() {
                         showLoading(false)
                         binding.recyclerView.isVisible = true
                     }
+
                     is Resource.Failure -> {
                         if (accountManager.isLogin) {
                             showLoading(false)
@@ -115,6 +125,7 @@ class RegisteredCoursesFragment : BaseFragment() {
                             binding.recyclerView.isVisible = false
                         }
                     }
+
                     else -> {
                         showLoading(true)
                     }

@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import ir.pattern.persianball.data.model.*
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.AcademyHomeDto
 import ir.pattern.persianball.data.model.home.*
 import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
 import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
@@ -32,7 +33,7 @@ class HomeRepository
 //    ).flow
 
     lateinit var products: Products
-    var courses: Academy? = null
+    var courses: AcademyDto? = null
     lateinit var sliderList: List<Slider>
 
     suspend fun getCourses(): Flow<Resource<Academy>> {
@@ -59,6 +60,13 @@ class HomeRepository
     suspend fun getAcademy(): Flow<Resource<Academy>> {
         return flow {
             val result = homeRemoteDataSource.getAcademy()
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getCourseDetail(id: Int): Flow<Resource<AcademyDto>>{
+        return flow {
+            val result = homeRemoteDataSource.getCourseDetail(id)
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
@@ -98,14 +106,14 @@ class HomeRepository
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getCourseById(id: Int): AcademyDto? {
-        if (courses != null) {
-            for (i in courses!!.result) {
-                if (i.id == id) return i
-            }
-            return null
-        }else{
-            return null
-        }
-    }
+//    fun getCourseById(id: Int): AcademyDto? {
+//        if (courses != null) {
+//            for (i in courses!!.result) {
+//                if (i.id == id) return i
+//            }
+//            return null
+//        }else{
+//            return null
+//        }
+//    }
 }

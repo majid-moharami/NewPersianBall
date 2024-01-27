@@ -18,4 +18,5 @@ data class DashboardDto(
     @SerializedName("course_variant_id") val course_variant_id: Int,
     @SerializedName("course_id") val courseId: Int,
     @SerializedName("week_count") val weekCount: Int,
+    @SerializedName("course_extra_file") val extraFile: String?
 )

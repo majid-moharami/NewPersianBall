@@ -148,6 +148,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login" />
 
+        <ir.pattern.persianball.views.PersianBallTextView
+            android:id="@+id/app_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/app_policy"
+            android:textColor="@drawable/blue_text_selector"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="@+id/register_txt"
+            app:layout_constraintLeft_toLeftOf="@+id/register_txt"
+            app:layout_constraintTop_toBottomOf="@+id/register_txt" />
+
         <ir.pattern.persianball.views.PersianBallImageButton
             android:id="@+id/instagram"
             android:layout_width="45dp"
@@ -159,7 +174,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_txt" />
+            app:layout_constraintTop_toBottomOf="@+id/app_policy" />
 
         <ir.pattern.persianball.views.PersianBallImageButton
             android:id="@+id/whatsapp"

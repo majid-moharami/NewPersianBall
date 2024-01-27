@@ -2,6 +2,7 @@ package ir.pattern.persianball.presenter.feature.setting.registered.recycler
 
 import android.annotation.SuppressLint
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.util.Assert
@@ -34,7 +35,8 @@ class RegisteredCoursesData(val dashboardDto: DashboardDto) : PersianBallRecycle
 
 class RegisteredCoursesViewHolder(
     itemView: View,
-    private val onItemClickListener: OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>
+    private val onItemClickListener: OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>,
+    private val onExtraFileClickListener: OnClickListener<RegisteredCoursesViewHolder, RegisteredCoursesData>
 ) : BaseViewHolder<RegisteredCoursesData>(itemView){
 
     private lateinit var binding: HolderRegisteredCourseBinding
@@ -50,15 +52,14 @@ class RegisteredCoursesViewHolder(
     override fun onBindView(data: RegisteredCoursesData?) {
        data?.dashboardDto?.also {
            binding.title.text = it.courseTitle
-           Glide.with(itemView.context).load("http://api.persianball.ir/media/course/cordless-screwdriver.jpg").into(binding.shapeableImageView)
+           Glide.with(itemView.context).load("http://api.persianball.ir${data.dashboardDto.courseDetail.image}").into(binding.shapeableImageView)
            binding.teacherText.text = "مدرس: ${it.coach}"
-           binding.progressView.progress = it.completionPercent.toFloat()
            binding.duration.text = " ${it.weekCount}هفته"
-           binding.progressText.text = "شما ${it.completionPercent} درصد از این دوره را گذرانده‌اید"
-           binding.progressView.labelText = "%${it.completionPercent}"
            binding.rateText.text = "امتیاز: 33/100"
+           binding.downloadFile.isVisible = !data.dashboardDto.extraFile.isNullOrEmpty()
        }
         setOnClickListener(binding.selectableLayout, onItemClickListener, this, data)
+        setOnClickListener(binding.downloadFile, onExtraFileClickListener, this, data)
     }
 
 }

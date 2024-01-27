@@ -42,7 +42,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
+import java.util.Formatter
+import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.floor
 
@@ -81,6 +82,7 @@ class MovieDetailFragment : BaseFragment() {
             movieId = args.id
         } else {
             movie = dashboardRepository.userCourseMovie
+            viewModel.homeRepository.courses = movie
         }
     }
 
@@ -94,8 +96,8 @@ class MovieDetailFragment : BaseFragment() {
         binding.backBtn.setOnClickListener {
             requireActivity().onBackPressed()
         }
-        if (args.id != -2) {
-            movie = viewModel.homeRepository.getCourseById(movieId)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getAcademyById(movieId)
         }
         if (movie != null) {
             viewModel.setAppropriateMap(movie!!)
@@ -142,6 +144,7 @@ class MovieDetailFragment : BaseFragment() {
                 when (it) {
                     is Resource.Success -> {
                         movie = it.data
+                        viewModel.homeRepository.courses = movie
                         viewModel.setAppropriateMap(movie!!)
                         binding.productChooseName.text = "انتخاب محصول هدیه"
                         if (movie!!.category?.nameFarsi == "دوره ها") {
@@ -178,13 +181,13 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         binding.addBtn.setOnClickListener {
-            if (viewModel.isCourseInBasket(movie?.courseTitle)){
+            if (viewModel.isCourseInBasket(movie?.courseTitle)) {
                 Toast.makeText(
                     requireActivity(),
                     "این دوره در سبد خرید شما موجود میباشد",
                     Toast.LENGTH_LONG
                 ).show()
-            }else{
+            } else {
                 viewLifecycleOwner.lifecycleScope.launch {
                     if (!accountManager.isLogin) {
                         Toast.makeText(

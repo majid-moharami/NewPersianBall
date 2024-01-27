@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Academy(
-    @SerializedName("results") val result: List<AcademyDto>
+    @SerializedName("results") val result: List<AcademyHomeDto>
 )
 
 data class AcademyDto(
@@ -13,7 +13,6 @@ data class AcademyDto(
     @SerializedName("week_count") val weekCount: Int,
     @SerializedName("course_title") val courseTitle: String,
     @SerializedName("image") val image: String?,
-    @SerializedName("is_active") val isActive: Boolean,
     @SerializedName("course_description") val courseDescription: String,
     @SerializedName("course_difficulty") val courseDifficulty: String,
     @SerializedName("course_duration") val courseDuration: Int,
@@ -24,7 +23,28 @@ data class AcademyDto(
     @SerializedName("images") val images: List<String?>,
     @SerializedName("video") val video: String?,
     @SerializedName("video_thumbnail") val videoThumbnail: String?,
-    @SerializedName("category") val category: CategoryDto?
+    @SerializedName("category") val category: CategoryDto?,
+    @SerializedName("course_extra_file") val extraFile: String?
+): Serializable
+
+data class AcademyHomeDto(
+    @SerializedName("id") val id: Int,
+    @SerializedName("image") val image: String?,
+    @SerializedName("course_price") val coursePrice: Int?,
+    @SerializedName("discount_percentage") val discountPercentage: Int?,
+    @SerializedName("name_farsi") val nameFarsi: String,
+    @SerializedName("name_english") val nameEnglish: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("published") val published: Boolean,
+    @SerializedName("difficulty") val difficulty: String,
+    @SerializedName("pre_requirement") val preRequirement: String,
+    @SerializedName("sorting_order") val sortingOrder: Int,
+    @SerializedName("created_at") val createdAt: String,
+    @SerializedName("category") val category: Int,
+    @SerializedName("video_thumbnail") val videoThumbnail: String?,
+    @SerializedName("video") val video: Int,
+    @SerializedName("images") val images: List<String?>,
+    @SerializedName("course_extra_file") val courseExtraFile: String?
 ): Serializable
 
 data class MovieDetailDto(

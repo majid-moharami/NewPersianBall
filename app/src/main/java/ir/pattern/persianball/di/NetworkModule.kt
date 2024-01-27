@@ -93,6 +93,10 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideTwoVersionBuilder(): VersionTwoRetrofitBuilder = VersionTwoRetrofitBuilder()
+
+    @Singleton
+    @Provides
     fun provideUserApi(
         userRetrofitBuilder: UserRetrofitBuilder,
         okHttpClient: OkHttpClient
@@ -152,5 +156,18 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
             .create(HomeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHomeVersionTwo(
+        versionTwoRetrofitBuilder: VersionTwoRetrofitBuilder,
+        @ApplicationContext context: Context
+    ) : HomeVersionTwoService {
+        val okHttpClient = provideOkHttp(context)
+        return versionTwoRetrofitBuilder.retrofitBuilder
+            .client(okHttpClient)
+            .build()
+            .create(HomeVersionTwoService::class.java)
     }
 }

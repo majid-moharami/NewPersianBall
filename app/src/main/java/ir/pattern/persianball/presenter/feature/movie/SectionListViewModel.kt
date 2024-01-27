@@ -35,7 +35,7 @@ class SectionListViewModel
     fun updateSections(sectionHeader: SectionHeaderData) {
         val tempList = mutableListOf<RecyclerItem>()
         var selectedOpen: Boolean? = null
-        var selectedHeaderId: String = ""
+        var selectedHeaderId = ""
         allList.map {
             if (it.data is PosterData) tempList.add(it)
             if (it.data is SectionHeaderData) {
@@ -81,16 +81,13 @@ class SectionListViewModel
 
     suspend fun getAcademyById(id: Int) {
         _academyDto.emit(Resource.Loading())
-        homeRepository.getAcademy().collect {
+        homeRepository.getCourseDetail(id).collect {
             when (it) {
                 is Resource.Success -> {
-                    it.data.result.map { academy ->
-                        if (academy.id == id) {
-                            detail = academy.detail
-                            _academyDto.emit(Resource.Success(academy))
-                        }
-                    }
+                    detail = it.data.detail
+                    _academyDto.emit(Resource.Success(it.data))
                 }
+
                 is Resource.Failure -> {
                     _academyDto.emit(Resource.Failure(it.error))
                 }

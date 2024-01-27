@@ -1,5 +1,6 @@
 package ir.pattern.persianball.presenter.feature.profile.password
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import ir.pattern.persianball.R
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.profile.ChangePasswordDto
 import ir.pattern.persianball.databinding.FragmentProfilePasswordBinding
+import ir.pattern.persianball.presenter.feature.login.LoginActivity
+import ir.pattern.persianball.presenter.feature.login.PersianBallPrivacyActivity
 import ir.pattern.persianball.presenter.feature.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 
@@ -101,6 +104,10 @@ class ProfilePasswordFragment : Fragment() {
 
         binding.logoutBtn.setOnClickListener {
             profileViewModel.logoutUser()
+        }
+
+        binding.appPolicy.setOnClickListener{
+            startActivity(Intent(requireActivity(), PersianBallPrivacyActivity::class.java))
         }
     }
 

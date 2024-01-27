@@ -3,18 +3,23 @@ package ir.pattern.persianball.presenter.feature.movie
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
-import ir.pattern.persianball.data.model.academy.*
+import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.CoachDto
+import ir.pattern.persianball.data.model.academy.GiftProductDto
+import ir.pattern.persianball.data.model.academy.MovieDetailDto
+import ir.pattern.persianball.data.model.academy.TimeAndLocationsDto
+import ir.pattern.persianball.data.model.academy.VariantDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeSliderData
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class MovieDetailViewModel
@@ -42,17 +47,13 @@ class MovieDetailViewModel
     val selectedGift = _selectedGift.asStateFlow()
     var selectedGifts: GiftProductDto? = null
 
+
     suspend fun getAcademyById(id: Int) {
         _academyDto.emit(Resource.Loading())
-        homeRepository.getAcademy().collect {
+        homeRepository.getCourseDetail(id).collect {
             when (it) {
                 is Resource.Success -> {
-                    it.data.result.map { academy ->
-                        if (academy.id == id) {
-                            detail = academy.detail
-                            _academyDto.emit(Resource.Success(academy))
-                        }
-                    }
+                    _academyDto.emit(Resource.Success(it.data))
                 }
 
                 is Resource.Failure -> {
@@ -64,9 +65,15 @@ class MovieDetailViewModel
         }
     }
 
-    fun isCourseInBasket(name: String?) : Boolean{
+    fun setAcademyFlow(academy: Resource<AcademyDto>) {
+        viewModelScope.launch {
+            _academyDto.emit(academy)
+        }
+    }
+
+    fun isCourseInBasket(name: String?): Boolean {
         shoppingCartRepository.basketList.map {
-            if (it.course?.courseName  == name) return true
+            if (it.course?.courseName == name) return true
         }
         return false
     }

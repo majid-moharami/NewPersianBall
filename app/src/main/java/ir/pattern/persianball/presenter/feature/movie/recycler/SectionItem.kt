@@ -54,12 +54,6 @@ class SectionItemViewHolder(
     override fun onBindView(data: SectionItemData) {
         binding.lock.isVisible = data.section.isLocked
         binding.title.text = data.section.title
-        data.variant?.coach?.also {
-            binding.send.isVisible = !it.fullName.isNullOrBlank() && !data.section.isLocked
-        } ?: run {
-            binding.send.isVisible = false
-        }
         setOnClickListener(binding.posterLayout, onMovieClickListener, this, data)
-        setOnClickListener(binding.send, onSendClickListener, this, data)
     }
 }

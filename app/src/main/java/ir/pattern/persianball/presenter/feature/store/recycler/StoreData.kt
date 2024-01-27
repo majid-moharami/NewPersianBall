@@ -64,7 +64,7 @@ class StoreViewHolder(
         data?.storeDto?.also {
             if (it.isAcademy) {
                 it.academyDto?.also { academy ->
-                    binding.name.text = academy.courseTitle
+                    binding.name.text = academy.nameFarsi
                     Glide.with(itemView.context).load("https://api.persianball.ir/${academy.image}")
                         .into(binding.picture)
                     academy.coursePrice?.also { price ->

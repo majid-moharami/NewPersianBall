@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.academy.AcademyDto
+import ir.pattern.persianball.data.model.academy.AcademyHomeDto
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
@@ -35,7 +36,7 @@ class StoreViewModel
     private val _cartList = MutableSharedFlow<Resource<Any?>>()
     val cartList = _cartList.asSharedFlow()
 
-    private lateinit var courseList: List<AcademyDto>
+    private lateinit var courseList: List<AcademyHomeDto>
     private lateinit var productList: List<Product>
 
     var isClassFilter = false
@@ -106,16 +107,16 @@ class StoreViewModel
         _recyclerItems.value = RecyclerData(flowOf(PagingData.from(filteredList)))
         if (isCourseFilter) {
             courseList.map {
-                if (it.category?.nameFarsi == "دوره ها") {
-                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
-                }
+//                if (it.category?.nameFarsi == "دوره ها") {
+//                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+//                }
             }
         }
         if (isClassFilter) {
             courseList.map {
-                if (it.category?.nameFarsi == "کلاس ها") {
-                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
-                }
+//                if (it.category?.nameFarsi == "کلاس ها") {
+//                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+//                }
             }
         }
         if (isProductFilter) {
@@ -130,9 +131,9 @@ class StoreViewModel
         val searchedList = mutableListOf<RecyclerItem>()
         if (!query.isNullOrEmpty()) {
             courseList.map { course ->
-                if (course.courseTitle.contains(query, true)) {
-                    searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = course))))
-                }
+//                if (course.courseTitle.contains(query, true)) {
+//                    searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = course))))
+//                }
             }
             productList.map { product ->
                 if (product.nameFarsi.contains(query, true)) {

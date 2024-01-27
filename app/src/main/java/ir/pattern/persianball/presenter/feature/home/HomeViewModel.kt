@@ -59,7 +59,6 @@ class HomeViewModel
                 is Resource.Success -> {
                     val listCourse = mutableListOf<RecyclerItem>()
                     it.data.result.map { course ->
-                        homeRepository.courses = it.data
                         listCourse.add(RecyclerItem(HomeCourseData(course)))
                     }
                     val courses = RecyclerData(flowOf(PagingData.from(listCourse)))
