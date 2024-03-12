@@ -38,20 +38,14 @@ class OrderCompleteFragment : Fragment() {
             container,
             false
         )
-
+        activity?.intent?.extras?.getString("TransactionNumber").takeIf { !it.isNullOrEmpty() }?.let {
+            binding.code.text = it.substring(1)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.intent?.extras?.getString("TransactionNumber").takeIf { !it.isNullOrEmpty() }?.let {
-            binding.code.text = it.substring(1)
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.payment.collect {
-                binding.code.text = it?.trackingCode.toString()
-            }
-        }
 
         binding.copy.setOnClickListener {
             copyToClipboard("tracking_code", binding.code.text.toString())

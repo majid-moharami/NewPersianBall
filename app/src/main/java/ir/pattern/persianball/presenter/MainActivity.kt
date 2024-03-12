@@ -39,6 +39,7 @@ import ir.pattern.persianball.presenter.feature.profile.ProfileFragment
 import ir.pattern.persianball.presenter.feature.shopping.OrderRecordActivity
 import ir.pattern.persianball.presenter.feature.shopping.ShoppingCartsActivity
 import ir.pattern.persianball.utils.SharedPreferenceUtils
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -77,6 +78,9 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         lifecycleScope.launch {
             viewModel.getShoppingCart()
+        }
+        lifecycleScope.launch {
+            viewModel.getMessage()
         }
     }
 

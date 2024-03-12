@@ -12,6 +12,7 @@ data class Product(
     @SerializedName("description") val description: String,
     @SerializedName("image") val image: String,
     @SerializedName("published") val published: Boolean,
+    @SerializedName("sorting_order") val sortingOrder: Int,
     @SerializedName("discount_percentage") val discountPercentage: Int?,
     @SerializedName("price") val price: Int?,
     @SerializedName("created_at") val createdAt: String?,

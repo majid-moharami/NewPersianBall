@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ir.pattern.persianball.R
+import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
@@ -31,6 +32,7 @@ import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
 import ir.pattern.persianball.presenter.feature.player.PlayerRepository
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -72,6 +74,24 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
         productId = args.id
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.academyDto.collect{
+                when (it) {
+                    is Resource.Success -> {
+                        product = it.data
+                        initView()
+                    }
+                    is Resource.Failure -> {
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,8 +102,9 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             container,
             false
         )
-        product = viewModel.getProductById(productId)
-        initView()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getProductById(productId)
+        }
         binding.backBtn.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -97,9 +118,9 @@ class ProductDetailFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.productCount.text = productCount.toString()
         }
         binding.addProduct.setOnClickListener {
-            var id : Int = -1
+            var id: Int = -1
             if (product?.variants.isNullOrEmpty()) {
-                        id = it.id
+                id = it.id
             } else {
                 product?.let { it1 ->
                     id = viewModel.getSelectedVariantId(

@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/iran_sans_bold"
-                        android:text="نام آدرس"
+                        android:text="نام تحویل گرینده"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_size_medium" />
 
@@ -76,7 +76,7 @@
                             android:background="@color/white"
                             android:drawableLeft="@drawable/map_ic"
                             android:fontFamily="@font/iran_sans"
-                            android:hint="منزل"
+                            android:hint="سعید محمدی"
                             android:gravity="right"
                             android:maxLines="1"
                             android:padding="5dp"

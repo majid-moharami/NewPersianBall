@@ -18,19 +18,23 @@ class HomeRemoteDataSource
 ) {
 
     suspend fun getCourses() : Resource<Academy>{
-        return Request.getResponse(request = {homeVersionTwoService.getCourse()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getCourse(100)}, errorTranslator)
     }
 
     suspend fun getAcademy() : Resource<Academy>{
-        return Request.getResponse(request = {homeVersionTwoService.getAcademy()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getAcademy(100)}, errorTranslator)
     }
 
     suspend fun getCourseDetail(id: Int): Resource<AcademyDto>{
         return Request.getResponse(request = {homeVersionTwoService.getCourseDetail(id)}, errorTranslator)
     }
 
+    suspend fun getProductDetail(id: Int): Resource<Product>{
+        return Request.getResponse(request = {homeVersionTwoService.getProductDetail(id)}, errorTranslator)
+    }
+
     suspend fun getProducts() : Resource<Products> {
-        return Request.getResponse(request = {homeVersionTwoService.getProduct()}, errorTranslator)
+        return Request.getResponse(request = {homeVersionTwoService.getProduct(100)}, errorTranslator)
     }
 
     suspend fun getGalley(): Resource<SliderList> {

@@ -97,7 +97,9 @@ class MovieDetailFragment : BaseFragment() {
             requireActivity().onBackPressed()
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getAcademyById(movieId)
+            if (movieId != -1) {
+                viewModel.getAcademyById(movieId)
+            }
         }
         if (movie != null) {
             viewModel.setAppropriateMap(movie!!)
@@ -134,10 +136,6 @@ class MovieDetailFragment : BaseFragment() {
             }.attach()
             initView()
             loading(show = false)
-        } else {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.getAcademyById(movieId)
-            }
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.academyDto.collectLatest {

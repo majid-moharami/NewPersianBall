@@ -40,7 +40,7 @@ data class AcademyHomeDto(
     @SerializedName("pre_requirement") val preRequirement: String,
     @SerializedName("sorting_order") val sortingOrder: Int,
     @SerializedName("created_at") val createdAt: String,
-    @SerializedName("category") val category: Int,
+    @SerializedName("category") val category: CategoryDto?,
     @SerializedName("video_thumbnail") val videoThumbnail: String?,
     @SerializedName("video") val video: Int,
     @SerializedName("images") val images: List<String?>,

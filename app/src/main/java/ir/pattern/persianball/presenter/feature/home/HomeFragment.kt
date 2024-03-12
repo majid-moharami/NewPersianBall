@@ -18,6 +18,7 @@ import ir.pattern.persianball.presenter.adapter.BasePagingAdapter
 import ir.pattern.persianball.presenter.adapter.BaseViewHolder
 import ir.pattern.persianball.presenter.feature.BaseFragment
 import ir.pattern.persianball.presenter.feature.player.PlayerActivity
+import ir.pattern.persianball.presenter.feature.shopping.OrderRecordActivity
 import ir.pattern.persianball.views.TryAgainView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -36,6 +37,15 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val data = activity?.intent?.data
+        val s = data?.path
+        if (s != null) {
+            startActivity(Intent(activity, OrderRecordActivity::class.java).apply {
+                putExtra("TransactionNumber", s)
+            })
+        }
+
         binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         pagingAdapter = HomeDataAdapter().also {

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.home.Product
 import ir.pattern.persianball.data.model.home.VariantsDto
 import ir.pattern.persianball.data.model.shoppingCart.CartItem
@@ -24,6 +25,8 @@ class ProductDetailViewModel
 ) : BaseViewModel() {
 
     lateinit var currentColorMap: Map<String, String>
+    private val _productDto = MutableSharedFlow<Resource<Product>>()
+    val academyDto = _productDto.asSharedFlow()
 
     private val _addingCartFlow = MutableSharedFlow<String>()
     val addingCartFlow = _addingCartFlow.asSharedFlow()
@@ -32,11 +35,21 @@ class ProductDetailViewModel
     var onlySize: Boolean? = null
     var anyOne: Boolean? = null
 
-    fun getProductById(id: Int): Product? {
-        for (i in homeRepository.products.products) {
-            if (i.id == id) return i
+    suspend fun getProductById(id: Int) {
+        _productDto.emit(Resource.Loading())
+        homeRepository.getProductDetail(id).collect {
+            when (it) {
+                is Resource.Success -> {
+                    _productDto.emit(Resource.Success(it.data))
+                }
+
+                is Resource.Failure -> {
+                    _productDto.emit(Resource.Failure(it.error))
+                }
+
+                else -> {}
+            }
         }
-        return null
     }
 
     fun getColorOFSize(size: String, product: Product): Map<String, String>? {

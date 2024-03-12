@@ -1,16 +1,19 @@
 package ir.pattern.persianball.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import ir.pattern.persianball.data.model.*
+import ir.pattern.persianball.data.model.ChangePassword
+import ir.pattern.persianball.data.model.ForgetPassword
+import ir.pattern.persianball.data.model.Resource
+import ir.pattern.persianball.data.model.RetryCode
+import ir.pattern.persianball.data.model.SignUp
+import ir.pattern.persianball.data.model.TokenResultDto
+import ir.pattern.persianball.data.model.VerifyUser
 import ir.pattern.persianball.data.model.academy.Academy
 import ir.pattern.persianball.data.model.academy.AcademyDto
-import ir.pattern.persianball.data.model.academy.AcademyHomeDto
-import ir.pattern.persianball.data.model.home.*
-import ir.pattern.persianball.data.model.paging.PagingSourceSinglePage
+import ir.pattern.persianball.data.model.home.Product
+import ir.pattern.persianball.data.model.home.Products
+import ir.pattern.persianball.data.model.home.Slider
+import ir.pattern.persianball.data.model.home.SliderList
 import ir.pattern.persianball.data.repository.remote.datasource.HomeRemoteDataSource
-import ir.pattern.persianball.utils.singlePagingConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -67,6 +70,13 @@ class HomeRepository
     suspend fun getCourseDetail(id: Int): Flow<Resource<AcademyDto>>{
         return flow {
             val result = homeRemoteDataSource.getCourseDetail(id)
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getProductDetail(id: Int): Flow<Resource<Product>>{
+        return flow {
+            val result = homeRemoteDataSource.getProductDetail(id)
             emit(result)
         }.flowOn(Dispatchers.IO)
     }

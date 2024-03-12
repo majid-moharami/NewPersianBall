@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class Order(
     @SerializedName("delivery_method") val deliveryMethod : String?,
     @SerializedName("address") val addressId : Int?,
-    @SerializedName("discount_code") val discountCode : String? = null
+    @SerializedName("discount_code") val discountCode : String? = null,
+    @SerializedName("is_browser_view") val isBrowserView : Boolean = true
 )
 
 data class PaymentLink(

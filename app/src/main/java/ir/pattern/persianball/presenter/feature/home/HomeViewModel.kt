@@ -1,20 +1,23 @@
 package ir.pattern.persianball.presenter.feature.home
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
 import ir.pattern.persianball.data.model.base.RecyclerData
-import ir.pattern.persianball.data.model.home.*
-import ir.pattern.persianball.data.model.shoppingCart.ShoppingCart
+import ir.pattern.persianball.data.model.home.Slider
 import ir.pattern.persianball.data.repository.HomeRepository
-import ir.pattern.persianball.data.repository.LoginRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
-import ir.pattern.persianball.presenter.feature.home.recycler.*
-import kotlinx.coroutines.flow.*
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseData
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeCoursesRowData
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeRecyclerHeaderData
+import ir.pattern.persianball.presenter.feature.home.recycler.HomeSliderData
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,9 +48,11 @@ class HomeViewModel
                         getCourses()
                     }
                 }
+
                 is Resource.Failure -> {
                     _cartList.emit(Resource.Failure(it.error))
                 }
+
                 else -> {}
             }
         }
@@ -58,18 +63,22 @@ class HomeViewModel
             when (it) {
                 is Resource.Success -> {
                     val listCourse = mutableListOf<RecyclerItem>()
-                    it.data.result.map { course ->
-                        listCourse.add(RecyclerItem(HomeCourseData(course)))
+                    if (it.data.result.isNotEmpty()) {
+                        it.data.result.map { course ->
+                            listCourse.add(RecyclerItem(HomeCourseData(course)))
+                        }
+                        val courses = RecyclerData(flowOf(PagingData.from(listCourse)))
+                        recyclerList.add(RecyclerItem(HomeCoursesRowData(courses)))
                     }
-                    val courses = RecyclerData(flowOf(PagingData.from(listCourse)))
-                    recyclerList.add(RecyclerItem(HomeCoursesRowData(courses)))
                     viewModelScope.launch {
                         getProducts()
                     }
                 }
+
                 is Resource.Failure -> {
                     _cartList.emit(Resource.Failure(it.error))
                 }
+
                 else -> {}
             }
         }
@@ -87,9 +96,11 @@ class HomeViewModel
                     }
                     _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
                 }
+
                 is Resource.Failure -> {
                     _cartList.emit(Resource.Failure(it.error))
                 }
+
                 else -> {}
             }
         }

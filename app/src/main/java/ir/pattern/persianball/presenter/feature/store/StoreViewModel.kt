@@ -1,28 +1,23 @@
 package ir.pattern.persianball.presenter.feature.store
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.pattern.persianball.data.model.RecyclerItem
 import ir.pattern.persianball.data.model.Resource
-import ir.pattern.persianball.data.model.academy.AcademyDto
 import ir.pattern.persianball.data.model.academy.AcademyHomeDto
 import ir.pattern.persianball.data.model.base.RecyclerData
 import ir.pattern.persianball.data.model.home.Product
-import ir.pattern.persianball.data.model.shoppingCart.CartItem
 import ir.pattern.persianball.data.model.store.StoreDto
 import ir.pattern.persianball.data.repository.HomeRepository
 import ir.pattern.persianball.data.repository.ShoppingCartRepository
 import ir.pattern.persianball.presenter.adapter.BaseViewModel
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeCourseData
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeCoursesRowData
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeProductData
-import ir.pattern.persianball.presenter.feature.home.recycler.HomeRecyclerHeaderData
 import ir.pattern.persianball.presenter.feature.store.recycler.FilterData
 import ir.pattern.persianball.presenter.feature.store.recycler.SearchData
 import ir.pattern.persianball.presenter.feature.store.recycler.StoreData
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -57,16 +52,18 @@ class StoreViewModel
                     RecyclerItem(SearchData())
                     RecyclerItem(FilterData())
                     courseList = it.data.result
-                    it.data.result.map { course ->
+                    it.data.result.sortedBy { course -> course.sortingOrder }.map { course ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(true, academyDto = course)))
                         )
                     }
                     getProducts()
                 }
+
                 is Resource.Failure -> {
                     _cartList.emit(Resource.Failure(it.error))
                 }
+
                 else -> {
                     _cartList.emit(Resource.Loading())
                 }
@@ -80,16 +77,18 @@ class StoreViewModel
                 is Resource.Success -> {
                     _cartList.emit(it)
                     productList = it.data.products
-                    it.data.products.map { product ->
+                    it.data.products.sortedBy { p -> p.sortingOrder }.map { product ->
                         recyclerList.add(
                             RecyclerItem(StoreData(StoreDto(false, product = product)))
                         )
                     }
-                    _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
+                    _recyclerItems.value = RecyclerData(flowOf(PagingData.from(sortList(recyclerList))))
                 }
+
                 is Resource.Failure -> {
                     _cartList.emit(Resource.Failure(it.error))
                 }
+
                 else -> {
                     _cartList.emit(Resource.Loading())
                 }
@@ -97,26 +96,30 @@ class StoreViewModel
         }
     }
 
+    fun sortList(recyclerItems: List<RecyclerItem>): List<RecyclerItem> {
+        return recyclerItems.sortedBy { if ((it.data as StoreData).storeDto.product?.sortingOrder != null) (it.data as StoreData).storeDto.product?.sortingOrder else (it.data as StoreData).storeDto.academyDto?.sortingOrder }
+    }
+
     fun filterProducts() {
         val filteredList = mutableListOf<RecyclerItem>()
 
         if (!isCourseFilter && !isClassFilter && !isProductFilter) {
-            _recyclerItems.value = RecyclerData(flowOf(PagingData.from(recyclerList)))
+            _recyclerItems.value = RecyclerData(flowOf(PagingData.from(sortList(recyclerList))))
             return
         }
-        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(filteredList)))
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(sortList(filteredList))))
         if (isCourseFilter) {
             courseList.map {
-//                if (it.category?.nameFarsi == "دوره ها") {
-//                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
-//                }
+                if (it.category?.nameFarsi == "دوره ها") {
+                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+                }
             }
         }
         if (isClassFilter) {
             courseList.map {
-//                if (it.category?.nameFarsi == "کلاس ها") {
-//                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
-//                }
+                if (it.category?.nameFarsi == "کلاس ها") {
+                    filteredList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = it))))
+                }
             }
         }
         if (isProductFilter) {
@@ -124,16 +127,16 @@ class StoreViewModel
                 filteredList.add(RecyclerItem(StoreData(StoreDto(false, product = it))))
             }
         }
-        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(filteredList)))
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(sortList(filteredList))))
     }
 
     fun search(query: String?) {
         val searchedList = mutableListOf<RecyclerItem>()
         if (!query.isNullOrEmpty()) {
             courseList.map { course ->
-//                if (course.courseTitle.contains(query, true)) {
-//                    searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = course))))
-//                }
+                if (course.nameFarsi.contains(query, true)) {
+                    searchedList.add(RecyclerItem(StoreData(StoreDto(true, academyDto = course))))
+                }
             }
             productList.map { product ->
                 if (product.nameFarsi.contains(query, true)) {
@@ -148,6 +151,6 @@ class StoreViewModel
                 searchedList.add(RecyclerItem(StoreData(StoreDto(false, product = product))))
             }
         }
-        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(searchedList)))
+        _recyclerItems.value = RecyclerData(flowOf(PagingData.from(sortList(searchedList))))
     }
 }

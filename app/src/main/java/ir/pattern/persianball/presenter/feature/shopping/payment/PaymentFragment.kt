@@ -69,21 +69,21 @@ class PaymentFragment : Fragment() {
                 viewModel.discountPercent?.also {
                     if (args.addressId == -1) {
                         viewModel.doOrder(
-                            Order(args.deliveryMethod, null, it)
+                            Order(args.deliveryMethod, null, it, true)
                         )
                     } else {
                         viewModel.doOrder(
-                            Order(args.deliveryMethod, args.addressId, it)
+                            Order(args.deliveryMethod, args.addressId, it, true)
                         )
                     }
                 } ?: kotlin.run {
                     if (args.addressId == -1) {
                         viewModel.doOrder(
-                            Order(args.deliveryMethod, null)
+                            Order(args.deliveryMethod, null, isBrowserView = true)
                         )
                     } else {
                         viewModel.doOrder(
-                            Order(args.deliveryMethod, args.addressId)
+                            Order(args.deliveryMethod, args.addressId, isBrowserView = true)
                         )
                     }
                 }
